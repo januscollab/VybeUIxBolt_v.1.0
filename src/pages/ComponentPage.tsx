@@ -7,6 +7,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ExternalLink, FileCode, Figma, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+// Import design system components
+import ColorPaletteComponent from "@/components/design-system/ColorPaletteComponent";
+import TypographyScaleComponent from "@/components/design-system/TypographyScaleComponent";
+import SpacingSystemComponent from "@/components/design-system/SpacingSystemComponent";
+import ElevationShadowsComponent from "@/components/design-system/ElevationShadowsComponent";
+
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: component, isLoading } = useComponent(slug!);
@@ -17,6 +23,22 @@ export default function ComponentPage() {
       title: "Copied to clipboard",
       description: "Code example has been copied to your clipboard.",
     });
+  };
+
+  // Render specific design system components
+  const renderComponentContent = () => {
+    switch (component?.slug) {
+      case 'color-palette':
+        return <ColorPaletteComponent />;
+      case 'typography-scale':
+        return <TypographyScaleComponent />;
+      case 'spacing-system':
+        return <SpacingSystemComponent />;
+      case 'elevation-shadows':
+        return <ElevationShadowsComponent />;
+      default:
+        return null;
+    }
   };
 
   if (isLoading) {
@@ -34,6 +56,12 @@ export default function ComponentPage() {
         <h1 className="text-2xl font-bold text-muted-foreground">Component not found</h1>
       </div>
     );
+  }
+
+  // If we have a custom component, render it
+  const customComponent = renderComponentContent();
+  if (customComponent) {
+    return customComponent;
   }
 
   return (
