@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { ExternalLink, FileCode, Figma } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ExperimentalComponentCard } from "@/components/ExperimentalComponentCard";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -52,71 +53,88 @@ export default function CategoryPage() {
       </div>
 
       {components && components.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {components.map((component) => (
-            <Card key={component.id} className="group hover:shadow-md transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <CardTitle className="text-lg">{component.name}</CardTitle>
-                    {component.description && (
-                      <CardDescription>{component.description}</CardDescription>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Badge
-                      variant={
-                        component.status === 'stable' ? 'default' :
-                        component.status === 'review' ? 'secondary' :
-                        component.status === 'deprecated' ? 'destructive' :
-                        'outline'
-                      }
-                      className="text-xs"
-                    >
-                      {component.status}
-                    </Badge>
-                    {component.is_experimental && (
-                      <Badge variant="outline" className="text-xs border-orange-500 text-orange-600">
-                        Experimental
+        <div className="space-y-8">
+          {/* Standard Components */}
+          {components.filter(c => !c.is_experimental).length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {components.filter(c => !c.is_experimental).map((component) => (
+                <Card key={component.id} className="group hover:shadow-md transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <CardTitle className="text-lg">{component.name}</CardTitle>
+                        {component.description && (
+                          <CardDescription>{component.description}</CardDescription>
+                        )}
+                      </div>
+                      <Badge
+                        variant={
+                          component.status === 'stable' ? 'default' :
+                          component.status === 'review' ? 'secondary' :
+                          component.status === 'deprecated' ? 'destructive' :
+                          'outline'
+                        }
+                        className="text-xs"
+                      >
+                        {component.status}
                       </Badge>
-                    )}
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  {component.variants && component.variants.length > 0 && (
-                    <span>{component.variants.length} variants</span>
-                  )}
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <Button asChild size="sm" className="flex-1">
-                    <Link to={`/component/${component.slug}`}>
-                      View Details
-                    </Link>
-                  </Button>
-                  
-                  <div className="flex gap-1">
-                    {component.figma_url && (
-                      <Button variant="outline" size="sm" asChild>
-                        <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
-                          <Figma className="h-4 w-4" />
-                        </a>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      {component.variants && component.variants.length > 0 && (
+                        <span>{component.variants.length} variants</span>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <Button asChild size="sm" className="flex-1">
+                        <Link to={`/component/${component.slug}`}>
+                          View Details
+                        </Link>
                       </Button>
-                    )}
-                    {component.storybook_url && (
-                      <Button variant="outline" size="sm" asChild>
-                        <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
-                          <FileCode className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    )}
-                  </div>
+                      
+                      <div className="flex gap-1">
+                        {component.figma_url && (
+                          <Button variant="outline" size="sm" asChild>
+                            <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
+                              <Figma className="h-4 w-4" />
+                            </a>
+                          </Button>
+                        )}
+                        {component.storybook_url && (
+                          <Button variant="outline" size="sm" asChild>
+                            <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
+                              <FileCode className="h-4 w-4" />
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Experimental Components Section */}
+          {components.filter(c => c.is_experimental).length > 0 && (
+            <div className="space-y-4">
+              <div className="border-t pt-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <h3 className="text-xl font-semibold">Experimental Components</h3>
+                  <Badge variant="outline" className="border-orange-500 text-orange-600">
+                    {components.filter(c => c.is_experimental).length} components
+                  </Badge>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {components.filter(c => c.is_experimental).map((component) => (
+                    <ExperimentalComponentCard key={component.id} component={component} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="text-center py-12">
