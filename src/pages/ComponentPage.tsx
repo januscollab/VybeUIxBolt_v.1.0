@@ -12,6 +12,12 @@ import ColorPaletteComponent from "@/components/design-system/ColorPaletteCompon
 import TypographyScaleComponent from "@/components/design-system/TypographyScaleComponent";
 import SpacingSystemComponent from "@/components/design-system/SpacingSystemComponent";
 import ElevationShadowsComponent from "@/components/design-system/ElevationShadowsComponent";
+import IconSystemComponent from "@/components/design-system/IconSystemComponent";
+import InteractionStatesComponent from "@/components/design-system/InteractionStatesComponent";
+
+// Import experimental components
+import WorkflowBuilderComponent from "@/components/experimental/WorkflowBuilderComponent";
+import CollaborationPanelComponent from "@/components/experimental/CollaborationPanelComponent";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -36,6 +42,14 @@ export default function ComponentPage() {
         return <SpacingSystemComponent />;
       case 'elevation-shadows':
         return <ElevationShadowsComponent />;
+      case 'icon-system':
+        return <IconSystemComponent />;
+      case 'interaction-states':
+        return <InteractionStatesComponent />;
+      case 'workflow-builder':
+        return <WorkflowBuilderComponent />;
+      case 'collaboration-panel':
+        return <CollaborationPanelComponent />;
       default:
         return null;
     }
