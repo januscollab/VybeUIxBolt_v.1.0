@@ -9,7 +9,218 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      component_variants: {
+        Row: {
+          code_example: string | null
+          component_id: string | null
+          created_at: string
+          id: string
+          name: string
+          preview_url: string | null
+          props: Json | null
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          code_example?: string | null
+          component_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          preview_url?: string | null
+          props?: Json | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          code_example?: string | null
+          component_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          preview_url?: string | null
+          props?: Json | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "component_variants_component_id_fkey"
+            columns: ["component_id"]
+            isOneToOne: false
+            referencedRelation: "components"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      components: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          figma_url: string | null
+          id: string
+          is_experimental: boolean | null
+          name: string
+          slug: string
+          sort_order: number | null
+          status: Database["public"]["Enums"]["component_status"] | null
+          storybook_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          figma_url?: string | null
+          id?: string
+          is_experimental?: boolean | null
+          name: string
+          slug: string
+          sort_order?: number | null
+          status?: Database["public"]["Enums"]["component_status"] | null
+          storybook_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          figma_url?: string | null
+          id?: string
+          is_experimental?: boolean | null
+          name?: string
+          slug?: string
+          sort_order?: number | null
+          status?: Database["public"]["Enums"]["component_status"] | null
+          storybook_url?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "components_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      design_tokens: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          sort_order: number | null
+          token_type: Database["public"]["Enums"]["token_type"]
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          sort_order?: number | null
+          token_type: Database["public"]["Enums"]["token_type"]
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          sort_order?: number | null
+          token_type?: Database["public"]["Enums"]["token_type"]
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_tokens_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documentation: {
+        Row: {
+          component_id: string | null
+          content: string
+          created_at: string
+          id: string
+          section: string | null
+          sort_order: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          component_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          section?: string | null
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          component_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          section?: string | null
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentation_component_id_fkey"
+            columns: ["component_id"]
+            isOneToOne: false
+            referencedRelation: "components"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +229,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      component_status: "draft" | "review" | "stable" | "deprecated"
+      theme_mode: "light" | "dark" | "auto"
+      token_type:
+        | "color"
+        | "typography"
+        | "spacing"
+        | "shadow"
+        | "radius"
+        | "motion"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +352,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      component_status: ["draft", "review", "stable", "deprecated"],
+      theme_mode: ["light", "dark", "auto"],
+      token_type: [
+        "color",
+        "typography",
+        "spacing",
+        "shadow",
+        "radius",
+        "motion",
+      ],
+    },
   },
 } as const
