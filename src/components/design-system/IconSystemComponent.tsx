@@ -12,7 +12,7 @@ import {
   Edit, Delete, Plus, Minus, Check, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown,
   ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Bell, Heart, Star, Share, Filter, Grid,
   List, Map, Camera, Image, Video, Music, File, Folder, Link, Lock, Unlock, Eye, EyeOff,
-  Search as SearchIcon, Refresh, MoreHorizontal, MoreVertical, Menu, ShoppingCart, CreditCard,
+  Search as SearchIcon, RefreshCw, MoreHorizontal, MoreVertical, Menu, ShoppingCart, CreditCard,
   DollarSign, TrendingUp, TrendingDown, Activity, BarChart, PieChart, Zap, Lightbulb,
   Palette, Brush, Type, Layers, Move, RotateCcw, Maximize, Minimize, Monitor, Smartphone,
   Tablet, Wifi, Bluetooth, Battery, Volume2, VolumeX, PlayCircle, PauseCircle, StopCircle,
