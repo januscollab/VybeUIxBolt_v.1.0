@@ -4,6 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function ColorPaletteComponent() {
   const colorGroups = [
     {
+      name: "Brand Colors",
+      colors: [
+        { name: "Zapier Orange", value: "hsl(16, 100%, 50%)", css: "bg-zapier-orange", description: "Primary brand color from Zapier" },
+        { name: "Earth", value: "hsl(25, 12%, 14%)", css: "bg-earth", description: "Deep earth tone for contrast" },
+        { name: "Cream", value: "hsl(43, 47%, 89%)", css: "bg-cream", description: "Warm neutral background" },
+        { name: "Almost White", value: "hsl(210, 20%, 98%)", css: "bg-almost-white", description: "Subtle off-white tone" },
+      ]
+    },
+    {
       name: "Primary Colors",
       colors: [
         { name: "Primary", value: "hsl(16, 100%, 50%)", css: "bg-primary", description: "Main brand color" },

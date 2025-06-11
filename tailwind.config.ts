@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'poppins': ['Poppins', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -47,6 +51,22 @@ export default {
 				info: {
 					DEFAULT: 'hsl(var(--info))',
 					foreground: 'hsl(var(--info-foreground))'
+				},
+				earth: {
+					DEFAULT: 'hsl(var(--earth))',
+					foreground: 'hsl(var(--earth-foreground))'
+				},
+				'zapier-orange': {
+					DEFAULT: 'hsl(var(--zapier-orange))',
+					foreground: 'hsl(var(--zapier-orange-foreground))'
+				},
+				cream: {
+					DEFAULT: 'hsl(var(--cream))',
+					foreground: 'hsl(var(--cream-foreground))'
+				},
+				'almost-white': {
+					DEFAULT: 'hsl(var(--almost-white))',
+					foreground: 'hsl(var(--almost-white-foreground))'
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',

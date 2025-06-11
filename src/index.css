@@ -39,6 +39,18 @@
     --info: 196 82% 39%;
     --info-foreground: 210 40% 98%;
 
+    --earth: 25 12% 14%;
+    --earth-foreground: 210 40% 98%;
+
+    --zapier-orange: 16 100% 50%;
+    --zapier-orange-foreground: 210 40% 98%;
+
+    --cream: 43 47% 89%;
+    --cream-foreground: 222.2 84% 4.9%;
+
+    --almost-white: 210 20% 98%;
+    --almost-white-foreground: 222.2 84% 4.9%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
@@ -107,6 +119,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
   }
 }
