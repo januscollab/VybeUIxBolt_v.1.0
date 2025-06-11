@@ -19,6 +19,15 @@ import InteractionStatesComponent from "@/components/design-system/InteractionSt
 import WorkflowBuilderComponent from "@/components/experimental/WorkflowBuilderComponent";
 import CollaborationPanelComponent from "@/components/experimental/CollaborationPanelComponent";
 
+// Import showcase components
+import ButtonShowcase from "@/components/showcase/ButtonShowcase";
+import InputShowcase from "@/components/showcase/InputShowcase";
+import CardShowcase from "@/components/showcase/CardShowcase";
+import FormShowcase from "@/components/showcase/FormShowcase";
+import NavigationShowcase from "@/components/showcase/NavigationShowcase";
+import TableShowcase from "@/components/showcase/TableShowcase";
+import FeedbackShowcase from "@/components/showcase/FeedbackShowcase";
+
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: component, isLoading } = useComponent(slug!);
@@ -50,6 +59,27 @@ export default function ComponentPage() {
         return <WorkflowBuilderComponent />;
       case 'collaboration-panel':
         return <CollaborationPanelComponent />;
+      // Core UI Components
+      case 'button':
+        return <ButtonShowcase />;
+      case 'input':
+        return <InputShowcase />;
+      case 'card':
+        return <CardShowcase />;
+      case 'form':
+        return <FormShowcase />;
+      case 'navigation':
+      case 'breadcrumb':
+      case 'pagination':
+      case 'tabs':
+        return <NavigationShowcase />;
+      case 'table':
+        return <TableShowcase />;
+      case 'alert':
+      case 'toast':
+      case 'progress':
+      case 'skeleton':
+        return <FeedbackShowcase />;
       default:
         return null;
     }
