@@ -6,6 +6,10 @@ import { Settings, Figma, Download, Palette, Database, ExternalLink, BookOpen, S
 import { Link } from "react-router-dom";
 import { useAdminRole } from "@/hooks/useAdminRole";
 import { ColorPaletteControls, TypographyControls, BrandingControls } from "@/components/admin/AdminControls";
+import { ColorPaletteAdmin } from "@/components/admin/ColorPaletteAdmin";
+import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
+import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
+import { UserInvitations } from "@/components/admin/UserInvitations";
 
 const SettingsPage = () => {
   const { isAdmin, loading } = useAdminRole();
@@ -90,18 +94,56 @@ const SettingsPage = () => {
                   </div>
                 </CardContent>
               </Card>
+              
+              <UserInvitations />
             </TabsContent>
 
             <TabsContent value="colors" className="space-y-4">
-              <ColorPaletteControls />
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Palette className="h-6 w-6" />
+                    VybeUI Color Palette Administration
+                    <Badge variant="destructive">Admin Only</Badge>
+                  </h2>
+                  <p className="text-muted-foreground mt-2">
+                    Customize your design system colors and create color palette versions.
+                  </p>
+                </div>
+                <ColorPaletteAdmin isOpen={true} onOpenChange={() => {}} />
+              </div>
             </TabsContent>
 
             <TabsContent value="typography" className="space-y-4">
-              <TypographyControls />
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Type className="h-6 w-6" />
+                    VybeUI Typography Administration
+                    <Badge variant="destructive">Admin Only</Badge>
+                  </h2>
+                  <p className="text-muted-foreground mt-2">
+                    Configure fonts, upload custom fonts, and manage typography scales.
+                  </p>
+                </div>
+                <TypographyAdmin isOpen={true} onOpenChange={() => {}} />
+              </div>
             </TabsContent>
 
             <TabsContent value="branding" className="space-y-4">
-              <BrandingControls />
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Building2 className="h-6 w-6" />
+                    VybeUI Brand Administration
+                    <Badge variant="destructive">Admin Only</Badge>
+                  </h2>
+                  <p className="text-muted-foreground mt-2">
+                    Upload your logo, set brand name, and customize brand assets.
+                  </p>
+                </div>
+                <BrandingAdmin isOpen={true} onOpenChange={() => {}} />
+              </div>
             </TabsContent>
           </>
         )}

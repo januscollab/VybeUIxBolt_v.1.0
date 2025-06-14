@@ -82,11 +82,11 @@ export default function ColorPaletteComponent() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">HSL:</span>
-                        <code className="bg-muted px-2 py-1 rounded text-xs">{color.value}</code>
+                        <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.value}</code>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">CSS:</span>
-                        <code className="bg-muted px-2 py-1 rounded text-xs">{color.css}</code>
+                        <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.css}</code>
                       </div>
                     </div>
                     {/* Color swatch */}

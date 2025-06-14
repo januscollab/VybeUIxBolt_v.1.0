@@ -178,280 +178,288 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
     { value: '900', label: 'Black (900)' }
   ];
 
-  return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Type className="h-5 w-5" />
-            VybeUI Typography Administration
-          </DialogTitle>
-        </DialogHeader>
+  const content = (
+    <div className="space-y-6">
+      {/* Primary Typography */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Primary Typography</CardTitle>
+          <CardDescription>
+            Main font used for headings and body text
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Font Family</Label>
+              <Select 
+                value={localTypography.primary?.family || ''}
+                onValueChange={(value) => handleFontFamilyChange('primary', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select primary font" />
+                </SelectTrigger>
+                 <SelectContent>
+                   {googleFonts.map(font => (
+                     <SelectItem key={font} value={font}>
+                       <span style={{ fontFamily: font }}>{font}</span>
+                     </SelectItem>
+                   ))}
+                   {customFonts.map(font => (
+                     <SelectItem key={font.id} value={font.font_family}>
+                       <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
+                     </SelectItem>
+                   ))}
+                 </SelectContent>
+              </Select>
+            </div>
 
-        <div className="space-y-6">
-          {/* Primary Typography */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Primary Typography</CardTitle>
-              <CardDescription>
-                Main font used for headings and body text
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Font Family</Label>
-                  <Select 
-                    value={localTypography.primary?.family || ''}
-                    onValueChange={(value) => handleFontFamilyChange('primary', value)}
+            <div className="space-y-2">
+              <Label>Font Weights</Label>
+              <div className="flex flex-wrap gap-2">
+                {fontWeights.map(weight => (
+                  <Badge
+                    key={weight.value}
+                    variant={localTypography.primary?.weights?.includes(weight.value) ? 'default' : 'outline'}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const currentWeights = localTypography.primary?.weights || [];
+                      const newWeights = currentWeights.includes(weight.value)
+                        ? currentWeights.filter(w => w !== weight.value)
+                        : [...currentWeights, weight.value];
+                      handleWeightChange('primary', newWeights);
+                    }}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select primary font" />
-                    </SelectTrigger>
-                     <SelectContent>
-                       {googleFonts.map(font => (
-                         <SelectItem key={font} value={font}>
-                           <span style={{ fontFamily: font }}>{font}</span>
-                         </SelectItem>
-                       ))}
-                       {customFonts.map(font => (
-                         <SelectItem key={font.id} value={font.font_family}>
-                           <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
-                         </SelectItem>
-                       ))}
-                     </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Font Weights</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {fontWeights.map(weight => (
-                      <Badge
-                        key={weight.value}
-                        variant={localTypography.primary?.weights?.includes(weight.value) ? 'default' : 'outline'}
-                        className="cursor-pointer"
-                        onClick={() => {
-                          const currentWeights = localTypography.primary?.weights || [];
-                          const newWeights = currentWeights.includes(weight.value)
-                            ? currentWeights.filter(w => w !== weight.value)
-                            : [...currentWeights, weight.value];
-                          handleWeightChange('primary', newWeights);
-                        }}
-                      >
-                        {weight.label}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
+                    {weight.label}
+                  </Badge>
+                ))}
               </div>
+            </div>
+          </div>
 
-              {/* Font Preview */}
-              <div className="p-4 border rounded-lg bg-muted/50">
-                <div 
-                  style={{ 
-                    fontFamily: localTypography.primary?.family || 'Inter',
-                    fontSize: '24px',
-                    fontWeight: '700',
-                    marginBottom: '8px'
-                  }}
-                >
-                  VybeUI Design System
-                </div>
-                <div 
-                  style={{ 
-                    fontFamily: localTypography.primary?.family || 'Inter',
-                    fontSize: '16px',
-                    fontWeight: '400'
-                  }}
-                >
-                  This is how your primary typography will look in the design system. It includes headings, body text, and interface elements.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Secondary Typography */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Secondary Typography</CardTitle>
-              <CardDescription>
-                Secondary font used for code, captions, and special elements
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Font Family</Label>
-                  <Select 
-                    value={localTypography.secondary?.family || ''}
-                    onValueChange={(value) => handleFontFamilyChange('secondary', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select secondary font" />
-                    </SelectTrigger>
-                     <SelectContent>
-                       {googleFonts.map(font => (
-                         <SelectItem key={font} value={font}>
-                           <span style={{ fontFamily: font }}>{font}</span>
-                         </SelectItem>
-                       ))}
-                       {customFonts.map(font => (
-                         <SelectItem key={font.id} value={font.font_family}>
-                           <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
-                         </SelectItem>
-                       ))}
-                     </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Font Weights</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {fontWeights.map(weight => (
-                      <Badge
-                        key={weight.value}
-                        variant={localTypography.secondary?.weights?.includes(weight.value) ? 'default' : 'outline'}
-                        className="cursor-pointer"
-                        onClick={() => {
-                          const currentWeights = localTypography.secondary?.weights || [];
-                          const newWeights = currentWeights.includes(weight.value)
-                            ? currentWeights.filter(w => w !== weight.value)
-                            : [...currentWeights, weight.value];
-                          handleWeightChange('secondary', newWeights);
-                        }}
-                      >
-                        {weight.label}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Font Preview */}
-              <div className="p-4 border rounded-lg bg-muted/50">
-                <div 
-                  style={{ 
-                    fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    marginBottom: '8px'
-                  }}
-                >
-                  const VybeUI = () =&gt; &#123;
-                </div>
-                <div 
-                  style={{ 
-                    fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
-                    fontSize: '14px',
-                    fontWeight: '400'
-                  }}
-                >
-                  &nbsp;&nbsp;return &lt;div&gt;Secondary typography for code&lt;/div&gt;;
-                  <br />
-                  &#125;;
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Custom Font Upload */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Custom Font Upload</CardTitle>
-              <CardDescription>
-                Upload your own font files for use in the design system
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
-                <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground mb-2">
-                  Upload font files (.woff, .woff2, .ttf, .otf)
-                </p>
-                <input
-                  type="file"
-                  multiple
-                  accept=".woff,.woff2,.ttf,.otf"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  id="font-upload"
-                />
-                <Button variant="outline" asChild>
-                  <label htmlFor="font-upload" className="cursor-pointer">
-                    <Upload className="h-4 w-4 mr-2" />
-                    Choose Files
-                  </label>
-                </Button>
-              </div>
-
-              {customFonts.length > 0 && (
-                <div className="space-y-2">
-                  <Label>Custom Fonts</Label>
-                  <div className="grid gap-2">
-                     {customFonts.map(font => (
-                       <div key={font.id} className="flex items-center justify-between p-2 border rounded">
-                         <span>{font.font_name}</span>
-                         <Button 
-                           variant="ghost" 
-                           size="sm"
-                           onClick={async () => {
-                             try {
-                               // Delete from storage
-                               const fileName = font.file_url.split('/').pop();
-                               if (fileName) {
-                                 await supabase.storage
-                                   .from('custom-fonts')
-                                   .remove([fileName]);
-                               }
-                               
-                               // Delete from database
-                               await supabase
-                                 .from('custom_fonts')
-                                 .delete()
-                                 .eq('id', font.id);
-                               
-                               await loadCustomFonts();
-                               
-                               toast({
-                                 title: "Font Deleted",
-                                 description: `${font.font_name} has been deleted successfully`,
-                               });
-                             } catch (error) {
-                               console.error('Error deleting font:', error);
-                               toast({
-                                 title: "Delete Failed",
-                                 description: "Failed to delete font. Please try again.",
-                                 variant: "destructive"
-                               });
-                             }
-                           }}
-                         >
-                           <Trash2 className="h-4 w-4" />
-                         </Button>
-                       </div>
-                     ))}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Actions */}
-          <div className="flex justify-end gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setLocalTypography(typography)}
+          {/* Font Preview */}
+          <div className="p-4 border rounded-lg bg-muted/50">
+            <div 
+              style={{ 
+                fontFamily: localTypography.primary?.family || 'Inter',
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '8px'
+              }}
             >
-              Reset
-            </Button>
-            <Button onClick={handleSave}>
-              <Save className="h-4 w-4 mr-1" />
-              Apply Changes
+              VybeUI Design System
+            </div>
+            <div 
+              style={{ 
+                fontFamily: localTypography.primary?.family || 'Inter',
+                fontSize: '16px',
+                fontWeight: '400'
+              }}
+            >
+              This is how your primary typography will look in the design system. It includes headings, body text, and interface elements.
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Secondary Typography */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Secondary Typography</CardTitle>
+          <CardDescription>
+            Secondary font used for code, captions, and special elements
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Font Family</Label>
+              <Select 
+                value={localTypography.secondary?.family || ''}
+                onValueChange={(value) => handleFontFamilyChange('secondary', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select secondary font" />
+                </SelectTrigger>
+                 <SelectContent>
+                   {googleFonts.map(font => (
+                     <SelectItem key={font} value={font}>
+                       <span style={{ fontFamily: font }}>{font}</span>
+                     </SelectItem>
+                   ))}
+                   {customFonts.map(font => (
+                     <SelectItem key={font.id} value={font.font_family}>
+                       <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
+                     </SelectItem>
+                   ))}
+                 </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Font Weights</Label>
+              <div className="flex flex-wrap gap-2">
+                {fontWeights.map(weight => (
+                  <Badge
+                    key={weight.value}
+                    variant={localTypography.secondary?.weights?.includes(weight.value) ? 'default' : 'outline'}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const currentWeights = localTypography.secondary?.weights || [];
+                      const newWeights = currentWeights.includes(weight.value)
+                        ? currentWeights.filter(w => w !== weight.value)
+                        : [...currentWeights, weight.value];
+                      handleWeightChange('secondary', newWeights);
+                    }}
+                  >
+                    {weight.label}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Font Preview */}
+          <div className="p-4 border rounded-lg bg-muted/50">
+            <div 
+              style={{ 
+                fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
+                fontSize: '14px',
+                fontWeight: '500',
+                marginBottom: '8px'
+              }}
+            >
+              <code>const VybeUI = () =&gt; &#123;</code>
+            </div>
+            <div 
+              style={{ 
+                fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
+                fontSize: '14px',
+                fontWeight: '400'
+              }}
+            >
+              <code>&nbsp;&nbsp;return &lt;div&gt;Secondary typography for code&lt;/div&gt;;</code>
+              <br />
+              <code>&#125;;</code>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Custom Font Upload */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Custom Font Upload</CardTitle>
+          <CardDescription>
+            Upload your own font files for use in the design system
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+            <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground mb-2">
+              Upload font files (.woff, .woff2, .ttf, .otf)
+            </p>
+            <input
+              type="file"
+              multiple
+              accept=".woff,.woff2,.ttf,.otf"
+              onChange={handleFileUpload}
+              className="hidden"
+              id="font-upload"
+            />
+            <Button variant="outline" asChild>
+              <label htmlFor="font-upload" className="cursor-pointer">
+                <Upload className="h-4 w-4 mr-2" />
+                Choose Files
+              </label>
             </Button>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+
+          {customFonts.length > 0 && (
+            <div className="space-y-2">
+              <Label>Custom Fonts</Label>
+              <div className="grid gap-2">
+                 {customFonts.map(font => (
+                   <div key={font.id} className="flex items-center justify-between p-2 border rounded">
+                     <span>{font.font_name}</span>
+                     <Button 
+                       variant="ghost" 
+                       size="sm"
+                       onClick={async () => {
+                         try {
+                           // Delete from storage
+                           const fileName = font.file_url.split('/').pop();
+                           if (fileName) {
+                             await supabase.storage
+                               .from('custom-fonts')
+                               .remove([fileName]);
+                           }
+                           
+                           // Delete from database
+                           await supabase
+                             .from('custom_fonts')
+                             .delete()
+                             .eq('id', font.id);
+                           
+                           await loadCustomFonts();
+                           
+                           toast({
+                             title: "Font Deleted",
+                             description: `${font.font_name} has been deleted successfully`,
+                           });
+                         } catch (error) {
+                           console.error('Error deleting font:', error);
+                           toast({
+                             title: "Delete Failed",
+                             description: "Failed to delete font. Please try again.",
+                             variant: "destructive"
+                           });
+                         }
+                       }}
+                     >
+                       <Trash2 className="h-4 w-4" />
+                     </Button>
+                   </div>
+                 ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Actions */}
+      <div className="flex justify-end gap-2">
+        <Button
+          variant="outline"
+          onClick={() => setLocalTypography(typography)}
+        >
+          Reset
+        </Button>
+        <Button onClick={handleSave}>
+          <Save className="h-4 w-4 mr-1" />
+          Apply Changes
+        </Button>
+      </div>
+    </div>
   );
+
+  // If not using as inline (modal mode), wrap in Dialog
+  if (!isOpen) {
+    return (
+      <Dialog open={false} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Type className="h-5 w-5" />
+              VybeUI Typography Administration
+            </DialogTitle>
+          </DialogHeader>
+          {content}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return content;
 }
