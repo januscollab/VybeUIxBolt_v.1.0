@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Save, Upload, Image, X, RefreshCw } from 'lucide-react';
-import { useDesignSystem } from '@/hooks/useDesignSystem';
-import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { useDesignSystem } from '@/hooks/useDesignSystem';
+import { validateBrandName, validateLogoUrl } from '@/lib/validation';
 
 interface BrandingAdminProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface BrandingAdminProps {
 
 export function BrandingAdmin({ isOpen, onOpenChange }: BrandingAdminProps) {
   const { activeVersion, updateBranding } = useDesignSystem();
+  const { toast } = useToast();
   const [brandName, setBrandName] = useState(activeVersion?.brand_name || 'VybeUI');
   const [logoUrl, setLogoUrl] = useState(activeVersion?.logo_url || '');
   const [uploading, setUploading] = useState(false);
@@ -84,6 +86,30 @@ export function BrandingAdmin({ isOpen, onOpenChange }: BrandingAdminProps) {
   };
 
   const handleSave = async () => {
+    // Validate brand name
+    const brandValidation = validateBrandName(brandName.trim());
+    if (!brandValidation.isValid) {
+      toast({
+        title: "Invalid Brand Name",
+        description: brandValidation.error || "Please enter a valid brand name",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate logo URL if provided
+    if (logoUrl.trim()) {
+      const urlValidation = validateLogoUrl(logoUrl.trim());
+      if (!urlValidation.isValid) {
+        toast({
+          title: "Invalid Logo URL",
+          description: urlValidation.error || "Please enter a valid HTTPS image URL",
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
     try {
       await updateBranding({
         brandName,

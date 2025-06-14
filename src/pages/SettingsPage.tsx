@@ -10,7 +10,7 @@ import { ColorPaletteAdmin } from "@/components/admin/ColorPaletteAdmin";
 import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
 import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
 import { UserInvitations } from "@/components/admin/UserInvitations";
-import { FigmaConfig } from "@/components/integrations/FigmaConfig";
+import { SecureFigmaConfig } from "@/components/integrations/SecureFigmaConfig";
 
 const SettingsPage = () => {
   const { isAdmin, loading } = useAdminRole();
@@ -149,7 +149,7 @@ const SettingsPage = () => {
         )}
 
         <TabsContent value="integrations" className="space-y-4">
-          <FigmaConfig />
+          <SecureFigmaConfig />
 
           <Card>
             <CardHeader>
