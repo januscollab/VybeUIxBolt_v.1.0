@@ -36,6 +36,11 @@ import TextareaShowcase from "@/components/showcase/TextareaShowcase";
 import AvatarShowcase from "@/components/showcase/AvatarShowcase";
 import ProgressBarShowcase from "@/components/showcase/ProgressBarShowcase";
 import SliderShowcase from "@/components/showcase/SliderShowcase";
+import SearchBarShowcase from "@/components/showcase/SearchBarShowcase";
+import SidebarShowcase from "@/components/showcase/SidebarShowcase";
+import CommandMenuShowcase from "@/components/showcase/CommandMenuShowcase";
+import StepsStepperShowcase from "@/components/showcase/StepsStepperShowcase";
+import AICommandPaletteShowcase from "@/components/showcase/AICommandPaletteShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -104,6 +109,18 @@ export default function ComponentPage() {
         return <ProgressBarShowcase />;
       case 'slider':
         return <SliderShowcase />;
+      case 'search-bar':
+      case 'search':
+        return <SearchBarShowcase />;
+      case 'sidebar':
+        return <SidebarShowcase />;
+      case 'command-menu':
+        return <CommandMenuShowcase />;
+      case 'steps-stepper':
+      case 'stepper':
+        return <StepsStepperShowcase />;
+      case 'ai-command-palette':
+        return <AICommandPaletteShowcase />;
       
       // Navigation
       case 'navigation':
