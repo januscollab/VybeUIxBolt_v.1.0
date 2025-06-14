@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ExternalLink, FileCode, Figma, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { SafeHtml } from "@/lib/sanitize";
 
 // Import design system components
 import ColorPaletteComponent from "@/components/design-system/ColorPaletteComponent";
@@ -352,7 +353,7 @@ export default function ComponentPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="prose prose-sm max-w-none">
-                      <div dangerouslySetInnerHTML={{ __html: doc.content }} />
+                      <SafeHtml html={doc.content} />
                     </div>
                   </CardContent>
                 </Card>
