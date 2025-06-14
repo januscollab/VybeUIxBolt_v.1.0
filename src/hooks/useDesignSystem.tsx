@@ -39,9 +39,45 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
   }, [user]);
 
   const checkAdminRole = async () => {
-    if (!user) return;
-    // Placeholder for admin check - will implement when types are ready
-    setIsAdmin(false);
+    if (!user) {
+      setIsAdmin(false);
+      return;
+    }
+    
+    try {
+      // Check if user has admin role in user_roles table
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error checking admin role:', error);
+        setIsAdmin(false);
+        return;
+      }
+
+      // User is admin if they have the admin role OR if they are the master admin
+      const isMasterAdmin = user.email === 'alan@januscollab.com';
+      const hasAdminRole = !!data;
+      
+      setIsAdmin(isMasterAdmin || hasAdminRole);
+      
+      // If master admin doesn't have role in database yet, add it
+      if (isMasterAdmin && !hasAdminRole) {
+        await supabase
+          .from('user_roles')
+          .insert({ user_id: user.id, role: 'admin' })
+          .select()
+          .maybeSingle();
+      }
+      
+    } catch (error) {
+      console.error('Error in checkAdminRole:', error);
+      setIsAdmin(false);
+    }
   };
 
   const loadActiveDesignSystem = async () => {

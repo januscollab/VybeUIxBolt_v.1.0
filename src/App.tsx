@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "@/components/layout/MainLayout";
+import { DesignSystemProvider } from "@/hooks/useDesignSystem.tsx";
 import Index from "./pages/Index";
 import CategoryPage from "./pages/CategoryPage";
 import ComponentPage from "./pages/ComponentPage";
@@ -18,18 +19,19 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Index />
-              </MainLayout>
-            </ProtectedRoute>
-          } />
+      <DesignSystemProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Index />
+                </MainLayout>
+              </ProtectedRoute>
+            } />
           <Route path="/category/:slug" element={
             <ProtectedRoute>
               <MainLayout>
@@ -58,10 +60,11 @@ const App = () => (
               </MainLayout>
             </ProtectedRoute>
           } />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </DesignSystemProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
