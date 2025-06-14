@@ -56,9 +56,9 @@ export default {
 					DEFAULT: 'hsl(var(--earth))',
 					foreground: 'hsl(var(--earth-foreground))'
 				},
-				'zapier-orange': {
-					DEFAULT: 'hsl(var(--zapier-orange))',
-					foreground: 'hsl(var(--zapier-orange-foreground))'
+				orange: {
+					DEFAULT: 'hsl(var(--orange))',
+					foreground: 'hsl(var(--orange-foreground))'
 				},
 				cream: {
 					DEFAULT: 'hsl(var(--cream))',

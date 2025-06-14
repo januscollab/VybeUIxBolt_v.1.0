@@ -6,7 +6,7 @@ export default function ColorPaletteComponent() {
     {
       name: "Brand Colors",
       colors: [
-        { name: "Zapier Orange", value: "hsl(16, 100%, 50%)", css: "bg-zapier-orange", description: "Primary brand color from Zapier" },
+        { name: "Orange", value: "hsl(16, 100%, 50%)", css: "bg-orange", description: "Vibrant orange accent color" },
         { name: "Earth", value: "hsl(25, 12%, 14%)", css: "bg-earth", description: "Deep earth tone for contrast" },
         { name: "Cream", value: "hsl(43, 47%, 89%)", css: "bg-cream", description: "Warm neutral background" },
         { name: "Almost White", value: "hsl(210, 20%, 98%)", css: "bg-almost-white", description: "Subtle off-white tone" },

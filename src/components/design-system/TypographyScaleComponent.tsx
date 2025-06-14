@@ -3,15 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export default function TypographyScaleComponent() {
   const typographyScale = [
-    { name: "Display Large", class: "text-6xl", size: "3.75rem", lineHeight: "1", weight: "font-bold", font: "font-poppins", usage: "Hero headings like 'Automate anything with 5,000+ app integrations'", example: "Automate anything with 5,000+ app integrations" },
+    { name: "Display Large", class: "text-6xl", size: "3.75rem", lineHeight: "1", weight: "font-bold", font: "font-poppins", usage: "Hero headings for major impact", example: "Beautiful Design Systems Made Simple" },
     { name: "Display Medium", class: "text-5xl", size: "3rem", lineHeight: "1.1", weight: "font-bold", font: "font-poppins", usage: "Large section headers", example: "Connect your entire tech stack" },
-    { name: "Display Small", class: "text-4xl", size: "2.25rem", lineHeight: "1.2", weight: "font-bold", font: "font-poppins", usage: "Page titles and major headings", example: "Workflow automation made simple" },
-    { name: "Heading 1", class: "text-3xl", size: "1.875rem", lineHeight: "1.25", weight: "font-bold", font: "font-poppins", usage: "Main section headings", example: "Get started with Zapier" },
+    { name: "Display Small", class: "text-4xl", size: "2.25rem", lineHeight: "1.2", weight: "font-bold", font: "font-poppins", usage: "Page titles and major headings", example: "Streamlined component library" },
+    { name: "Heading 1", class: "text-3xl", size: "1.875rem", lineHeight: "1.25", weight: "font-bold", font: "font-poppins", usage: "Main section headings", example: "Get started with VybeUI" },
     { name: "Heading 2", class: "text-2xl", size: "1.5rem", lineHeight: "1.3", weight: "font-semibold", font: "font-poppins", usage: "Sub-section headings", example: "Popular workflow templates" },
     { name: "Heading 3", class: "text-xl", size: "1.25rem", lineHeight: "1.4", weight: "font-semibold", font: "font-poppins", usage: "Card titles and smaller headings", example: "Email to Slack notifications" },
     { name: "Heading 4", class: "text-lg", size: "1.125rem", lineHeight: "1.5", weight: "font-medium", font: "font-poppins", usage: "Minor headings and labels", example: "Trigger: When someone subscribes" },
-    { name: "Body Large", class: "text-lg", size: "1.125rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Introductory text and highlights", example: "Easy automation for busy people. Zapier moves info between your web apps automatically, so you can focus on your most important work." },
-    { name: "Body", class: "text-base", size: "1rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Default body text", example: "Connect 5,000+ apps and automate your workflows without any code. Trusted by millions of users worldwide to save time and increase productivity." },
+    { name: "Body Large", class: "text-lg", size: "1.125rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Introductory text and highlights", example: "Beautiful, accessible components for modern web applications. VybeUI provides a comprehensive design system to accelerate your development workflow." },
+    { name: "Body", class: "text-base", size: "1rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Default body text", example: "Build stunning interfaces with our complete component library. Trusted by developers worldwide to create consistent, accessible user experiences." },
     { name: "Body Small", class: "text-sm", size: "0.875rem", lineHeight: "1.5", weight: "font-normal", font: "font-inter", usage: "Secondary text, captions, metadata", example: "Last updated: 2 hours ago • Created by John Smith" },
     { name: "Caption", class: "text-xs", size: "0.75rem", lineHeight: "1.4", weight: "font-normal", font: "font-inter", usage: "Fine print, helper text, timestamps", example: "By connecting your account, you agree to our Terms of Service" },
   ];

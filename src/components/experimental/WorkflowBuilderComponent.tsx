@@ -76,7 +76,7 @@ export default function WorkflowBuilderComponent() {
 
   const getStepColor = (type: string) => {
     switch (type) {
-      case 'trigger': return 'bg-zapier-orange';
+      case 'trigger': return 'bg-orange';
       case 'action': return 'bg-primary';
       case 'filter': return 'bg-warning';
       case 'delay': return 'bg-info';

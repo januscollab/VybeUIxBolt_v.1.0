@@ -39,8 +39,18 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
   };
 
   const loadCustomFonts = async () => {
-    // Placeholder for custom fonts - will be available after types regenerate
-    setCustomFonts([]);
+    try {
+      const { data, error } = await supabase
+        .from('custom_fonts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setCustomFonts(data || []);
+    } catch (error) {
+      console.error('Error loading custom fonts:', error);
+      setCustomFonts([]);
+    }
   };
 
   const handleFontFamilyChange = (fontType: 'primary' | 'secondary', fontFamily: string) => {
@@ -77,14 +87,85 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (!files) return;
+    if (!files || files.length === 0) return;
 
-    // This would handle font file uploads
-    // For now, we'll show a placeholder message
-    toast({
-      title: "Font Upload",
-      description: "Font upload functionality would be implemented here.",
-    });
+    for (const file of Array.from(files)) {
+      // Validate file type
+      const validFormats = ['.woff', '.woff2', '.ttf', '.otf'];
+      const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+      
+      if (!validFormats.includes(fileExtension)) {
+        toast({
+          title: "Invalid File Type",
+          description: `${file.name} is not a supported font format. Use WOFF, WOFF2, TTF, or OTF.`,
+          variant: "destructive"
+        });
+        continue;
+      }
+
+      // Validate file size (max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        toast({
+          title: "File Too Large",
+          description: `${file.name} is larger than 2MB. Please use a smaller file.`,
+          variant: "destructive"
+        });
+        continue;
+      }
+
+      try {
+        // Create unique filename
+        const fileName = `${Date.now()}-${file.name}`;
+
+        // Upload to Supabase Storage
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('custom-fonts')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('custom-fonts')
+          .getPublicUrl(fileName);
+
+        // Extract font name without extension
+        const fontName = file.name.replace(/\.[^/.]+$/, "");
+        const fontFamily = fontName.replace(/[^a-zA-Z0-9\s]/g, '').trim();
+
+        // Save font metadata to database
+        const { error: dbError } = await supabase
+          .from('custom_fonts')
+          .insert({
+            font_name: fontName,
+            font_family: fontFamily,
+            file_url: publicUrl,
+            file_format: fileExtension.substring(1),
+            uploaded_by: (await supabase.auth.getUser()).data.user?.id
+          });
+
+        if (dbError) throw dbError;
+
+        toast({
+          title: "Font Uploaded",
+          description: `${fontName} has been uploaded successfully`,
+        });
+
+      } catch (error) {
+        console.error('Error uploading font:', error);
+        toast({
+          title: "Upload Failed",
+          description: `Failed to upload ${file.name}. Please try again.`,
+          variant: "destructive"
+        });
+      }
+    }
+
+    // Reload custom fonts
+    await loadCustomFonts();
+    
+    // Clear the input
+    event.target.value = '';
   };
 
   const fontWeights = [
@@ -127,13 +208,18 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
                     <SelectTrigger>
                       <SelectValue placeholder="Select primary font" />
                     </SelectTrigger>
-                    <SelectContent>
-                      {googleFonts.map(font => (
-                        <SelectItem key={font} value={font}>
-                          <span style={{ fontFamily: font }}>{font}</span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                     <SelectContent>
+                       {googleFonts.map(font => (
+                         <SelectItem key={font} value={font}>
+                           <span style={{ fontFamily: font }}>{font}</span>
+                         </SelectItem>
+                       ))}
+                       {customFonts.map(font => (
+                         <SelectItem key={font.id} value={font.font_family}>
+                           <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
+                         </SelectItem>
+                       ))}
+                     </SelectContent>
                   </Select>
                 </div>
 
@@ -204,13 +290,18 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
                     <SelectTrigger>
                       <SelectValue placeholder="Select secondary font" />
                     </SelectTrigger>
-                    <SelectContent>
-                      {googleFonts.map(font => (
-                        <SelectItem key={font} value={font}>
-                          <span style={{ fontFamily: font }}>{font}</span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                     <SelectContent>
+                       {googleFonts.map(font => (
+                         <SelectItem key={font} value={font}>
+                           <span style={{ fontFamily: font }}>{font}</span>
+                         </SelectItem>
+                       ))}
+                       {customFonts.map(font => (
+                         <SelectItem key={font.id} value={font.font_family}>
+                           <span style={{ fontFamily: font.font_family }}>{font.font_name} (Custom)</span>
+                         </SelectItem>
+                       ))}
+                     </SelectContent>
                   </Select>
                 </div>
 
@@ -298,14 +389,48 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
                 <div className="space-y-2">
                   <Label>Custom Fonts</Label>
                   <div className="grid gap-2">
-                    {customFonts.map(font => (
-                      <div key={font.id} className="flex items-center justify-between p-2 border rounded">
-                        <span>{font.font_name}</span>
-                        <Button variant="ghost" size="sm">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
+                     {customFonts.map(font => (
+                       <div key={font.id} className="flex items-center justify-between p-2 border rounded">
+                         <span>{font.font_name}</span>
+                         <Button 
+                           variant="ghost" 
+                           size="sm"
+                           onClick={async () => {
+                             try {
+                               // Delete from storage
+                               const fileName = font.file_url.split('/').pop();
+                               if (fileName) {
+                                 await supabase.storage
+                                   .from('custom-fonts')
+                                   .remove([fileName]);
+                               }
+                               
+                               // Delete from database
+                               await supabase
+                                 .from('custom_fonts')
+                                 .delete()
+                                 .eq('id', font.id);
+                               
+                               await loadCustomFonts();
+                               
+                               toast({
+                                 title: "Font Deleted",
+                                 description: `${font.font_name} has been deleted successfully`,
+                               });
+                             } catch (error) {
+                               console.error('Error deleting font:', error);
+                               toast({
+                                 title: "Delete Failed",
+                                 description: "Failed to delete font. Please try again.",
+                                 variant: "destructive"
+                               });
+                             }
+                           }}
+                         >
+                           <Trash2 className="h-4 w-4" />
+                         </Button>
+                       </div>
+                     ))}
                   </div>
                 </div>
               )}
