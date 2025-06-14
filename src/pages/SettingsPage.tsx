@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings, Figma, Download, Palette, Database, ExternalLink, BookOpen, Shield, Type, Building2 } from "lucide-react";
+import { Settings, Figma, Download, Palette, ExternalLink, BookOpen, Shield, Type, Building2, Upload } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminRole } from "@/hooks/useAdminRole";
 import { ColorPaletteControls, TypographyControls, BrandingControls } from "@/components/admin/AdminControls";
@@ -49,9 +49,8 @@ const SettingsPage = () => {
             </>
           )}
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
-          <TabsTrigger value="export">Export/Import</TabsTrigger>
+          <TabsTrigger value="export">Import/Export</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
-          <TabsTrigger value="database">Database</TabsTrigger>
         </TabsList>
 
         {isAdmin && (
@@ -266,39 +265,24 @@ const SettingsPage = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Download className="h-5 w-5" />
-                Export & Import Tools
+                Import & Export
               </CardTitle>
               <CardDescription>
-                Advanced tools for exporting your design system in various formats and importing external data.
+                Simple tools for importing and exporting your design system data.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <Button asChild className="w-full">
-                <Link to="/analytics">
-                  <Download className="h-4 w-4 mr-2" />
-                  Access Export/Import Tools
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Supported Formats</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { name: "JSON", desc: "Complete data export" },
-                  { name: "CSS", desc: "CSS custom properties" },
-                  { name: "Figma Tokens", desc: "Design tokens plugin" },
-                  { name: "Storybook", desc: "Component stories" }
-                ].map((format) => (
-                  <div key={format.name} className="text-center p-4 border rounded-lg">
-                    <div className="font-semibold">{format.name}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{format.desc}</div>
-                  </div>
-                ))}
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button className="h-20 flex-col">
+                  <Download className="h-6 w-6 mb-2" />
+                  Export Design System
+                  <span className="text-xs text-muted-foreground">Download as JSON</span>
+                </Button>
+                <Button variant="outline" className="h-20 flex-col">
+                  <Upload className="h-6 w-6 mb-2" />
+                  Import Design System
+                  <span className="text-xs text-muted-foreground">Upload JSON file</span>
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -333,47 +317,6 @@ const SettingsPage = () => {
                   <div>--accent: 16 100% 50%</div>
                   <div>--background: 0 0% 100%</div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="database" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Database className="h-5 w-5" />
-                Database Configuration
-              </CardTitle>
-              <CardDescription>
-                Manage your Supabase database and view system information.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold">4</div>
-                  <div className="text-sm text-muted-foreground">Tables</div>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold">0</div>
-                  <div className="text-sm text-muted-foreground">RLS Policies</div>
-                </div>
-                <div className="text-center p-4 border rounded-lg">
-                  <div className="text-2xl font-bold">1</div>
-                  <div className="text-sm text-muted-foreground">Functions</div>
-                </div>
-              </div>
-              
-              <div className="bg-muted p-4 rounded-lg">
-                <h5 className="font-semibold mb-2">Database Tables</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• <code>categories</code> - Component categories</li>
-                  <li>• <code>components</code> - Component definitions</li>
-                  <li>• <code>component_variants</code> - Component variations</li>
-                  <li>• <code>documentation</code> - Component documentation</li>
-                  <li>• <code>design_tokens</code> - Design token definitions</li>
-                </ul>
               </div>
             </CardContent>
           </Card>
