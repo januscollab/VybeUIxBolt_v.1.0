@@ -41,6 +41,12 @@ import SidebarShowcase from "@/components/showcase/SidebarShowcase";
 import CommandMenuShowcase from "@/components/showcase/CommandMenuShowcase";
 import StepsStepperShowcase from "@/components/showcase/StepsStepperShowcase";
 import AICommandPaletteShowcase from "@/components/showcase/AICommandPaletteShowcase";
+import BreadcrumbShowcase from "@/components/showcase/BreadcrumbShowcase";
+import AccordionShowcase from "@/components/showcase/AccordionShowcase";
+import TooltipShowcase from "@/components/showcase/TooltipShowcase";
+import PopoverShowcase from "@/components/showcase/PopoverShowcase";
+import ListShowcase from "@/components/showcase/ListShowcase";
+import DividerShowcase from "@/components/showcase/DividerShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -121,6 +127,19 @@ export default function ComponentPage() {
         return <StepsStepperShowcase />;
       case 'ai-command-palette':
         return <AICommandPaletteShowcase />;
+      case 'breadcrumb':
+        return <BreadcrumbShowcase />;
+      case 'accordion':
+        return <AccordionShowcase />;
+      case 'tooltip':
+        return <TooltipShowcase />;
+      case 'popover':
+        return <PopoverShowcase />;
+      case 'list':
+        return <ListShowcase />;
+      case 'divider':
+      case 'separator':
+        return <DividerShowcase />;
       
       // Navigation
       case 'navigation':

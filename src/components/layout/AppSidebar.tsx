@@ -52,9 +52,32 @@ export function AppSidebar() {
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
 
-  const filteredCategories = categories?.filter(category =>
-    category.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Enhanced search: filter both categories and components
+  const searchQueryLower = searchQuery.toLowerCase();
+  
+  const filteredCategories = categories?.filter(category => {
+    // Search in category name
+    if (category.name.toLowerCase().includes(searchQueryLower)) return true;
+    
+    // Search in category components
+    const categoryComponents = getCategoryComponents(category.id);
+    return categoryComponents.some(component => 
+      component.name.toLowerCase().includes(searchQueryLower) ||
+      component.description?.toLowerCase().includes(searchQueryLower) ||
+      component.slug.toLowerCase().includes(searchQueryLower)
+    );
+  });
+
+  const getFilteredComponents = (categoryId: string) => {
+    const categoryComponents = getCategoryComponents(categoryId);
+    if (!searchQuery) return categoryComponents;
+    
+    return categoryComponents.filter(component =>
+      component.name.toLowerCase().includes(searchQueryLower) ||
+      component.description?.toLowerCase().includes(searchQueryLower) ||
+      component.slug.toLowerCase().includes(searchQueryLower)
+    );
+  };
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev => 
@@ -131,7 +154,7 @@ export function AppSidebar() {
                               <span>{category.name}</span>
                             </Link>
                           </SidebarMenuButton>
-                          {categoryComponents.length > 0 && (
+                          {getFilteredComponents(category.id).length > 0 && (
                             <CollapsibleTrigger asChild>
                               <Button
                                 variant="ghost"
@@ -149,7 +172,7 @@ export function AppSidebar() {
                         </div>
                         <CollapsibleContent>
                           <SidebarMenuSub>
-                            {categoryComponents.map((component) => {
+                            {getFilteredComponents(category.id).map((component) => {
                               const isComponentActive = location.pathname === `/component/${component.slug}`;
                               return (
                                 <SidebarMenuSubItem key={component.id}>

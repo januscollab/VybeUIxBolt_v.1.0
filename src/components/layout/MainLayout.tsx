@@ -1,11 +1,47 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
+import { 
+  Breadcrumb, 
+  BreadcrumbItem, 
+  BreadcrumbLink, 
+  BreadcrumbList, 
+  BreadcrumbPage, 
+  BreadcrumbSeparator 
+} from "@/components/ui/breadcrumb";
+import { useLocation, Link } from "react-router-dom";
+import { useCategories, useComponent } from "@/hooks/useDesignSystem";
+import { useMemo } from "react";
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
+  const location = useLocation();
+  const { data: categories } = useCategories();
+  
+  // Parse current route for breadcrumbs
+  const breadcrumbs = useMemo(() => {
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const crumbs = [{ name: 'Home', href: '/' }];
+    
+    if (pathSegments.length > 0) {
+      const [type, slug] = pathSegments;
+      
+      if (type === 'category' && slug) {
+        const category = categories?.find(cat => cat.slug === slug);
+        if (category) {
+          crumbs.push({ name: category.name, href: `/category/${slug}` });
+        }
+      } else if (type === 'component' && slug) {
+        // We'll need to get component data to show proper breadcrumb
+        crumbs.push({ name: 'Component', href: `/component/${slug}` });
+      }
+    }
+    
+    return crumbs;
+  }, [location.pathname, categories]);
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
@@ -14,8 +50,28 @@ export function MainLayout({ children }: MainLayoutProps) {
           <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
             <div className="flex h-14 items-center px-4">
               <SidebarTrigger className="mr-4" />
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4 flex-1">
                 <h1 className="text-lg font-semibold">Design Language System</h1>
+                {breadcrumbs.length > 1 && (
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      {breadcrumbs.map((crumb, index) => (
+                        <BreadcrumbItem key={crumb.href}>
+                          {index === breadcrumbs.length - 1 ? (
+                            <BreadcrumbPage>{crumb.name}</BreadcrumbPage>
+                          ) : (
+                            <>
+                              <BreadcrumbLink asChild>
+                                <Link to={crumb.href}>{crumb.name}</Link>
+                              </BreadcrumbLink>
+                              <BreadcrumbSeparator />
+                            </>
+                          )}
+                        </BreadcrumbItem>
+                      ))}
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                )}
               </div>
             </div>
           </header>
