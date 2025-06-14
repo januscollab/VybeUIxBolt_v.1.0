@@ -54,6 +54,7 @@ import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase
 import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsageGuidelinesShowcase";
 import FigmaIntegrationShowcase from "@/components/showcase/FigmaIntegrationShowcase";
 import ComponentAnalyticsShowcase from "@/components/showcase/ComponentAnalyticsShowcase";
+import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -161,6 +162,8 @@ export default function ComponentPage() {
         return <FigmaIntegrationShowcase />;
       case 'component-analytics':
         return <ComponentAnalyticsShowcase />;
+      case 'code-block':
+        return <CodeBlockShowcase />;
       
       // Navigation
       case 'navigation':

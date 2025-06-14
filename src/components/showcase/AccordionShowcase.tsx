@@ -2,17 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { CodeModal } from "@/components/ui/code-modal";
 import { Copy, Figma, FileCode, Star, Users, Settings, HelpCircle } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 
 export default function AccordionShowcase() {
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
 
   const codeExamples = {
     basic: `<Accordion type="single" collapsible className="w-full">
@@ -129,18 +122,13 @@ export default function AccordionShowcase() {
 
           <div className="flex items-center justify-between">
             <h4 className="font-medium">Code Example</h4>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(codeExamples.basic)}
-            >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
-            </Button>
+            <CodeModal code={codeExamples.basic} title="Basic Accordion Code">
+              <Button variant="outline" size="sm">
+                <Copy className="h-4 w-4 mr-1" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
-          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.basic}</code>
-          </pre>
         </CardContent>
       </Card>
 
@@ -182,18 +170,13 @@ export default function AccordionShowcase() {
 
           <div className="flex items-center justify-between">
             <h4 className="font-medium">Multiple Accordion Code</h4>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(codeExamples.multiple)}
-            >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
-            </Button>
+            <CodeModal code={codeExamples.multiple} title="Multiple Accordion Code">
+              <Button variant="outline" size="sm">
+                <Copy className="h-4 w-4 mr-1" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
-          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.multiple}</code>
-          </pre>
         </CardContent>
       </Card>
 
@@ -262,18 +245,13 @@ export default function AccordionShowcase() {
 
           <div className="flex items-center justify-between">
             <h4 className="font-medium">Accordion with Icons Code</h4>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(codeExamples.withIcons)}
-            >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
-            </Button>
+            <CodeModal code={codeExamples.withIcons} title="Accordion with Icons Code">
+              <Button variant="outline" size="sm">
+                <Copy className="h-4 w-4 mr-1" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
-          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.withIcons}</code>
-          </pre>
         </CardContent>
       </Card>
 
