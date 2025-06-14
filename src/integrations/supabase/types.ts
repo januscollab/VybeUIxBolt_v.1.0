@@ -136,6 +136,72 @@ export type Database = {
           },
         ]
       }
+      custom_fonts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          font_family: string
+          font_files: Json
+          font_name: string
+          google_font_url: string | null
+          id: string
+          is_google_font: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          font_family: string
+          font_files?: Json
+          font_name: string
+          google_font_url?: string | null
+          id?: string
+          is_google_font?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          font_family?: string
+          font_files?: Json
+          font_name?: string
+          google_font_url?: string | null
+          id?: string
+          is_google_font?: boolean | null
+        }
+        Relationships: []
+      }
+      design_system_versions: {
+        Row: {
+          color_palette: Json
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean | null
+          typography: Json
+          updated_at: string
+          version_name: string
+        }
+        Insert: {
+          color_palette?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          typography?: Json
+          updated_at?: string
+          version_name: string
+        }
+        Update: {
+          color_palette?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          typography?: Json
+          updated_at?: string
+          version_name?: string
+        }
+        Relationships: []
+      }
       design_tokens: {
         Row: {
           category_id: string | null
@@ -251,14 +317,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "user"
       component_status: "draft" | "review" | "stable" | "deprecated"
       theme_mode: "light" | "dark" | "auto"
       token_type:
@@ -383,6 +477,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "user"],
       component_status: ["draft", "review", "stable", "deprecated"],
       theme_mode: ["light", "dark", "auto"],
       token_type: [

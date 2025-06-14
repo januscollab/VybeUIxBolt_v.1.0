@@ -39,12 +39,8 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
   };
 
   const loadCustomFonts = async () => {
-    const { data } = await supabase
-      .from('custom_fonts')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    setCustomFonts(data || []);
+    // Placeholder for custom fonts - will be available after types regenerate
+    setCustomFonts([]);
   };
 
   const handleFontFamilyChange = (fontType: 'primary' | 'secondary', fontFamily: string) => {
