@@ -53,7 +53,7 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
         .eq('role', 'admin')
         .maybeSingle();
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error('Error checking admin role:', error);
         setIsAdmin(false);
         return;
@@ -81,50 +81,184 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
   };
 
   const loadActiveDesignSystem = async () => {
-    // Placeholder - will implement when database types are ready
-    setColorPalette({
-      primary: "#007bff",
-      secondary: "#6c757d",
-      success: "#28a745",
-      warning: "#ffc107",
-      error: "#dc3545",
-      orange: "#ff6b35"
-    });
-    setTypography({
-      primary: { family: "Inter", weights: ["400", "500", "600", "700"] },
-      secondary: { family: "JetBrains Mono", weights: ["400", "500"] }
-    });
-    setBrandName('VybeUI');
-    setLogoUrl('');
+    try {
+      // Load the active design system version from database
+      const { data, error } = await supabase
+        .from('design_system_versions')
+        .select('*')
+        .eq('is_active', true)
+        .single();
+        
+      if (error) {
+        console.error('Error loading design system:', error);
+        // Fallback to default values
+        setColorPalette({
+          primary: "#3b82f6",
+          secondary: "#6b7280",
+          success: "#10b981",
+          warning: "#f59e0b",
+          error: "#ef4444",
+          orange: "#f97316"
+        });
+        setTypography({
+          primary: { family: "Inter", weights: ["400", "500", "600", "700"] },
+          secondary: { family: "JetBrains Mono", weights: ["400", "500"] }
+        });
+        setBrandName('VybeUI');
+        setLogoUrl('');
+        return;
+      }
+      
+      if (data) {
+        setActiveVersion(data);
+        setColorPalette(data.color_palette || {});
+        setTypography(data.typography || {});
+        setBrandName(data.brand_name || 'VybeUI');
+        setLogoUrl(data.logo_url || '');
+      }
+    } catch (error) {
+      console.error('Error in loadActiveDesignSystem:', error);
+    }
   };
 
   const updateBranding = async (branding: { brandName: string; logoUrl: string }) => {
-    setBrandName(branding.brandName);
-    setLogoUrl(branding.logoUrl);
+    if (!isAdmin) throw new Error('Admin access required');
+    
+    try {
+      // Update the active design system version
+      const { error } = await supabase
+        .from('design_system_versions')
+        .update({
+          brand_name: branding.brandName,
+          logo_url: branding.logoUrl,
+          updated_at: new Date().toISOString()
+        })
+        .eq('is_active', true);
+        
+      if (error) throw error;
+      
+      setBrandName(branding.brandName);
+      setLogoUrl(branding.logoUrl);
+    } catch (error) {
+      console.error('Error updating branding:', error);
+      throw error;
+    }
   };
 
   const loadVersions = async () => {
-    setVersions([]);
+    if (!isAdmin) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('design_system_versions')
+        .select('*')
+        .order('created_at', { ascending: false });
+        
+      if (error) throw error;
+      setVersions(data || []);
+    } catch (error) {
+      console.error('Error loading versions:', error);
+    }
   };
 
   const updateColorPalette = async (colors: Record<string, string>) => {
-    setColorPalette(colors);
+    if (!isAdmin) throw new Error('Admin access required');
+    
+    try {
+      const { error } = await supabase
+        .from('design_system_versions')
+        .update({
+          color_palette: colors,
+          updated_at: new Date().toISOString()
+        })
+        .eq('is_active', true);
+        
+      if (error) throw error;
+      setColorPalette(colors);
+    } catch (error) {
+      console.error('Error updating color palette:', error);
+      throw error;
+    }
   };
 
   const updateTypography = async (typo: Record<string, any>) => {
-    setTypography(typo);
+    if (!isAdmin) throw new Error('Admin access required');
+    
+    try {
+      const { error } = await supabase
+        .from('design_system_versions')
+        .update({
+          typography: typo,
+          updated_at: new Date().toISOString()
+        })
+        .eq('is_active', true);
+        
+      if (error) throw error;
+      setTypography(typo);
+    } catch (error) {
+      console.error('Error updating typography:', error);
+      throw error;
+    }
   };
 
   const saveVersion = async (name: string) => {
-    // Placeholder
+    if (!isAdmin) throw new Error('Admin access required');
+    
+    try {
+      // First, set all versions to inactive
+      await supabase
+        .from('design_system_versions')
+        .update({ is_active: false })
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+        
+      // Create new version with current settings
+      const { error } = await supabase
+        .from('design_system_versions')
+        .insert({
+          version_name: name,
+          brand_name: brandName,
+          logo_url: logoUrl,
+          color_palette: colorPalette,
+          typography: typography,
+          is_active: true,
+          created_by: user?.id
+        });
+        
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error saving version:', error);
+      throw error;
+    }
   };
 
   const loadVersion = async (versionId: string) => {
-    // Placeholder
+    if (!isAdmin) throw new Error('Admin access required');
+    
+    try {
+      // Set all versions to inactive
+      await supabase
+        .from('design_system_versions')
+        .update({ is_active: false })
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+        
+      // Set selected version to active
+      const { error } = await supabase
+        .from('design_system_versions')
+        .update({ is_active: true })
+        .eq('id', versionId);
+        
+      if (error) throw error;
+      
+      // Reload the design system
+      await loadActiveDesignSystem();
+    } catch (error) {
+      console.error('Error loading version:', error);
+      throw error;
+    }
   };
 
   const refreshVersions = async () => {
-    // Placeholder
+    await loadVersions();
   };
 
   return (
