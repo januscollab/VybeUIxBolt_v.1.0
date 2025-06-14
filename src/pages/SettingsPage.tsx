@@ -2,10 +2,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings, Figma, Download, Palette, Database, ExternalLink, BookOpen } from "lucide-react";
+import { Settings, Figma, Download, Palette, Database, ExternalLink, BookOpen, Shield, Type, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAdminRole } from "@/hooks/useAdminRole";
+import { ColorPaletteControls, TypographyControls, BrandingControls } from "@/components/admin/AdminControls";
 
 const SettingsPage = () => {
+  const { isAdmin, loading } = useAdminRole();
+
   return (
     <div className="space-y-6">
       <div>
@@ -18,13 +22,89 @@ const SettingsPage = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="integrations" className="space-y-6">
+      <Tabs defaultValue={isAdmin ? "design-system" : "integrations"} className="space-y-6">
         <TabsList>
+          {isAdmin && (
+            <>
+              <TabsTrigger value="design-system">
+                <Shield className="h-4 w-4 mr-2" />
+                Design System
+              </TabsTrigger>
+              <TabsTrigger value="colors">
+                <Palette className="h-4 w-4 mr-2" />
+                Colors
+              </TabsTrigger>
+              <TabsTrigger value="typography">
+                <Type className="h-4 w-4 mr-2" />
+                Typography
+              </TabsTrigger>
+              <TabsTrigger value="branding">
+                <Building2 className="h-4 w-4 mr-2" />
+                Branding
+              </TabsTrigger>
+            </>
+          )}
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
           <TabsTrigger value="export">Export/Import</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
           <TabsTrigger value="database">Database</TabsTrigger>
         </TabsList>
+
+        {isAdmin && (
+          <>
+            <TabsContent value="design-system" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5" />
+                    Design System Administration
+                    <Badge variant="destructive">Admin Only</Badge>
+                  </CardTitle>
+                  <CardDescription>
+                    Manage your design system versions, rollback changes, and configure advanced settings.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold">1</div>
+                      <div className="text-sm text-muted-foreground">Active Version</div>
+                    </div>
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold">3</div>
+                      <div className="text-sm text-muted-foreground">Saved Versions</div>
+                    </div>
+                    <div className="text-center p-4 border rounded-lg">
+                      <div className="text-2xl font-bold">127</div>
+                      <div className="text-sm text-muted-foreground">Components</div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h5 className="font-semibold mb-2">Quick Actions</h5>
+                    <div className="flex gap-2 flex-wrap">
+                      <Button size="sm">Create Version</Button>
+                      <Button size="sm" variant="outline">Export System</Button>
+                      <Button size="sm" variant="outline">Import Backup</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="colors" className="space-y-4">
+              <ColorPaletteControls />
+            </TabsContent>
+
+            <TabsContent value="typography" className="space-y-4">
+              <TypographyControls />
+            </TabsContent>
+
+            <TabsContent value="branding" className="space-y-4">
+              <BrandingControls />
+            </TabsContent>
+          </>
+        )}
 
         <TabsContent value="integrations" className="space-y-4">
           <Card>
