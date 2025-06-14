@@ -30,6 +30,12 @@ import FeedbackShowcase from "@/components/showcase/FeedbackShowcase";
 import FormFieldShowcase from "@/components/showcase/FormFieldShowcase";
 import BadgeShowcase from "@/components/showcase/BadgeShowcase";
 import SelectDropdownShowcase from "@/components/showcase/SelectDropdownShowcase";
+import CheckboxShowcase from "@/components/showcase/CheckboxShowcase";
+import SwitchToggleShowcase from "@/components/showcase/SwitchToggleShowcase";
+import TextareaShowcase from "@/components/showcase/TextareaShowcase";
+import AvatarShowcase from "@/components/showcase/AvatarShowcase";
+import ProgressBarShowcase from "@/components/showcase/ProgressBarShowcase";
+import SliderShowcase from "@/components/showcase/SliderShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -84,6 +90,20 @@ export default function ComponentPage() {
         return <FormShowcase />;
       case 'form-field':
         return <FormFieldShowcase />;
+      case 'checkbox':
+        return <CheckboxShowcase />;
+      case 'switch-toggle':
+      case 'switch':
+        return <SwitchToggleShowcase />;
+      case 'textarea':
+        return <TextareaShowcase />;
+      case 'avatar':
+        return <AvatarShowcase />;
+      case 'progress-bar':
+      case 'progress':
+        return <ProgressBarShowcase />;
+      case 'slider':
+        return <SliderShowcase />;
       
       // Navigation
       case 'navigation':
