@@ -24,7 +24,7 @@ export function FigmaConfig() {
     try {
       const { data, error } = await supabase
         .from('design_system_versions')
-        .select('figma_client_id, figma_client_secret')
+        .select('*')
         .eq('is_active', true)
         .single();
 
@@ -33,10 +33,12 @@ export function FigmaConfig() {
         return;
       }
 
-      if (data) {
-        setClientId(data.figma_client_id || '');
-        setClientSecret(data.figma_client_secret || '');
-        setHasCredentials(!!(data.figma_client_id && data.figma_client_secret));
+      if (data && typeof data === 'object') {
+        const figmaClientId = (data as any).figma_client_id || '';
+        const figmaClientSecret = (data as any).figma_client_secret || '';
+        setClientId(figmaClientId);
+        setClientSecret(figmaClientSecret);
+        setHasCredentials(!!(figmaClientId && figmaClientSecret));
       }
     } catch (error) {
       console.error('Error loading Figma config:', error);

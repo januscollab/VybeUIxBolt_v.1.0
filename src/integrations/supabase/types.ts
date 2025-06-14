@@ -175,6 +175,8 @@ export type Database = {
           color_palette: Json
           created_at: string
           created_by: string | null
+          figma_client_id: string | null
+          figma_client_secret: string | null
           id: string
           is_active: boolean | null
           logo_url: string | null
@@ -187,6 +189,8 @@ export type Database = {
           color_palette?: Json
           created_at?: string
           created_by?: string | null
+          figma_client_id?: string | null
+          figma_client_secret?: string | null
           id?: string
           is_active?: boolean | null
           logo_url?: string | null
@@ -199,6 +203,8 @@ export type Database = {
           color_palette?: Json
           created_at?: string
           created_by?: string | null
+          figma_client_id?: string | null
+          figma_client_secret?: string | null
           id?: string
           is_active?: boolean | null
           logo_url?: string | null
