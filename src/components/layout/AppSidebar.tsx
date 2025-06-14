@@ -12,7 +12,8 @@ import {
   Github,
   ExternalLink,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Settings
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -200,7 +201,17 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border p-4">
-        <div className="flex gap-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={location.pathname === "/settings"}>
+              <Link to="/settings">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <div className="flex gap-2 mt-4">
           <Button variant="outline" size="sm" className="flex-1" asChild>
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4" />
