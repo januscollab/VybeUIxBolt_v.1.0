@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings, Figma, Download, Palette, Database, ExternalLink } from "lucide-react";
+import { Settings, Figma, Download, Palette, Database, ExternalLink, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SettingsPage = () => {
@@ -54,6 +54,37 @@ const SettingsPage = () => {
                 <Figma className="h-4 w-4 mr-2" />
                 Connect Figma Account
                 <Badge variant="secondary" className="ml-2">Sprint 6</Badge>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5" />
+                Storybook Integration
+                <Badge variant="outline">Not Configured</Badge>
+              </CardTitle>
+              <CardDescription>
+                Generate and maintain Storybook stories for all your components automatically. 
+                Perfect for component documentation and testing in isolation.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-muted p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Features (Available)</h4>
+                <ul className="text-sm space-y-1 text-muted-foreground">
+                  <li>• Automatic story generation for all components</li>
+                  <li>• Component props documentation</li>
+                  <li>• Interactive controls and knobs</li>
+                  <li>• Design token integration</li>
+                  <li>• Export stories for existing Storybook setups</li>
+                </ul>
+              </div>
+              <Button disabled className="w-full">
+                <BookOpen className="h-4 w-4 mr-2" />
+                Configure Storybook Integration
+                <Badge variant="secondary" className="ml-2">Coming Soon</Badge>
               </Button>
             </CardContent>
           </Card>
