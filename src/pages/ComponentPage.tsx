@@ -27,6 +27,9 @@ import FormShowcase from "@/components/showcase/FormShowcase";
 import NavigationShowcase from "@/components/showcase/NavigationShowcase";
 import TableShowcase from "@/components/showcase/TableShowcase";
 import FeedbackShowcase from "@/components/showcase/FeedbackShowcase";
+import FormFieldShowcase from "@/components/showcase/FormFieldShowcase";
+import BadgeShowcase from "@/components/showcase/BadgeShowcase";
+import SelectDropdownShowcase from "@/components/showcase/SelectDropdownShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -43,6 +46,7 @@ export default function ComponentPage() {
   // Render specific design system components
   const renderComponentContent = () => {
     switch (component?.slug) {
+      // Foundations
       case 'color-palette':
         return <ColorPaletteComponent />;
       case 'typography-scale':
@@ -52,34 +56,57 @@ export default function ComponentPage() {
       case 'elevation-shadows':
         return <ElevationShadowsComponent />;
       case 'icon-system':
+      case 'icons':
         return <IconSystemComponent />;
       case 'interaction-states':
         return <InteractionStatesComponent />;
+      
+      // Experimental
       case 'workflow-builder':
         return <WorkflowBuilderComponent />;
       case 'collaboration-panel':
         return <CollaborationPanelComponent />;
+      
       // Core UI Components
       case 'button':
         return <ButtonShowcase />;
       case 'input':
+      case 'input-field':
         return <InputShowcase />;
+      case 'select-dropdown':
+        return <SelectDropdownShowcase />;
+      case 'badge':
+        return <BadgeShowcase />;
       case 'card':
         return <CardShowcase />;
       case 'form':
+      case 'form-wrapper':
         return <FormShowcase />;
+      case 'form-field':
+        return <FormFieldShowcase />;
+      
+      // Navigation
       case 'navigation':
+      case 'navigation-menu':
       case 'breadcrumb':
       case 'pagination':
       case 'tabs':
         return <NavigationShowcase />;
+      
+      // Content & Layout
       case 'table':
+      case 'data-table':
         return <TableShowcase />;
+      
+      // Feedback & Messaging
       case 'alert':
       case 'toast':
+      case 'toast-notification':
       case 'progress':
+      case 'progress-bar':
       case 'skeleton':
         return <FeedbackShowcase />;
+      
       default:
         return null;
     }
