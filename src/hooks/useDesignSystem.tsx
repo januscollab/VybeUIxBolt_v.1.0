@@ -111,8 +111,8 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
       
       if (data) {
         setActiveVersion(data);
-        setColorPalette(data.color_palette || {});
-        setTypography(data.typography || {});
+        setColorPalette((data.color_palette as Record<string, string>) || {});
+        setTypography((data.typography as Record<string, any>) || {});
         setBrandName(data.brand_name || 'VybeUI');
         setLogoUrl(data.logo_url || '');
       }
