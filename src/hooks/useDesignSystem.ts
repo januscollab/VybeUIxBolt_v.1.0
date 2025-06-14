@@ -88,3 +88,6 @@ export const useComponent = (slug: string) => {
     },
   });
 };
+
+// Re-export the main useDesignSystem hook from the tsx file
+export { useDesignSystem } from './useDesignSystem.tsx';
