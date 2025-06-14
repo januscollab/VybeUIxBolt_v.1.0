@@ -1,25 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
-import { Copy, Figma, FileCode, Search, Calculator, Calendar, Settings, User, File, Folder, Plus, Command as CommandIcon } from "lucide-react";
+import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
+import { Copy, Figma, FileCode, Search, Calculator, Calendar, CreditCard, Settings, User, Mail, MessageSquare, Plus, FileText, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 
 export default function CommandMenuShowcase() {
   const [open, setOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setDialogOpen((open) => !open);
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  const [open2, setOpen2] = useState(false);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -29,16 +18,24 @@ export default function CommandMenuShowcase() {
     });
   };
 
-  const commands = [
-    { title: "Calendar", icon: Calendar, shortcut: "⌘C" },
-    { title: "Search Emoji", icon: Search, shortcut: "⌘E" },
-    { title: "Calculator", icon: Calculator, shortcut: "⌘+" },
-    { title: "Settings", icon: Settings, shortcut: "⌘," },
-    { title: "Profile", icon: User, shortcut: "⌘P" }
-  ];
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   const codeExamples = {
-    basic: `<Command>
+    basic: `import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+
+const [open, setOpen] = useState(false);
+
+<CommandDialog open={open} onOpenChange={setOpen}>
   <CommandInput placeholder="Type a command or search..." />
   <CommandList>
     <CommandEmpty>No results found.</CommandEmpty>
@@ -48,47 +45,35 @@ export default function CommandMenuShowcase() {
         <span>Calendar</span>
       </CommandItem>
       <CommandItem>
-        <Search className="mr-2 h-4 w-4" />
-        <span>Search Emoji</span>
+        <Mail className="mr-2 h-4 w-4" />
+        <span>Mail</span>
       </CommandItem>
     </CommandGroup>
   </CommandList>
-</Command>`,
-    dialog: `const [open, setOpen] = useState(false);
-
-useEffect(() => {
+</CommandDialog>`,
+    keyboard: `useEffect(() => {
   const down = (e: KeyboardEvent) => {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       setOpen((open) => !open);
     }
   };
+
   document.addEventListener("keydown", down);
   return () => document.removeEventListener("keydown", down);
-}, []);
-
-<CommandDialog open={open} onOpenChange={setOpen}>
+}, []);`,
+    inline: `<Command className="rounded-lg border shadow-md">
   <CommandInput placeholder="Type a command or search..." />
   <CommandList>
     <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup heading="Actions">
-      <CommandItem>Calendar</CommandItem>
-      <CommandItem>Search</CommandItem>
+    <CommandGroup heading="Suggestions">
+      <CommandItem>
+        <Calendar className="mr-2 h-4 w-4" />
+        <span>Calendar</span>
+      </CommandItem>
     </CommandGroup>
   </CommandList>
-</CommandDialog>`,
-    withShortcuts: `<CommandGroup heading="Actions">
-  <CommandItem>
-    <Calendar className="mr-2 h-4 w-4" />
-    <span>Calendar</span>
-    <CommandShortcut>⌘C</CommandShortcut>
-  </CommandItem>
-  <CommandItem>
-    <Search className="mr-2 h-4 w-4" />
-    <span>Search</span>
-    <CommandShortcut>⌘E</CommandShortcut>
-  </CommandItem>
-</CommandGroup>`
+</Command>`
   };
 
   return (
@@ -99,7 +84,7 @@ useEffect(() => {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold">Command Menu</h1>
             <p className="text-lg text-muted-foreground">
-              Keyboard-driven command palette for quick navigation and actions with fuzzy search.
+              Fast, composable command menu for React applications with keyboard navigation.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -119,48 +104,73 @@ useEffect(() => {
         </div>
         <div className="flex items-center gap-2">
           <Badge variant="default">Stable</Badge>
-          <Badge variant="outline">Navigation</Badge>
-          <Badge variant="outline">Keyboard</Badge>
+          <Badge variant="outline">Command</Badge>
+          <Badge variant="outline">Search</Badge>
         </div>
       </div>
 
-      {/* Basic Command Menu */}
+      {/* Command Dialog */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Command Menu</CardTitle>
+          <CardTitle>Command Dialog</CardTitle>
           <CardDescription>
-            Standard command palette with search and grouped command items.
+            Modal command menu triggered by keyboard shortcut (⌘K).
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="p-6 border rounded-lg bg-muted/50">
-            <Command className="rounded-lg border shadow-md max-w-md mx-auto">
-              <CommandInput placeholder="Type a command or search..." />
-              <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading="Suggestions">
-                  {commands.slice(0, 3).map((command) => (
-                    <CommandItem key={command.title}>
-                      <command.icon className="mr-2 h-4 w-4" />
-                      <span>{command.title}</span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-                <CommandSeparator />
-                <CommandGroup heading="Settings">
-                  {commands.slice(3).map((command) => (
-                    <CommandItem key={command.title}>
-                      <command.icon className="mr-2 h-4 w-4" />
-                      <span>{command.title}</span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
+            <div className="text-center space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Press{" "}
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                  <span className="text-xs">⌘</span>K
+                </kbd>{" "}
+                to open the command menu
+              </p>
+              <Button onClick={() => setOpen(true)}>
+                Open Command Menu
+              </Button>
+            </div>
           </div>
 
+          <CommandDialog open={open} onOpenChange={setOpen}>
+            <CommandInput placeholder="Type a command or search..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup heading="Suggestions">
+                <CommandItem>
+                  <Calendar className="mr-2 h-4 w-4" />
+                  <span>Calendar</span>
+                </CommandItem>
+                <CommandItem>
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>Search Emoji</span>
+                </CommandItem>
+                <CommandItem>
+                  <Calculator className="mr-2 h-4 w-4" />
+                  <span>Calculator</span>
+                </CommandItem>
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Settings">
+                <CommandItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </CommandItem>
+                <CommandItem>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Billing</span>
+                </CommandItem>
+                <CommandItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </CommandDialog>
+
           <div className="flex items-center justify-between">
-            <h4 className="font-medium">Code Example</h4>
+            <h4 className="font-medium">Dialog Code Example</h4>
             <Button
               variant="outline"
               size="sm"
@@ -176,295 +186,211 @@ useEffect(() => {
         </CardContent>
       </Card>
 
-      {/* Command Dialog */}
+      {/* Inline Command */}
       <Card>
         <CardHeader>
-          <CardTitle>Command Dialog</CardTitle>
+          <CardTitle>Inline Command Menu</CardTitle>
           <CardDescription>
-            Full-screen command palette triggered by keyboard shortcut (⌘K).
+            Command menu component embedded directly in the interface.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="text-center space-y-4">
-              <div className="flex items-center justify-center gap-2 text-lg font-medium">
-                <CommandIcon className="h-5 w-5" />
-                Press{" "}
-                <kbd className="pointer-events-none inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100">
-                  <span className="text-xs">⌘</span>K
-                </kbd>{" "}
-                to open command palette
-              </div>
-              <Button onClick={() => setDialogOpen(true)}>
-                Or click to open manually
-              </Button>
-              
-              <CommandDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <div className="max-w-md mx-auto">
+              <Command className="rounded-lg border shadow-md">
                 <CommandInput placeholder="Type a command or search..." />
                 <CommandList>
                   <CommandEmpty>No results found.</CommandEmpty>
                   <CommandGroup heading="Quick Actions">
                     <CommandItem>
                       <Plus className="mr-2 h-4 w-4" />
-                      <span>Create new file</span>
-                      <CommandShortcut>⌘N</CommandShortcut>
+                      <span>New Document</span>
+                      <div className="ml-auto text-xs text-muted-foreground">⌘N</div>
+                    </CommandItem>
+                    <CommandItem>
+                      <FileText className="mr-2 h-4 w-4" />
+                      <span>Open Recent</span>
+                      <div className="ml-auto text-xs text-muted-foreground">⌘O</div>
                     </CommandItem>
                     <CommandItem>
                       <Search className="mr-2 h-4 w-4" />
-                      <span>Search files</span>
-                      <CommandShortcut>⌘F</CommandShortcut>
-                    </CommandItem>
-                    <CommandItem>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Open settings</span>
-                      <CommandShortcut>⌘,</CommandShortcut>
+                      <span>Find in Files</span>
+                      <div className="ml-auto text-xs text-muted-foreground">⌘⇧F</div>
                     </CommandItem>
                   </CommandGroup>
                   <CommandSeparator />
-                  <CommandGroup heading="Recent Files">
+                  <CommandGroup heading="Communication">
                     <CommandItem>
-                      <File className="mr-2 h-4 w-4" />
-                      <span>App.tsx</span>
+                      <Mail className="mr-2 h-4 w-4" />
+                      <span>Send Email</span>
                     </CommandItem>
                     <CommandItem>
-                      <File className="mr-2 h-4 w-4" />
-                      <span>index.css</span>
-                    </CommandItem>
-                    <CommandItem>
-                      <Folder className="mr-2 h-4 w-4" />
-                      <span>components/</span>
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      <span>Start Chat</span>
                     </CommandItem>
                   </CommandGroup>
                   <CommandSeparator />
-                  <CommandGroup heading="Navigation">
+                  <CommandGroup heading="Tools">
                     <CommandItem>
-                      <Calendar className="mr-2 h-4 w-4" />
-                      <span>Go to Calendar</span>
-                      <CommandShortcut>G then C</CommandShortcut>
+                      <Calculator className="mr-2 h-4 w-4" />
+                      <span>Calculator</span>
                     </CommandItem>
                     <CommandItem>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Go to Profile</span>
-                      <CommandShortcut>G then P</CommandShortcut>
+                      <Globe className="mr-2 h-4 w-4" />
+                      <span>Web Search</span>
                     </CommandItem>
                   </CommandGroup>
                 </CommandList>
-              </CommandDialog>
+              </Command>
             </div>
           </div>
 
           <div className="flex items-center justify-between">
-            <h4 className="font-medium">Command Dialog Code</h4>
+            <h4 className="font-medium">Inline Command Code</h4>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => copyToClipboard(codeExamples.dialog)}
+              onClick={() => copyToClipboard(codeExamples.inline)}
             >
               <Copy className="h-4 w-4 mr-1" />
               Copy
             </Button>
           </div>
           <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.dialog}</code>
+            <code>{codeExamples.inline}</code>
           </pre>
         </CardContent>
       </Card>
 
-      {/* Command with Shortcuts */}
+      {/* Advanced Features */}
       <Card>
         <CardHeader>
-          <CardTitle>Commands with Keyboard Shortcuts</CardTitle>
+          <CardTitle>Advanced Command Menu</CardTitle>
           <CardDescription>
-            Enhanced command palette with visible keyboard shortcuts and categories.
+            Command menu with sub-commands, recent items, and custom shortcuts.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="p-6 border rounded-lg bg-muted/50">
-            <Command className="rounded-lg border shadow-md max-w-lg mx-auto">
-              <CommandInput placeholder="Search commands..." />
-              <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading="File Operations">
-                  <CommandItem>
-                    <Plus className="mr-2 h-4 w-4" />
-                    <span>New File</span>
-                    <CommandShortcut>⌘N</CommandShortcut>
-                  </CommandItem>
-                  <CommandItem>
-                    <Folder className="mr-2 h-4 w-4" />
-                    <span>New Folder</span>
-                    <CommandShortcut>⇧⌘N</CommandShortcut>
-                  </CommandItem>
-                  <CommandItem>
-                    <Search className="mr-2 h-4 w-4" />
-                    <span>Find in Files</span>
-                    <CommandShortcut>⇧⌘F</CommandShortcut>
-                  </CommandItem>
-                </CommandGroup>
-                <CommandSeparator />
-                <CommandGroup heading="Navigation">
-                  <CommandItem>
-                    <Calendar className="mr-2 h-4 w-4" />
-                    <span>Calendar</span>
-                    <CommandShortcut>⌘1</CommandShortcut>
-                  </CommandItem>
-                  <CommandItem>
-                    <Calculator className="mr-2 h-4 w-4" />
-                    <span>Calculator</span>
-                    <CommandShortcut>⌘2</CommandShortcut>
-                  </CommandItem>
-                </CommandGroup>
-                <CommandSeparator />
-                <CommandGroup heading="System">
-                  <CommandItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Preferences</span>
-                    <CommandShortcut>⌘,</CommandShortcut>
-                  </CommandItem>
-                  <CommandItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Account</span>
-                    <CommandShortcut>⌘U</CommandShortcut>
-                  </CommandItem>
-                </CommandGroup>
-              </CommandList>
-            </Command>
+            <div className="text-center space-y-4">
+              <Button onClick={() => setOpen2(true)} variant="outline">
+                Open Advanced Command Menu
+              </Button>
+            </div>
           </div>
 
+          <CommandDialog open={open2} onOpenChange={setOpen2}>
+            <CommandInput placeholder="Search commands, files, and more..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup heading="Recent">
+                <CommandItem>
+                  <FileText className="mr-2 h-4 w-4" />
+                  <span>project-overview.md</span>
+                  <div className="ml-auto text-xs text-muted-foreground">2 min ago</div>
+                </CommandItem>
+                <CommandItem>
+                  <FileText className="mr-2 h-4 w-4" />
+                  <span>component-library.tsx</span>
+                  <div className="ml-auto text-xs text-muted-foreground">1 hr ago</div>
+                </CommandItem>
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Create">
+                <CommandItem>
+                  <Plus className="mr-2 h-4 w-4" />
+                  <span>New Component</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘⇧N</div>
+                </CommandItem>
+                <CommandItem>
+                  <Plus className="mr-2 h-4 w-4" />
+                  <span>New Page</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘⇧P</div>
+                </CommandItem>
+                <CommandItem>
+                  <Plus className="mr-2 h-4 w-4" />
+                  <span>New Folder</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘⇧F</div>
+                </CommandItem>
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Navigate">
+                <CommandItem>
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>Go to File</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘P</div>
+                </CommandItem>
+                <CommandItem>
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>Go to Symbol</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘⇧O</div>
+                </CommandItem>
+                <CommandItem>
+                  <Search className="mr-2 h-4 w-4" />
+                  <span>Go to Line</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘G</div>
+                </CommandItem>
+              </CommandGroup>
+              <CommandSeparator />
+              <CommandGroup heading="Settings">
+                <CommandItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Preferences</span>
+                  <div className="ml-auto text-xs text-muted-foreground">⌘,</div>
+                </CommandItem>
+                <CommandItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>User Settings</span>
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </CommandDialog>
+
           <div className="flex items-center justify-between">
-            <h4 className="font-medium">Shortcuts Code</h4>
+            <h4 className="font-medium">Keyboard Shortcuts Setup</h4>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => copyToClipboard(codeExamples.withShortcuts)}
+              onClick={() => copyToClipboard(codeExamples.keyboard)}
             >
               <Copy className="h-4 w-4 mr-1" />
               Copy
             </Button>
           </div>
           <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.withShortcuts}</code>
+            <code>{codeExamples.keyboard}</code>
           </pre>
         </CardContent>
       </Card>
 
-      {/* Keyboard Shortcuts Reference */}
+      {/* Implementation Guidelines */}
       <Card>
         <CardHeader>
-          <CardTitle>Keyboard Shortcuts Reference</CardTitle>
+          <CardTitle>Implementation Guidelines</CardTitle>
           <CardDescription>
-            Complete guide to command menu keyboard interactions and shortcuts.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="font-medium">Navigation</h4>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Open command palette</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">⌘K</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Navigate up/down</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">↑↓</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Select item</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">Enter</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Close palette</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">Esc</kbd>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Quick Actions</h4>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">New file</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">⌘N</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Search files</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">⌘F</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Settings</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">⌘,</kbd>
-                </div>
-                <div className="flex items-center justify-between p-2 rounded bg-muted/50">
-                  <span className="text-sm">Help</span>
-                  <kbd className="px-2 py-1 bg-background border rounded text-xs">⌘?</kbd>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Supabase Integration */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Supabase Integration</CardTitle>
-          <CardDescription>
-            Command menu with dynamic commands and user action tracking.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Database Integration</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-              <li>• Dynamic command generation from database</li>
-              <li>• User command history and analytics</li>
-              <li>• Role-based command filtering</li>
-              <li>• Real-time command suggestions</li>
-              <li>• Command usage tracking and optimization</li>
-            </ul>
-          </div>
-          
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Command Patterns</h4>
-            <div className="text-sm text-green-800 dark:text-green-200 space-y-1">
-              <code className="block">// Commands table</code>
-              <code className="block">commands: id, name, action, shortcut, role_required</code>
-              <code className="block">// Usage analytics</code>
-              <code className="block">command_usage: command_id, user_id, timestamp</code>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Accessibility & Guidelines */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Accessibility & Guidelines</CardTitle>
-          <CardDescription>
-            Best practices for implementing accessible command menu interfaces.
+            Best practices for command menu functionality and user experience.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-medium mb-2">Accessibility Features</h4>
+              <h4 className="font-medium mb-2">Features</h4>
               <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• ARIA combobox and listbox roles</li>
-                <li>• Keyboard navigation and shortcuts</li>
-                <li>• Screen reader announcements</li>
-                <li>• Focus management and trapping</li>
-                <li>• High contrast support</li>
+                <li>• Fuzzy search and filtering</li>
+                <li>• Keyboard navigation (↑↓ arrows)</li>
+                <li>• Command shortcuts display</li>
+                <li>• Grouped command organization</li>
+                <li>• Recent commands history</li>
               </ul>
             </div>
             <div>
               <h4 className="font-medium mb-2">Best Practices</h4>
               <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Use consistent keyboard shortcuts</li>
-                <li>• Provide fuzzy search capabilities</li>
-                <li>• Group related commands logically</li>
-                <li>• Show visual shortcuts in interface</li>
-                <li>• Maintain command state across sessions</li>
+                <li>• Use semantic command names</li>
+                <li>• Show keyboard shortcuts</li>
+                <li>• Group related commands</li>
+                <li>• Provide command descriptions</li>
+                <li>• Handle async command execution</li>
               </ul>
             </div>
           </div>
