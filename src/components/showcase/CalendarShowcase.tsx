@@ -11,7 +11,7 @@ import { toast } from "@/hooks/use-toast";
 
 export default function CalendarShowcase() {
   const [date, setDate] = useState<Date>();
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined } | undefined>();
+  const [dateRange, setDateRange] = useState<any>();
   const [multipleDates, setMultipleDates] = useState<Date[]>([]);
 
   const copyToClipboard = (text: string) => {
