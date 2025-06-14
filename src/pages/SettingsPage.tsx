@@ -10,6 +10,7 @@ import { ColorPaletteAdmin } from "@/components/admin/ColorPaletteAdmin";
 import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
 import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
 import { UserInvitations } from "@/components/admin/UserInvitations";
+import { FigmaConfig } from "@/components/integrations/FigmaConfig";
 
 const SettingsPage = () => {
   const { isAdmin, loading } = useAdminRole();
@@ -148,68 +149,7 @@ const SettingsPage = () => {
         )}
 
         <TabsContent value="integrations" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Figma className="h-5 w-5" />
-                Figma Integration
-                <Badge variant="default">Active</Badge>
-              </CardTitle>
-              <CardDescription>
-                Configure your Figma integration settings for design system synchronization.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Figma Client ID</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                    placeholder="Enter your Figma Client ID"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Found in your Figma app settings under "API"
-                  </p>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Figma Client Secret</label>
-                  <input 
-                    type="password" 
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background"
-                    placeholder="Enter your Figma Client Secret"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Keep this secure - never share your client secret
-                  </p>
-                </div>
-                
-                <div className="bg-muted p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Available Features</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Automatic Figma file creation with design system structure</li>
-                    <li>• Component placeholder generation</li>
-                    <li>• Design token export in Figma-compatible format</li>
-                    <li>• Shareable URL collection and synchronization</li>
-                    <li>• Design system sync and updates</li>
-                  </ul>
-                </div>
-                
-                <div className="flex gap-2">
-                  <Button className="flex-1">
-                    Save Configuration
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <a href="https://www.figma.com/developers/api" target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Figma API Docs
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <FigmaConfig />
 
           <Card>
             <CardHeader>
