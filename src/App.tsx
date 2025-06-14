@@ -10,6 +10,7 @@ import CategoryPage from "./pages/CategoryPage";
 import ComponentPage from "./pages/ComponentPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
+import AuditPage from "./pages/AuditPage";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./components/auth/AuthPage";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
@@ -57,6 +58,13 @@ const App = () => (
             <ProtectedRoute>
               <MainLayout>
                 <SettingsPage />
+              </MainLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/audit" element={
+            <ProtectedRoute>
+              <MainLayout>
+                <AuditPage />
               </MainLayout>
             </ProtectedRoute>
           } />

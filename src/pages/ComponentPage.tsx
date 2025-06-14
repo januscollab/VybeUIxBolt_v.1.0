@@ -49,6 +49,11 @@ import PopoverShowcase from "@/components/showcase/PopoverShowcase";
 import ListShowcase from "@/components/showcase/ListShowcase";
 import DividerShowcase from "@/components/showcase/DividerShowcase";
 import FigmaExportShowcase from "@/components/showcase/FigmaExportShowcase";
+import RadioButtonShowcase from "@/components/showcase/RadioButtonShowcase";
+import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
+import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsageGuidelinesShowcase";
+import FigmaIntegrationShowcase from "@/components/showcase/FigmaIntegrationShowcase";
+import ComponentAnalyticsShowcase from "@/components/showcase/ComponentAnalyticsShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -144,6 +149,18 @@ export default function ComponentPage() {
         return <DividerShowcase />;
       case 'figma-export':
         return <FigmaExportShowcase />;
+      case 'radio-button':
+      case 'radio-group':
+        return <RadioButtonShowcase />;
+      case 'loading-spinner':
+      case 'spinner':
+        return <LoadingSpinnerShowcase />;
+      case 'component-usage-guidelines':
+        return <ComponentUsageGuidelinesShowcase />;
+      case 'figma-integration':
+        return <FigmaIntegrationShowcase />;
+      case 'component-analytics':
+        return <ComponentAnalyticsShowcase />;
       
       // Navigation
       case 'navigation':
