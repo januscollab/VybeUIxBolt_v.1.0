@@ -149,29 +149,33 @@ export function AppSidebar() {
                   return (
                     <SidebarMenuItem key={category.id}>
                       <Collapsible open={isExpanded} onOpenChange={() => toggleCategory(category.id)}>
-                        <div className="flex items-center">
-                          <SidebarMenuButton asChild isActive={isActive} className="flex-1">
-                            <Link to={`/category/${category.slug}`}>
-                              <Icon className="h-4 w-4" />
-                              <span>{category.name}</span>
-                            </Link>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton 
+                            asChild 
+                            isActive={isActive} 
+                            className="w-full justify-between"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleCategory(category.id);
+                            }}
+                          >
+                            <div className="flex items-center justify-between w-full cursor-pointer">
+                              <div className="flex items-center gap-2">
+                                <Icon className="h-4 w-4" />
+                                <span>{category.name}</span>
+                              </div>
+                              {getFilteredComponents(category.id).length > 0 && (
+                                <div className="ml-auto">
+                                  {isExpanded ? (
+                                    <ChevronUp className="h-3 w-3" />
+                                  ) : (
+                                    <ChevronDown className="h-3 w-3" />
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </SidebarMenuButton>
-                          {getFilteredComponents(category.id).length > 0 && (
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-6 w-6 p-0 hover:bg-sidebar-accent"
-                              >
-                                {isExpanded ? (
-                                  <ChevronUp className="h-3 w-3" />
-                                ) : (
-                                  <ChevronDown className="h-3 w-3" />
-                                )}
-                              </Button>
-                            </CollapsibleTrigger>
-                          )}
-                        </div>
+                        </CollapsibleTrigger>
                         <CollapsibleContent>
                           <SidebarMenuSub>
                             {getFilteredComponents(category.id).map((component) => {
