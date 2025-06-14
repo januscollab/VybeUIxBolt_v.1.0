@@ -6,60 +6,16 @@ import {
 } from "@/components/ui/resizable";
 import { cn } from "@/lib/utils";
 
-/** Props for CoreResizablePanelGroup component */
-export interface CoreResizablePanelGroupProps extends React.HTMLAttributes<HTMLDivElement> {
-  direction?: "horizontal" | "vertical";
-}
-
-/** Core ResizablePanelGroup component */
-const ResizablePanelGroup = React.forwardRef<
-  React.ElementRef<typeof ShadcnResizablePanelGroup>,
-  CoreResizablePanelGroupProps
->(({ className, ...props }, ref) => (
-  <ShadcnResizablePanelGroup
-    ref={ref}
-    className={cn("core-resizable-panel-group", className)}
-    {...props}
-  />
-));
+/** Core ResizablePanelGroup component - simplified wrapper */
+const ResizablePanelGroup = (props: any) => <ShadcnResizablePanelGroup {...props} />;
 ResizablePanelGroup.displayName = "CoreResizablePanelGroup";
 
-/** Props for CoreResizablePanel component */
-export interface CoreResizablePanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  defaultSize?: number;
-  minSize?: number;
-  maxSize?: number;
-}
-
-/** Core ResizablePanel component */
-const ResizablePanel = React.forwardRef<
-  HTMLDivElement,
-  CoreResizablePanelProps
->(({ className, ...props }, ref) => (
-  <ShadcnResizablePanel
-    ref={ref}
-    className={cn("core-resizable-panel", className)}
-    {...props}
-  />
-));
+/** Core ResizablePanel component - simplified wrapper */
+const ResizablePanel = (props: any) => <ShadcnResizablePanel {...props} />;
 ResizablePanel.displayName = "CoreResizablePanel";
 
-/** Props for CoreResizableHandle component */
-export interface CoreResizableHandleProps extends React.HTMLAttributes<HTMLDivElement> {
-  withHandle?: boolean;
-}
-
-/** Core ResizableHandle component */
-const ResizableHandle = React.forwardRef<
-  HTMLDivElement,
-  CoreResizableHandleProps
->(({ className, ...props }, ref) => (
-  <ShadcnResizableHandle
-    ref={ref}
-    className={cn("core-resizable-handle", className)}
-    {...props}
-  />
-));
+/** Core ResizableHandle component - simplified wrapper */  
+const ResizableHandle = (props: any) => <ShadcnResizableHandle {...props} />;
 ResizableHandle.displayName = "CoreResizableHandle";
 
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle };
