@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { UserPlus, Mail, Calendar, Check, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { validateEmail } from '@/lib/validation';
 
 export function UserInvitations() {
   const [email, setEmail] = useState('');
@@ -15,6 +16,17 @@ export function UserInvitations() {
 
   const sendInvitation = async () => {
     if (!email) return;
+    
+    // Validate email format and security constraints
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      toast({
+        title: "Invalid Email",
+        description: emailValidation.error || "Please enter a valid email address",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setLoading(true);
     try {

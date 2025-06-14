@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 export interface RichTextEditorProps {
   value?: string;
@@ -18,13 +19,16 @@ export const RichTextEditor = React.forwardRef<
 
   useEffect(() => {
     if (editorRef.current && editorRef.current.innerHTML !== value) {
-      editorRef.current.innerHTML = value;
+      // Sanitize the value before setting innerHTML to prevent XSS
+      editorRef.current.innerHTML = sanitizeHtml(value);
     }
   }, [value]);
 
   const handleInput = () => {
     if (editorRef.current && onChange) {
-      onChange(editorRef.current.innerHTML);
+      // Sanitize content before passing to onChange to prevent XSS
+      const sanitizedContent = sanitizeHtml(editorRef.current.innerHTML);
+      onChange(sanitizedContent);
     }
   };
 
