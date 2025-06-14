@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { DevicePreview } from "./DevicePreview";
+import { AdminControls } from "@/components/admin/AdminControls";
 import { 
   Breadcrumb, 
   BreadcrumbItem, 
@@ -94,6 +95,7 @@ export function MainLayout({ children }: MainLayoutProps) {
             {children}
           </div>
         </main>
+        <AdminControls />
       </div>
     </SidebarProvider>
   );

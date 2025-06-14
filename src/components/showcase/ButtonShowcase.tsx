@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { CodeModal } from "@/components/ui/code-modal";
 import { Heart, Download, Plus, Trash2, Settings, ExternalLink } from "lucide-react";
 
 export default function ButtonShowcase() {
@@ -145,28 +146,38 @@ export default function ButtonShowcase() {
           <CardDescription>Implementation examples</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <h4 className="font-medium">Basic Button</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`<Button>Click me</Button>`}</code>
-            </pre>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-medium">Button with Icon</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`<Button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <CodeModal
+              code={`<Button>Click me</Button>`}
+              title="Basic Button"
+            >
+              <Button variant="outline" className="w-full">
+                Basic Button Code
+              </Button>
+            </CodeModal>
+            
+            <CodeModal
+              code={`<Button>
   <Plus className="mr-2 h-4 w-4" />
   Add Item
-</Button>`}</code>
-            </pre>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-medium">Variant and Size</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`<Button variant="outline" size="lg">
+</Button>`}
+              title="Button with Icon"
+            >
+              <Button variant="outline" className="w-full">
+                Button with Icon Code
+              </Button>
+            </CodeModal>
+            
+            <CodeModal
+              code={`<Button variant="outline" size="lg">
   Large Outline Button
-</Button>`}</code>
-            </pre>
+</Button>`}
+              title="Variant and Size"
+            >
+              <Button variant="outline" className="w-full">
+                Variant & Size Code
+              </Button>
+            </CodeModal>
           </div>
         </CardContent>
       </Card>

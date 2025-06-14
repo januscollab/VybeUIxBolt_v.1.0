@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CodeModal } from "@/components/ui/code-modal";
 import { Copy, Figma, FileCode, Palette, Pipette } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
@@ -321,31 +322,16 @@ const presetColors = ["#ef4444", "#3b82f6", "#22c55e"];
 
           <div className="flex items-center justify-between">
             <h4 className="font-medium">Code Example</h4>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCode(!showCode)}
-              >
-                {showCode ? "Hide" : "Show"} Code
+            <CodeModal
+              code={codeExample}
+              title="Color Picker Implementation"
+            >
+              <Button variant="outline" size="sm">
+                <Copy className="h-4 w-4 mr-1" />
+                View Code
               </Button>
-              {showCode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(codeExample)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              )}
-            </div>
+            </CodeModal>
           </div>
-          {showCode && (
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{codeExample}</code>
-            </pre>
-          )}
         </CardContent>
       </Card>
 
