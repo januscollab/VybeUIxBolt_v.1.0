@@ -47,6 +47,7 @@ import TooltipShowcase from "@/components/showcase/TooltipShowcase";
 import PopoverShowcase from "@/components/showcase/PopoverShowcase";
 import ListShowcase from "@/components/showcase/ListShowcase";
 import DividerShowcase from "@/components/showcase/DividerShowcase";
+import FigmaExportShowcase from "@/components/showcase/FigmaExportShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -140,6 +141,8 @@ export default function ComponentPage() {
       case 'divider':
       case 'separator':
         return <DividerShowcase />;
+      case 'figma-export':
+        return <FigmaExportShowcase />;
       
       // Navigation
       case 'navigation':
