@@ -293,6 +293,54 @@ export type Database = {
           },
         ]
       }
+      figma_integrations: {
+        Row: {
+          api_token_set: boolean
+          auto_sync: boolean
+          component_prefix: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          export_format: string
+          export_scale: number
+          id: string
+          is_active: boolean
+          project_name: string
+          team_id: string
+          updated_at: string
+        }
+        Insert: {
+          api_token_set?: boolean
+          auto_sync?: boolean
+          component_prefix?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          export_format?: string
+          export_scale?: number
+          id?: string
+          is_active?: boolean
+          project_name: string
+          team_id: string
+          updated_at?: string
+        }
+        Update: {
+          api_token_set?: boolean
+          auto_sync?: boolean
+          component_prefix?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          export_format?: string
+          export_scale?: number
+          id?: string
+          is_active?: boolean
+          project_name?: string
+          team_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

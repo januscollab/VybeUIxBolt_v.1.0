@@ -79,6 +79,12 @@ export function FigmaIntegrationWizard({ isOpen, onOpenChange }: FigmaIntegratio
   const handleComplete = async () => {
     setIsLoading(true);
     try {
+      // First set all existing integrations to inactive
+      await supabase
+        .from('figma_integrations')
+        .update({ is_active: false })
+        .neq('id', '00000000-0000-0000-0000-000000000000');
+
       // Save configuration to database
       const { error } = await supabase
         .from('figma_integrations')
