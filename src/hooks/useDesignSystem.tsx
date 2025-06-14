@@ -200,8 +200,16 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
           orange: "#f97316"
         });
         setTypography({
-          primary: { family: "Inter", weights: ["400", "500", "600", "700"] },
-          secondary: { family: "JetBrains Mono", weights: ["400", "500"] }
+          primary: { 
+            family: "Inter", 
+            weights: ["400", "500", "600", "700"],
+            googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          },
+          secondary: { 
+            family: "JetBrains Mono", 
+            weights: ["400", "500"],
+            googleFontUrl: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+          }
         });
         setBrandName('VybeUI');
         setLogoUrl('');
