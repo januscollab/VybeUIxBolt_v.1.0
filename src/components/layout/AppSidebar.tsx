@@ -206,19 +206,6 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border p-4">
-        <div className="flex items-center justify-between mb-4">
-          <UserMenu />
-        </div>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={location.pathname === "/settings"}>
-              <Link to="/settings">
-                <Settings className="h-4 w-4" />
-                <span>Settings</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
         <div className="flex gap-2 mt-4">
           <Button variant="outline" size="sm" className="flex-1" asChild>
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">

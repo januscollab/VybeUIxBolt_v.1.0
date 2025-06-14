@@ -2,14 +2,15 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Search } from "lucide-react";
+import { Copy, Search, Code, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 // Import commonly used Lucide icons for the showcase
 import {
   Home, User, Settings, Mail, Phone, Calendar, Clock, Download, Upload, Save,
-  Edit, Delete, Plus, Minus, Check, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown,
+  Edit, Delete, Plus, Minus, Check, X, ChevronLeft, ChevronRight,
   ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Bell, Heart, Star, Share, Filter, Grid,
   List, Map, Camera, Image, Video, Music, File, Folder, Link, Lock, Unlock, Eye, EyeOff,
   Search as SearchIcon, RefreshCw, MoreHorizontal, MoreVertical, Menu, ShoppingCart, CreditCard,
@@ -22,6 +23,8 @@ import {
 
 export default function IconSystemComponent() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showUsageExamples, setShowUsageExamples] = useState(false);
+  const [showGuidelines, setShowGuidelines] = useState(false);
 
   const iconCategories = [
     {
@@ -223,88 +226,111 @@ export default function IconSystemComponent() {
       </div>
 
       {/* Usage Examples */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Usage Examples</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Button with Icon</CardTitle>
-              <CardDescription>Icons in interactive elements</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create New
-                </Button>
-                <Button variant="outline">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+      <Collapsible open={showUsageExamples} onOpenChange={setShowUsageExamples}>
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" className="w-full justify-between">
+            <div className="flex items-center gap-2">
+              <Code className="h-4 w-4" />
+              Usage Examples
+            </div>
+            {showUsageExamples ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Button with Icon</CardTitle>
+                <CardDescription>Icons in interactive elements</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create New
+                  </Button>
+                  <Button variant="outline">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Status Indicators</CardTitle>
-              <CardDescription>Icons for system states</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-success">
-                  <Check className="h-4 w-4" />
-                  <span className="text-sm">Task completed</span>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Status Indicators</CardTitle>
+                <CardDescription>Icons for system states</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-success">
+                    <Check className="h-4 w-4" />
+                    <span className="text-sm">Task completed</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-warning">
+                    <Clock className="h-4 w-4" />
+                    <span className="text-sm">In progress</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-destructive">
+                    <X className="h-4 w-4" />
+                    <span className="text-sm">Failed</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-warning">
-                  <Clock className="h-4 w-4" />
-                  <span className="text-sm">In progress</span>
-                </div>
-                <div className="flex items-center gap-2 text-destructive">
-                  <X className="h-4 w-4" />
-                  <span className="text-sm">Failed</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+              </CardContent>
+            </Card>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Guidelines */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Icon Guidelines</CardTitle>
-          <CardDescription>Best practices for consistent icon usage</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-success">Best Practices</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use consistent sizing throughout your interface</li>
-                <li>• Choose icons with similar visual weight</li>
-                <li>• Provide text labels for accessibility</li>
-                <li>• Use semantic meaning consistently</li>
-                <li>• Test icon clarity at small sizes</li>
-              </ul>
+      <Collapsible open={showGuidelines} onOpenChange={setShowGuidelines}>
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" className="w-full justify-between">
+            <div className="flex items-center gap-2">
+              <Code className="h-4 w-4" />
+              Icon Guidelines
             </div>
-            <div className="space-y-3">
-              <h4 className="font-medium text-warning">Accessibility</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Include aria-labels for standalone icons</li>
-                <li>• Ensure sufficient color contrast</li>
-                <li>• Don't rely solely on icons for meaning</li>
-                <li>• Use role="img" for decorative icons</li>
-                <li>• Test with screen readers</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            {showGuidelines ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Icon Guidelines</CardTitle>
+              <CardDescription>Best practices for consistent icon usage</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h4 className="font-medium text-success">Best Practices</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Use consistent sizing throughout your interface</li>
+                    <li>• Choose icons with similar visual weight</li>
+                    <li>• Provide text labels for accessibility</li>
+                    <li>• Use semantic meaning consistently</li>
+                    <li>• Test icon clarity at small sizes</li>
+                  </ul>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-medium text-warning">Accessibility</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Include aria-labels for standalone icons</li>
+                    <li>• Ensure sufficient color contrast</li>
+                    <li>• Don't rely solely on icons for meaning</li>
+                    <li>• Use role="img" for decorative icons</li>
+                    <li>• Test with screen readers</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }

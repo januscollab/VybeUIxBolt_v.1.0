@@ -11,6 +11,8 @@ import {
 import { useLocation, Link } from "react-router-dom";
 import { useCategories, useComponent } from "@/hooks/useDesignSystem";
 import { useMemo } from "react";
+import { UserMenu } from "@/components/auth/UserMenu";
+import { useAuth } from "@/hooks/useAuth";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -19,6 +21,7 @@ interface MainLayoutProps {
 export function MainLayout({ children }: MainLayoutProps) {
   const location = useLocation();
   const { data: categories } = useCategories();
+  const { user } = useAuth();
   
   // Parse current route for breadcrumbs
   const breadcrumbs = useMemo(() => {
@@ -72,6 +75,14 @@ export function MainLayout({ children }: MainLayoutProps) {
                     </BreadcrumbList>
                   </Breadcrumb>
                 )}
+              </div>
+              <div className="flex items-center gap-3">
+                {user && (
+                  <div className="text-sm text-muted-foreground">
+                    Welcome, {user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'}
+                  </div>
+                )}
+                <UserMenu />
               </div>
             </div>
           </header>
