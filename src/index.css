@@ -121,4 +121,39 @@
   body {
     @apply bg-background text-foreground font-inter;
   }
+
+  /* Accessibility improvements */
+  /* High contrast focus indicators */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Reduced motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Ensure text remains readable */
+  .prose {
+    color: hsl(var(--foreground));
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: hsl(var(--foreground));
+  }
+
+  /* Code block styling for better readability */
+  .bg-code-block {
+    background-color: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .text-code-foreground {
+    color: hsl(var(--foreground));
+  }
 }

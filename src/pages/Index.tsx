@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCategories, useComponents } from "@/hooks/useDesignSystem";
+import { CategoryCardSkeleton } from "@/components/ui/loading-skeleton";
 import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github, Figma } from "lucide-react";
 
 const categoryIcons = {
@@ -83,7 +84,7 @@ const Index = () => {
         {categoriesLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-32 bg-muted animate-pulse rounded-lg" />
+              <CategoryCardSkeleton key={i} />
             ))}
           </div>
         ) : (
