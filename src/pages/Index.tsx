@@ -39,7 +39,7 @@ const Index = () => {
         </p>
         <div className="flex items-center justify-center gap-4 pt-4">
           <Button asChild>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
               View on GitHub
               <ExternalLink className="h-3 w-3 ml-1" />
