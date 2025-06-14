@@ -5,11 +5,14 @@ import { useAuth } from './useAuth';
 interface DesignSystemContextType {
   colorPalette: Record<string, string>;
   typography: Record<string, any>;
+  brandName: string;
+  logoUrl: string;
   isAdmin: boolean;
   versions: any[];
   activeVersion: any;
   updateColorPalette: (colors: Record<string, string>) => Promise<void>;
   updateTypography: (typography: Record<string, any>) => Promise<void>;
+  updateBranding: (branding: { brandName: string; logoUrl: string }) => Promise<void>;
   saveVersion: (name: string) => Promise<void>;
   loadVersion: (versionId: string) => Promise<void>;
   refreshVersions: () => Promise<void>;
@@ -21,6 +24,8 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
   const { user } = useAuth();
   const [colorPalette, setColorPalette] = useState<Record<string, string>>({});
   const [typography, setTypography] = useState<Record<string, any>>({});
+  const [brandName, setBrandName] = useState('VybeUI');
+  const [logoUrl, setLogoUrl] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [versions, setVersions] = useState<any[]>([]);
   const [activeVersion, setActiveVersion] = useState<any>(null);
@@ -53,6 +58,13 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
       primary: { family: "Inter", weights: ["400", "500", "600", "700"] },
       secondary: { family: "JetBrains Mono", weights: ["400", "500"] }
     });
+    setBrandName('VybeUI');
+    setLogoUrl('');
+  };
+
+  const updateBranding = async (branding: { brandName: string; logoUrl: string }) => {
+    setBrandName(branding.brandName);
+    setLogoUrl(branding.logoUrl);
   };
 
   const loadVersions = async () => {
@@ -83,11 +95,14 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
     <DesignSystemContext.Provider value={{
       colorPalette,
       typography,
+      brandName,
+      logoUrl,
       isAdmin,
       versions,
       activeVersion,
       updateColorPalette,
       updateTypography,
+      updateBranding,
       saveVersion,
       loadVersion,
       refreshVersions
