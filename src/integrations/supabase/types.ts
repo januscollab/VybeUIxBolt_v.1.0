@@ -171,31 +171,37 @@ export type Database = {
       }
       design_system_versions: {
         Row: {
+          brand_name: string | null
           color_palette: Json
           created_at: string
           created_by: string | null
           id: string
           is_active: boolean | null
+          logo_url: string | null
           typography: Json
           updated_at: string
           version_name: string
         }
         Insert: {
+          brand_name?: string | null
           color_palette?: Json
           created_at?: string
           created_by?: string | null
           id?: string
           is_active?: boolean | null
+          logo_url?: string | null
           typography?: Json
           updated_at?: string
           version_name: string
         }
         Update: {
+          brand_name?: string | null
           color_palette?: Json
           created_at?: string
           created_by?: string | null
           id?: string
           is_active?: boolean | null
+          logo_url?: string | null
           typography?: Json
           updated_at?: string
           version_name?: string
