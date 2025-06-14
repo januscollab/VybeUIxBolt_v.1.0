@@ -329,7 +329,7 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
                 marginBottom: '8px'
               }}
             >
-              const VybeUI = () =&gt; &#123;
+              {`const VybeUI = () => {`}
             </pre>
             <pre 
               className="text-sm"
@@ -338,8 +338,7 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
                 fontWeight: '400'
               }}
             >
-              &nbsp;&nbsp;return &lt;div&gt;Secondary typography for code&lt;/div&gt;;{'\n'}
-              &#125;
+              {`  return <div>Secondary typography for code</div>;\n}`}
             </pre>
           </div>
         </CardContent>
