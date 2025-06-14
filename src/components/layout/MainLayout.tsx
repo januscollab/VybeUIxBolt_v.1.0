@@ -11,10 +11,11 @@ import {
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb";
 import { useLocation, Link } from "react-router-dom";
-import { useCategories, useComponent } from "@/hooks/useDesignSystem";
+import { useCategories, useComponent, useDesignSystem } from "@/hooks/useDesignSystem";
 import { useMemo } from "react";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { Palette } from "lucide-react";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -24,6 +25,9 @@ export function MainLayout({ children }: MainLayoutProps) {
   const location = useLocation();
   const { data: categories } = useCategories();
   const { user } = useAuth();
+  const { brandName, logoUrl } = useDesignSystem();
+  
+  const displayName = brandName || 'Design Language System';
   
   // Parse current route for breadcrumbs
   const breadcrumbs = useMemo(() => {
@@ -56,7 +60,20 @@ export function MainLayout({ children }: MainLayoutProps) {
             <div className="flex h-14 items-center px-4">
               <SidebarTrigger className="mr-4" />
               <div className="flex items-center gap-4 flex-1">
-                <h1 className="text-lg font-semibold">Design Language System</h1>
+                <div className="flex items-center gap-3">
+                  {logoUrl ? (
+                    <img 
+                      src={logoUrl} 
+                      alt={`${displayName} Logo`}
+                      className="h-8 w-auto max-w-[120px] object-contain"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+                      <Palette className="h-4 w-4 text-primary-foreground" />
+                    </div>
+                  )}
+                  <h1 className="text-lg font-semibold">{displayName}</h1>
+                </div>
                 {breadcrumbs.length > 1 && (
                   <Breadcrumb>
                     <BreadcrumbList>

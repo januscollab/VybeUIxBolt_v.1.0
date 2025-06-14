@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCategories, useComponents } from "@/hooks/useDesignSystem";
+import { useCategories, useComponents, useDesignSystem } from "@/hooks/useDesignSystem";
 import { CategoryCardSkeleton } from "@/components/ui/loading-skeleton";
 import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github, Figma } from "lucide-react";
 
@@ -19,21 +19,32 @@ const categoryIcons = {
 const Index = () => {
   const { data: categories, isLoading: categoriesLoading } = useCategories();
   const { data: allComponents } = useComponents();
+  const { brandName, logoUrl } = useDesignSystem();
 
   const totalComponents = allComponents?.length || 0;
   const stableComponents = allComponents?.filter(c => c.status === 'stable').length || 0;
   const experimentalComponents = allComponents?.filter(c => c.is_experimental).length || 0;
+
+  const displayName = brandName || 'Design Language System';
 
   return (
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-4 py-12">
         <div className="flex justify-center mb-6">
-          <div className="h-16 w-16 rounded-2xl bg-primary flex items-center justify-center">
-            <Palette className="h-8 w-8 text-primary-foreground" />
-          </div>
+          {logoUrl ? (
+            <img 
+              src={logoUrl} 
+              alt={`${displayName} Logo`}
+              className="h-16 w-auto max-w-[200px] object-contain"
+            />
+          ) : (
+            <div className="h-16 w-16 rounded-2xl bg-primary flex items-center justify-center">
+              <Palette className="h-8 w-8 text-primary-foreground" />
+            </div>
+          )}
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">Design Language System</h1>
+        <h1 className="text-4xl font-bold tracking-tight">{displayName}</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           A comprehensive design system built for rapid product development. 
           Explore our components, tokens, and patterns based on modern design principles.

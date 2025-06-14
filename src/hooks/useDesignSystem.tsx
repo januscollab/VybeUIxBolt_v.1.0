@@ -38,6 +38,105 @@ export function DesignSystemProvider({ children }: { children: React.ReactNode }
     }
   }, [user]);
 
+  // Apply design system changes to CSS variables
+  useEffect(() => {
+    applyDesignSystemToCSS();
+  }, [colorPalette, typography]);
+
+  const applyDesignSystemToCSS = () => {
+    const root = document.documentElement;
+    
+    // Apply color palette
+    if (colorPalette.primary) {
+      // Convert hex to HSL for CSS variables
+      const primaryHSL = hexToHSL(colorPalette.primary);
+      if (primaryHSL) {
+        root.style.setProperty('--primary', primaryHSL);
+      }
+    }
+    
+    if (colorPalette.secondary) {
+      const secondaryHSL = hexToHSL(colorPalette.secondary);
+      if (secondaryHSL) {
+        root.style.setProperty('--secondary', secondaryHSL);
+      }
+    }
+
+    if (colorPalette.orange) {
+      const orangeHSL = hexToHSL(colorPalette.orange);
+      if (orangeHSL) {
+        root.style.setProperty('--orange', orangeHSL);
+      }
+    }
+
+    // Apply typography
+    if (typography.primary?.family) {
+      root.style.setProperty('--font-primary', typography.primary.family);
+    }
+    
+    if (typography.secondary?.family) {
+      root.style.setProperty('--font-secondary', typography.secondary.family);
+    }
+
+    // Load Google Fonts if needed
+    loadGoogleFonts();
+  };
+
+  const hexToHSL = (hex: string): string | null => {
+    // Remove # if present
+    hex = hex.replace('#', '');
+    
+    // Parse hex values
+    const r = parseInt(hex.substr(0, 2), 16) / 255;
+    const g = parseInt(hex.substr(2, 2), 16) / 255;
+    const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0, s = 0, l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    h = Math.round(h * 360);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
+
+    return `${h} ${s}% ${l}%`;
+  };
+
+  const loadGoogleFonts = () => {
+    const existingLinks = document.querySelectorAll('link[data-font-loader]');
+    existingLinks.forEach(link => link.remove());
+
+    const fontsToLoad = [];
+    
+    if (typography.primary?.googleFontUrl) {
+      fontsToLoad.push(typography.primary.googleFontUrl);
+    }
+    
+    if (typography.secondary?.googleFontUrl) {
+      fontsToLoad.push(typography.secondary.googleFontUrl);
+    }
+
+    fontsToLoad.forEach(fontUrl => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = fontUrl;
+      link.setAttribute('data-font-loader', 'true');
+      document.head.appendChild(link);
+    });
+  };
+
   const checkAdminRole = async () => {
     if (!user) {
       setIsAdmin(false);
@@ -289,3 +388,6 @@ export function useDesignSystem() {
   }
   return context;
 }
+
+// Export query hooks from the existing file
+export { useCategories, useComponents, useComponent, useDesignTokens } from './useDesignSystem';
