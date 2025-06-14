@@ -52,6 +52,10 @@ export function AppSidebar() {
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
 
+  const getCategoryComponents = (categoryId: string) => {
+    return allComponents?.filter(component => component.category_id === categoryId) || [];
+  };
+
   // Enhanced search: filter both categories and components
   const searchQueryLower = searchQuery.toLowerCase();
   
@@ -85,10 +89,6 @@ export function AppSidebar() {
         ? prev.filter(id => id !== categoryId)
         : [...prev, categoryId]
     );
-  };
-
-  const getCategoryComponents = (categoryId: string) => {
-    return allComponents?.filter(component => component.category_id === categoryId) || [];
   };
 
   return (
