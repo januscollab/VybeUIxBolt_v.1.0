@@ -55,6 +55,7 @@ import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsa
 import FigmaIntegrationShowcase from "@/components/showcase/FigmaIntegrationShowcase";
 import ComponentAnalyticsShowcase from "@/components/showcase/ComponentAnalyticsShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
+import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -164,6 +165,9 @@ export default function ComponentPage() {
         return <ComponentAnalyticsShowcase />;
       case 'code-block':
         return <CodeBlockShowcase />;
+      case 'phone-input':
+      case 'phone':
+        return <PhoneInputShowcase />;
       
       // Navigation
       case 'navigation':
