@@ -8,9 +8,10 @@ interface CodeModalProps {
   title: string;
   code: string;
   trigger?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export function CodeModal({ title, code, trigger }: CodeModalProps) {
+export function CodeModal({ title, code, trigger, children }: CodeModalProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(code);
     toast({
@@ -22,7 +23,7 @@ export function CodeModal({ title, code, trigger }: CodeModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {trigger || (
+        {children || trigger || (
           <Button variant="outline" size="sm">
             <Code className="h-4 w-4 mr-2" />
             View Code
