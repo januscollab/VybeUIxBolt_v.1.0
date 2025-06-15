@@ -10,6 +10,7 @@ import { ColorPaletteAdmin } from "@/components/admin/ColorPaletteAdmin";
 import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
 import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
 import { UserInvitations } from "@/components/admin/UserInvitations";
+import { SmartSiteScanner } from "@/components/admin/SmartSiteScanner";
 import { SecureFigmaConfig } from "@/components/integrations/SecureFigmaConfig";
 
 const SettingsPage = () => {
@@ -110,6 +111,7 @@ const SettingsPage = () => {
                     Customize your design system colors and create color palette versions.
                   </p>
                 </div>
+                <SmartSiteScanner />
                 <ColorPaletteAdmin isOpen={true} onOpenChange={() => {}} />
               </div>
             </TabsContent>
@@ -126,6 +128,7 @@ const SettingsPage = () => {
                     Configure fonts, upload custom fonts, and manage typography scales.
                   </p>
                 </div>
+                <SmartSiteScanner />
                 <TypographyAdmin isOpen={true} onOpenChange={() => {}} />
               </div>
             </TabsContent>
