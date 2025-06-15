@@ -264,10 +264,11 @@ export interface PhoneInputProps {
   className?: string;
   variant?: "numeric" | "flag";
   defaultCountry?: string;
+  disabled?: boolean;
 }
 
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
-  ({ className, variant = "numeric", value = "", onChange, placeholder = "557215200", defaultCountry = "AE", ...props }, ref) => {
+  ({ className, variant = "numeric", value = "", onChange, placeholder = "557215200", defaultCountry = "AE", disabled, ...props }, ref) => {
     const [selectedCountry, setSelectedCountry] = useState(defaultCountry);
     const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -304,7 +305,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     if (variant === "flag") {
       return (
         <div className={cn("flex", className)}>
-          <Select value={selectedCountry} onValueChange={handleCountryChange}>
+          <Select value={selectedCountry} onValueChange={handleCountryChange} disabled={disabled}>
             <SelectTrigger className="w-32 rounded-r-none border-r-0">
               <SelectValue>
                 <div className="flex items-center gap-2">
@@ -332,6 +333,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             onChange={handlePhoneChange}
             placeholder={placeholder}
             className="rounded-l-none flex-1"
+            disabled={disabled}
             {...props}
           />
         </div>
@@ -341,7 +343,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     // Numeric variant (default)
     return (
       <div className={cn("flex", className)}>
-        <Select value={selectedCountry} onValueChange={handleCountryChange}>
+        <Select value={selectedCountry} onValueChange={handleCountryChange} disabled={disabled}>
           <SelectTrigger className="w-24 rounded-r-none border-r-0">
             <SelectValue>
               <span className="text-sm">{selectedCountryData?.dial}</span>
@@ -365,6 +367,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           onChange={handlePhoneChange}
           placeholder={placeholder}
           className="rounded-l-none flex-1"
+          disabled={disabled}
           {...props}
         />
       </div>

@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Copy, Code } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface CodeModalProps {
+  title: string;
   code: string;
-  title?: string;
-  children?: React.ReactNode;
+  trigger?: React.ReactNode;
 }
 
-export function CodeModal({ code, title = "Code Example", children }: CodeModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export function CodeModal({ title, code, trigger }: CodeModalProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(code);
     toast({
@@ -22,32 +20,31 @@ export function CodeModal({ code, title = "Code Example", children }: CodeModalP
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        {children || (
+        {trigger || (
           <Button variant="outline" size="sm">
             <Code className="h-4 w-4 mr-2" />
             View Code
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden">
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            {title}
+          <div className="flex items-center justify-between">
+            <DialogTitle>{title}</DialogTitle>
             <Button
               variant="outline"
               size="sm"
               onClick={copyToClipboard}
-              className="ml-auto"
             >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Code
             </Button>
-          </DialogTitle>
+          </div>
         </DialogHeader>
-        <div className="overflow-auto max-h-[60vh]">
-          <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto">
+        <div className="mt-4">
+          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm border">
             <code>{code}</code>
           </pre>
         </div>

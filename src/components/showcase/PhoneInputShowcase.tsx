@@ -4,20 +4,14 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { Button } from '@/components/ui/button';
-import { Copy, Phone } from 'lucide-react';
+import { CodeModal } from '@/components/ui/code-modal';
+import { Copy, Phone, Code } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 export default function PhoneInputShowcase() {
   const [numericValue, setNumericValue] = useState("+971557215200");
   const [flagValue, setFlagValue] = useState("+971557215200");
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
 
   const numericCode = `import { PhoneInput } from '@/components/ui/phone-input';
 
@@ -91,22 +85,10 @@ function MyComponent() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium">Code Example</h4>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(numericCode)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              </div>
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-                <code>{numericCode}</code>
-              </pre>
-            </div>
+            <CodeModal 
+              title="Numeric Phone Input Code"
+              code={numericCode}
+            />
           </div>
         </CardContent>
       </Card>
@@ -138,127 +120,105 @@ function MyComponent() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium">Code Example</h4>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(flagCode)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              </div>
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-                <code>{flagCode}</code>
-              </pre>
-            </div>
+            <CodeModal 
+              title="Flag Phone Input Code"
+              code={flagCode}
+            />
           </div>
         </CardContent>
       </Card>
 
       {/* Usage Examples */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Usage Examples</CardTitle>
-          <CardDescription>
-            Different configurations and use cases for phone input components
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="font-medium">Default Settings</h4>
-              <div className="space-y-2">
-                <Label>UAE Default</Label>
-                <PhoneInput
-                  variant="numeric"
-                  defaultCountry="AE"
-                  placeholder="Enter phone number"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">US Default with Flags</h4>
-              <div className="space-y-2">
-                <Label>US Default</Label>
-                <PhoneInput
-                  variant="flag"
-                  defaultCountry="US"
-                  placeholder="Enter phone number"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Disabled State</h4>
-              <div className="space-y-2">
-                <Label>Disabled Input</Label>
-                <PhoneInput
-                  variant="numeric"
-                  defaultCountry="AE"
-                  placeholder="557215200"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Different Placeholder</h4>
-              <div className="space-y-2">
-                <Label>Custom Placeholder</Label>
-                <PhoneInput
-                  variant="flag"
-                  defaultCountry="GB"
-                  placeholder="20 1234 5678"
-                />
-              </div>
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Usage Examples</h2>
+        <p className="text-muted-foreground">
+          Different configurations and use cases for phone input components
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h4 className="font-medium">Default Settings</h4>
+            <div className="space-y-2">
+              <Label>UAE Default</Label>
+              <PhoneInput
+                variant="numeric"
+                defaultCountry="AE"
+                placeholder="Enter phone number"
+              />
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Features */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Features</CardTitle>
-          <CardDescription>
-            Key features and capabilities of the phone input components
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-green-600">✓ Core Features</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• International country code support</li>
-                <li>• Two visual variants (numeric/flag)</li>
-                <li>• Automatic number formatting</li>
-                <li>• Country-specific validation</li>
-                <li>• Keyboard-only digits input</li>
-                <li>• Configurable default country</li>
-                <li>• Full TypeScript support</li>
-                <li>• Accessible form integration</li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-medium text-blue-600">📱 Supported Countries</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• UAE, Saudi Arabia, Kuwait</li>
-                <li>• United States, Canada</li>
-                <li>• United Kingdom, Germany</li>
-                <li>• India, Pakistan, Egypt</li>
-                <li>• Australia, France, Spain</li>
-                <li>• And many more...</li>
-                <li>• Easy to extend with more countries</li>
-                <li>• Flag emoji support</li>
-              </ul>
+          <div className="space-y-4">
+            <h4 className="font-medium">US Default with Flags</h4>
+            <div className="space-y-2">
+              <Label>US Default</Label>
+              <PhoneInput
+                variant="flag"
+                defaultCountry="US"
+                placeholder="Enter phone number"
+              />
             </div>
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="space-y-4">
+            <h4 className="font-medium">Disabled State</h4>
+            <div className="space-y-2">
+              <Label>Disabled Input</Label>
+              <PhoneInput
+                variant="numeric"
+                defaultCountry="AE"
+                placeholder="557215200"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="font-medium">Different Placeholder</h4>
+            <div className="space-y-2">
+              <Label>Custom Placeholder</Label>
+              <PhoneInput
+                variant="flag"
+                defaultCountry="GB"
+                placeholder="20 1234 5678"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Guidelines */}
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Guidelines</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-green-600">✓ Core Features</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• International country code support (249 countries)</li>
+              <li>• Two visual variants (numeric/flag)</li>
+              <li>• Automatic number formatting</li>
+              <li>• Country-specific validation</li>
+              <li>• Keyboard-only digits input</li>
+              <li>• Configurable default country</li>
+              <li>• Full TypeScript support</li>
+              <li>• Accessible form integration</li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-blue-600">📱 Best Practices</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Use flag variant for international forms</li>
+              <li>• Use numeric variant for simple, clean designs</li>
+              <li>• Set appropriate default country for your users</li>
+              <li>• Provide clear placeholder examples</li>
+              <li>• Always validate phone numbers server-side</li>
+              <li>• Consider country-specific formatting rules</li>
+              <li>• Test with various country codes</li>
+              <li>• Ensure accessibility with proper labels</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
