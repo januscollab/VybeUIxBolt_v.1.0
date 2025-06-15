@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings, Figma, Download, Palette, ExternalLink, BookOpen, Shield, Type, Building2, Upload } from "lucide-react";
+import { Settings, Figma, Download, Palette, ExternalLink, BookOpen, Shield, Type, Building2, Upload, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminRole } from "@/hooks/useAdminRole";
 import { ColorPaletteControls, TypographyControls, BrandingControls } from "@/components/admin/AdminControls";
@@ -11,6 +11,7 @@ import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
 import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
 import { UserInvitations } from "@/components/admin/UserInvitations";
 import { SmartSiteScanner } from "@/components/admin/SmartSiteScanner";
+import { VersionManager } from "@/components/admin/VersionManager";
 import { SecureFigmaConfig } from "@/components/integrations/SecureFigmaConfig";
 
 const SettingsPage = () => {
@@ -36,6 +37,10 @@ const SettingsPage = () => {
                 <Shield className="h-4 w-4 mr-2" />
                 Design System
               </TabsTrigger>
+              <TabsTrigger value="scanner">
+                <Globe className="h-4 w-4 mr-2" />
+                Smart Scanner
+              </TabsTrigger>
               <TabsTrigger value="colors">
                 <Palette className="h-4 w-4 mr-2" />
                 Colors
@@ -58,45 +63,24 @@ const SettingsPage = () => {
         {isAdmin && (
           <>
             <TabsContent value="design-system" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5" />
-                    Design System Administration
-                    <Badge variant="destructive">Admin Only</Badge>
-                  </CardTitle>
-                  <CardDescription>
-                    Manage your design system versions, rollback changes, and configure advanced settings.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 border rounded-lg">
-                      <div className="text-2xl font-bold">1</div>
-                      <div className="text-sm text-muted-foreground">Active Version</div>
-                    </div>
-                    <div className="text-center p-4 border rounded-lg">
-                      <div className="text-2xl font-bold">3</div>
-                      <div className="text-sm text-muted-foreground">Saved Versions</div>
-                    </div>
-                    <div className="text-center p-4 border rounded-lg">
-                      <div className="text-2xl font-bold">127</div>
-                      <div className="text-sm text-muted-foreground">Components</div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-muted p-4 rounded-lg">
-                    <h5 className="font-semibold mb-2">Quick Actions</h5>
-                    <div className="flex gap-2 flex-wrap">
-                      <Button size="sm">Create Version</Button>
-                      <Button size="sm" variant="outline">Export System</Button>
-                      <Button size="sm" variant="outline">Import Backup</Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
+              <VersionManager />
               <UserInvitations />
+            </TabsContent>
+
+            <TabsContent value="scanner" className="space-y-4">
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Globe className="h-6 w-6" />
+                    Smart Site Scanner
+                    <Badge variant="outline">Beta</Badge>
+                  </h2>
+                  <p className="text-muted-foreground mt-2">
+                    Automatically extract and apply colors and typography from any website to your design system.
+                  </p>
+                </div>
+                <SmartSiteScanner />
+              </div>
             </TabsContent>
 
             <TabsContent value="colors" className="space-y-4">
@@ -104,14 +88,13 @@ const SettingsPage = () => {
                 <div>
                   <h2 className="text-2xl font-bold flex items-center gap-2">
                     <Palette className="h-6 w-6" />
-                    VybeUI Color Palette Administration
+                    Color Palette Administration
                     <Badge variant="destructive">Admin Only</Badge>
                   </h2>
                   <p className="text-muted-foreground mt-2">
                     Customize your design system colors and create color palette versions.
                   </p>
                 </div>
-                <SmartSiteScanner />
                 <ColorPaletteAdmin isOpen={true} onOpenChange={() => {}} />
               </div>
             </TabsContent>
@@ -121,14 +104,13 @@ const SettingsPage = () => {
                 <div>
                   <h2 className="text-2xl font-bold flex items-center gap-2">
                     <Type className="h-6 w-6" />
-                    VybeUI Typography Administration
+                    Typography Administration
                     <Badge variant="destructive">Admin Only</Badge>
                   </h2>
                   <p className="text-muted-foreground mt-2">
                     Configure fonts, upload custom fonts, and manage typography scales.
                   </p>
                 </div>
-                <SmartSiteScanner />
                 <TypographyAdmin isOpen={true} onOpenChange={() => {}} />
               </div>
             </TabsContent>
