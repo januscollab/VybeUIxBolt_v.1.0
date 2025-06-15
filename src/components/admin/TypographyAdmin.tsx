@@ -321,25 +321,29 @@ export function TypographyAdmin({ isOpen, onOpenChange }: TypographyAdminProps) 
 
           {/* Font Preview */}
           <div className="p-4 border rounded-lg bg-muted/50">
-            <pre 
-              className="text-sm"
+            <div 
+              className="font-mono text-sm"
               style={{ 
-                fontFamily: localTypography.secondary?.family || 'JetBrains Mono, monospace',
+                fontFamily: localTypography.secondary?.family ? `"${localTypography.secondary.family}", monospace` : 'JetBrains Mono, monospace',
                 fontWeight: '500',
-                marginBottom: '8px'
+                marginBottom: '8px',
+                lineHeight: '1.5'
               }}
             >
-              {`const VybeUI = () => {`}
-            </pre>
-            <pre 
-              className="text-sm"
+              const VybeUI = () =&gt; &#123;
+            </div>
+            <div 
+              className="font-mono text-sm"
               style={{ 
-                fontFamily: localTypography.secondary?.family || 'JetBrains Mono, monospace',
-                fontWeight: '400'
+                fontFamily: localTypography.secondary?.family ? `"${localTypography.secondary.family}", monospace` : 'JetBrains Mono, monospace',
+                fontWeight: '400',
+                lineHeight: '1.5'
               }}
             >
-              {`  return <div>Secondary typography for code</div>;\n}`}
-            </pre>
+              &nbsp;&nbsp;return &lt;div&gt;Secondary typography for code&lt;/div&gt;;
+              <br />
+              &#125;
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -13,7 +13,7 @@ import ColorPaletteComponent from "@/components/design-system/ColorPaletteCompon
 import TypographyScaleComponent from "@/components/design-system/TypographyScaleComponent";
 import SpacingSystemComponent from "@/components/design-system/SpacingSystemComponent";
 import ElevationShadowsComponent from "@/components/design-system/ElevationShadowsComponent";
-import IconSystemComponent from "@/components/design-system/IconSystemComponent";
+import { EnhancedIconSystemComponent } from "@/components/design-system/IconSystemComponent";
 import InteractionStatesComponent from "@/components/design-system/InteractionStatesComponent";
 
 // Import experimental components
@@ -82,7 +82,7 @@ export default function ComponentPage() {
         return <ElevationShadowsComponent />;
       case 'icon-system':
       case 'icons':
-        return <IconSystemComponent />;
+        return <EnhancedIconSystemComponent />;
       case 'interaction-states':
         return <InteractionStatesComponent />;
       
