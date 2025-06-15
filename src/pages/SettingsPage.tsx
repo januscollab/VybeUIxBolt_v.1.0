@@ -68,19 +68,7 @@ const SettingsPage = () => {
             </TabsContent>
 
             <TabsContent value="scanner" className="space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold flex items-center gap-2">
-                    <Globe className="h-6 w-6" />
-                    Smart Site Scanner
-                    <Badge variant="outline">Beta</Badge>
-                  </h2>
-                  <p className="text-muted-foreground mt-2">
-                    Automatically extract and apply colors and typography from any website to your design system.
-                  </p>
-                </div>
-                <SmartSiteScanner />
-              </div>
+              <SmartSiteScanner />
             </TabsContent>
 
             <TabsContent value="colors" className="space-y-4">

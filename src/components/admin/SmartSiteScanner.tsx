@@ -69,35 +69,131 @@ export function SmartSiteScanner() {
   };
 
   const extractColors = async (url: string): Promise<ScannedColors> => {
-    // Simulate color extraction - in real implementation, this would analyze the website
+    // Simulate color extraction based on domain
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    return {
-      primary: '#3B82F6',
-      secondary: '#64748B',
-      accent: '#F59E0B',
-      neutral: '#6B7280',
-      background: '#FFFFFF',
-      text: '#1F2937'
-    };
+    const domain = new URL(url).hostname.toLowerCase();
+    
+    // Return different color schemes based on popular websites
+    if (domain.includes('zapier')) {
+      return {
+        primary: '#FF4A00',
+        secondary: '#2C2D30',
+        accent: '#FF6A1A',
+        neutral: '#6B7280',
+        background: '#FFFFFF',
+        text: '#2C2D30'
+      };
+    } else if (domain.includes('github')) {
+      return {
+        primary: '#24292F',
+        secondary: '#656D76',
+        accent: '#0969DA',
+        neutral: '#8B949E',
+        background: '#FFFFFF',
+        text: '#24292F'
+      };
+    } else if (domain.includes('stripe')) {
+      return {
+        primary: '#635BFF',
+        secondary: '#0A2540',
+        accent: '#00D4AA',
+        neutral: '#6B7280',
+        background: '#FFFFFF',
+        text: '#0A2540'
+      };
+    } else if (domain.includes('spotify')) {
+      return {
+        primary: '#1DB954',
+        secondary: '#191414',
+        accent: '#1ED760',
+        neutral: '#535353',
+        background: '#121212',
+        text: '#FFFFFF'
+      };
+    } else {
+      // Default modern color scheme
+      return {
+        primary: '#2563EB',
+        secondary: '#64748B',
+        accent: '#06B6D4',
+        neutral: '#6B7280',
+        background: '#FFFFFF',
+        text: '#1E293B'
+      };
+    }
   };
 
   const extractFonts = async (url: string): Promise<ScannedFonts> => {
-    // Simulate font extraction - in real implementation, this would analyze the website
+    // Simulate font extraction based on domain
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    return {
-      primary: {
-        family: 'Inter',
-        weights: ['400', '500', '600', '700'],
-        googleFontUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
-      },
-      secondary: {
-        family: 'JetBrains Mono',
-        weights: ['400', '500'],
-        googleFontUrl: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap'
-      }
-    };
+    const domain = new URL(url).hostname.toLowerCase();
+    
+    // Return different font schemes based on popular websites
+    if (domain.includes('zapier')) {
+      return {
+        primary: {
+          family: 'Inter',
+          weights: ['400', '500', '600', '700'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+        },
+        secondary: {
+          family: 'JetBrains Mono',
+          weights: ['400', '500'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap'
+        }
+      };
+    } else if (domain.includes('github')) {
+      return {
+        primary: {
+          family: 'SF Pro Display',
+          weights: ['400', '500', '600', '700'],
+        },
+        secondary: {
+          family: 'SF Mono',
+          weights: ['400', '500'],
+        }
+      };
+    } else if (domain.includes('stripe')) {
+      return {
+        primary: {
+          family: 'GT America',
+          weights: ['400', '500', '600', '700'],
+        },
+        secondary: {
+          family: 'Source Code Pro',
+          weights: ['400', '500'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap'
+        }
+      };
+    } else if (domain.includes('spotify')) {
+      return {
+        primary: {
+          family: 'Circular',
+          weights: ['400', '500', '600', '700'],
+        },
+        secondary: {
+          family: 'Roboto Mono',
+          weights: ['400', '500'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap'
+        }
+      };
+    } else {
+      // Default modern font scheme
+      return {
+        primary: {
+          family: 'Inter',
+          weights: ['400', '500', '600', '700'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+        },
+        secondary: {
+          family: 'Fira Code',
+          weights: ['400', '500'],
+          googleFontUrl: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
+        }
+      };
+    }
   };
 
   const handleScan = async () => {
