@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,47 +28,37 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/" element={
-              <ProtectedRoute>
-                <MainLayout>
-                  <Index />
-                </MainLayout>
-              </ProtectedRoute>
+              <MainLayout>
+                <Index />
+              </MainLayout>
             } />
-          <Route path="/category/:slug" element={
-            <ProtectedRoute>
+            <Route path="/category/:slug" element={
               <MainLayout>
                 <CategoryPage />
               </MainLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/component/:slug" element={
-            <ProtectedRoute>
+            } />
+            <Route path="/component/:slug" element={
               <MainLayout>
                 <ComponentPage />
               </MainLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/analytics" element={
-            <ProtectedRoute>
+            } />
+            <Route path="/analytics" element={
               <MainLayout>
                 <AnalyticsPage />
               </MainLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/settings" element={
-            <ProtectedRoute>
-              <MainLayout>
-                <SettingsPage />
-              </MainLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/audit" element={
-            <ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <SettingsPage />
+                </MainLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/audit" element={
               <MainLayout>
                 <AuditPage />
               </MainLayout>
-            </ProtectedRoute>
-          } />
+            } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
