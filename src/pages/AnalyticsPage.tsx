@@ -7,6 +7,7 @@ import { Search, Download } from "lucide-react";
 const AnalyticsPage = () => {
   const handleSearch = (query: string, filters: any) => {
     console.log("Search:", query, filters);
+    // Search functionality can be implemented to filter static data
   };
 
   const handleClearFilters = () => {

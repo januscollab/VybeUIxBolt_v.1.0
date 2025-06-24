@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCategories, useComponents, useDesignSystem } from "@/hooks/useDesignSystem";
+import { useCategories, useComponents, useDesignSystem } from "@/hooks/useStaticDesignSystem";
 import { CategoryCardSkeleton } from "@/components/ui/loading-skeleton";
 import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github, BookOpen, Edit } from "lucide-react";
 
@@ -60,9 +60,9 @@ const Index = () => {
             </a>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="/documentation">
+            <Link to="/category/foundations">
               <BookOpen className="h-4 w-4 mr-2" />
-              Documentation
+              Get Started
             </Link>
           </Button>
         </div>
@@ -119,7 +119,7 @@ const Index = () => {
                             {categoryComponents.length} components
                           </Badge>
                           {category.slug === 'experimental' && (
-                            <Badge variant="outline" className="text-xs border-orange-500 text-orange-600">
+                            <Badge variant="outline" className="text-xs border-accent text-accent">
                               Experimental
                             </Badge>
                           )}
@@ -164,13 +164,13 @@ const Index = () => {
             <CardHeader>
               <CardTitle>For Developers</CardTitle>
               <CardDescription>
-                Explore our component library with implementation guides and documentation.
+                Explore our component library with interactive examples and code snippets.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button asChild className="w-full">
-                <Link to="/documentation">
-                  Browse Documentation
+                <Link to="/category/core-ui">
+                  Browse Components
                 </Link>
               </Button>
             </CardContent>

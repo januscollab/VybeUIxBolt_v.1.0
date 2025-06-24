@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { 
   Palette, 
@@ -35,7 +36,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useCategories, useComponents } from "@/hooks/useDesignSystem";
+import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
 
 const categoryIcons = {
   'foundations': Palette,
@@ -233,7 +234,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-border p-4 bg-background">
         <p className="text-xs text-muted-foreground text-center">
-          VybeUI Design System v1.0.0
+          VybeUI v1.0.0
         </p>
       </SidebarFooter>
     </Sidebar>

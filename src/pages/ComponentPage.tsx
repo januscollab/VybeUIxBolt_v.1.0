@@ -1,10 +1,9 @@
 
 import { useParams } from "react-router-dom";
-import { useComponent } from "@/hooks/useDesignSystem";
+import { useComponent } from "@/hooks/useStaticDesignSystem";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SafeHtml } from "@/lib/sanitize";
 
 // Import design system components
 import ColorPaletteComponent from "@/components/design-system/ColorPaletteComponent";
@@ -48,8 +47,6 @@ import ListShowcase from "@/components/showcase/ListShowcase";
 import DividerShowcase from "@/components/showcase/DividerShowcase";
 import RadioButtonShowcase from "@/components/showcase/RadioButtonShowcase";
 import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
-import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsageGuidelinesShowcase";
-import { ComponentAnalyticsShowcase } from "@/components/showcase/ComponentAnalyticsShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
 import BannerShowcase from "@/components/showcase/BannerShowcase";
@@ -145,10 +142,6 @@ export default function ComponentPage() {
       case 'loading-spinner':
       case 'spinner':
         return <LoadingSpinnerShowcase />;
-      case 'component-usage-guidelines':
-        return <ComponentUsageGuidelinesShowcase />;
-      case 'component-analytics':
-        return <ComponentAnalyticsShowcase />;
       case 'code-block':
         return <CodeBlockShowcase />;
       case 'phone-input':
@@ -158,7 +151,6 @@ export default function ComponentPage() {
       // Navigation
       case 'navigation':
       case 'navigation-menu':
-      case 'breadcrumb':
       case 'pagination':
       case 'tabs':
         return <NavigationShowcase />;
@@ -172,8 +164,6 @@ export default function ComponentPage() {
       case 'alert':
       case 'toast':
       case 'toast-notification':
-      case 'progress':
-      case 'progress-bar':
       case 'skeleton':
         return <FeedbackShowcase />;
       
@@ -274,18 +264,6 @@ export default function ComponentPage() {
                     {component.is_experimental ? 'Experimental' : 'Standard'}
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-medium">Created</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {new Date(component.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium">Last Updated</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {new Date(component.updated_at).toLocaleDateString()}
-                  </p>
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -339,7 +317,7 @@ export default function ComponentPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="prose prose-sm max-w-none">
-                      <SafeHtml html={doc.content} />
+                      <div dangerouslySetInnerHTML={{ __html: doc.content }} />
                     </div>
                   </CardContent>
                 </Card>

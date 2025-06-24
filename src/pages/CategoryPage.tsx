@@ -1,9 +1,9 @@
+
 import { useParams } from "react-router-dom";
-import { useComponents, useCategories } from "@/hooks/useDesignSystem";
+import { useComponents, useCategories } from "@/hooks/useStaticDesignSystem";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, FileCode, Figma } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ExperimentalComponentCard } from "@/components/ExperimentalComponentCard";
 
@@ -45,7 +45,7 @@ export default function CategoryPage() {
         <div className="flex items-center gap-2">
           <Badge variant="secondary">{components?.length || 0} components</Badge>
           {category.slug === 'experimental' && (
-            <Badge variant="outline" className="border-orange-500 text-orange-600">
+            <Badge variant="outline" className="border-accent text-accent">
               Experimental
             </Badge>
           )}
@@ -87,30 +87,11 @@ export default function CategoryPage() {
                       )}
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <Button asChild size="sm" className="flex-1">
-                        <Link to={`/component/${component.slug}`}>
-                          View Details
-                        </Link>
-                      </Button>
-                      
-                      <div className="flex gap-1">
-                        {component.figma_url && (
-                          <Button variant="outline" size="sm" asChild>
-                            <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
-                              <Figma className="h-4 w-4" />
-                            </a>
-                          </Button>
-                        )}
-                        {component.storybook_url && (
-                          <Button variant="outline" size="sm" asChild>
-                            <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
-                              <FileCode className="h-4 w-4" />
-                            </a>
-                          </Button>
-                        )}
-                      </div>
-                    </div>
+                    <Button asChild size="sm" className="w-full">
+                      <Link to={`/component/${component.slug}`}>
+                        View Details
+                      </Link>
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -123,7 +104,7 @@ export default function CategoryPage() {
               <div className="border-t pt-8">
                 <div className="flex items-center gap-2 mb-6">
                   <h3 className="text-xl font-semibold">Experimental Components</h3>
-                  <Badge variant="outline" className="border-orange-500 text-orange-600">
+                  <Badge variant="outline" className="border-accent text-accent">
                     {components.filter(c => c.is_experimental).length} components
                   </Badge>
                 </div>
