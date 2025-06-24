@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Figma, Download, Upload, Sync, ExternalLink, Info } from 'lucide-react';
+import { Figma, Download, Upload, RefreshCw, ExternalLink, Info } from 'lucide-react';
 
 export function FigmaIntegrationShowcase() {
   return (
@@ -73,7 +73,7 @@ export function FigmaIntegrationShowcase() {
           </div>
           
           <Button disabled className="w-full">
-            <Sync className="h-4 w-4 mr-2" />
+            <RefreshCw className="h-4 w-4 mr-2" />
             Connect to Figma (Demo)
           </Button>
         </CardContent>
