@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,8 +36,8 @@ export default function BadgeShowcase() {
   <CheckCircle className="h-3 w-3" />
   Verified
 </Badge>`,
-    status: `<Badge variant="outline" className="border-green-500 text-green-600">
-  <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+    status: `<Badge variant="outline" className="border-success text-success">
+  <div className="w-2 h-2 bg-success rounded-full mr-1"></div>
   Active
 </Badge>`
   };
@@ -120,15 +121,15 @@ export default function BadgeShowcase() {
             <div className="space-y-2">
               <p className="text-sm font-medium">Success States</p>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-green-500 text-green-600 w-fit">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+                <Badge variant="outline" className="border-success text-success w-fit">
+                  <div className="w-2 h-2 bg-success rounded-full mr-1"></div>
                   Active
                 </Badge>
-                <Badge variant="outline" className="border-green-500 text-green-600 w-fit">
+                <Badge variant="outline" className="border-success text-success w-fit">
                   <CheckCircle className="h-3 w-3 mr-1" />
                   Verified
                 </Badge>
-                <Badge variant="outline" className="border-green-500 text-green-600 w-fit">
+                <Badge variant="outline" className="border-success text-success w-fit">
                   <Shield className="h-3 w-3 mr-1" />
                   Secure
                 </Badge>
@@ -138,15 +139,15 @@ export default function BadgeShowcase() {
             <div className="space-y-2">
               <p className="text-sm font-medium">Warning States</p>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-yellow-500 text-yellow-600 w-fit">
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full mr-1"></div>
+                <Badge variant="outline" className="border-warning text-warning w-fit">
+                  <div className="w-2 h-2 bg-warning rounded-full mr-1"></div>
                   Pending
                 </Badge>
-                <Badge variant="outline" className="border-yellow-500 text-yellow-600 w-fit">
+                <Badge variant="outline" className="border-warning text-warning w-fit">
                   <AlertCircle className="h-3 w-3 mr-1" />
                   Warning
                 </Badge>
-                <Badge variant="outline" className="border-yellow-500 text-yellow-600 w-fit">
+                <Badge variant="outline" className="border-warning text-warning w-fit">
                   <Clock className="h-3 w-3 mr-1" />
                   In Review
                 </Badge>
@@ -156,11 +157,11 @@ export default function BadgeShowcase() {
             <div className="space-y-2">
               <p className="text-sm font-medium">Error States</p>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-red-500 text-red-600 w-fit">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mr-1"></div>
+                <Badge variant="outline" className="border-destructive text-destructive w-fit">
+                  <div className="w-2 h-2 bg-destructive rounded-full mr-1"></div>
                   Offline
                 </Badge>
-                <Badge variant="outline" className="border-red-500 text-red-600 w-fit">
+                <Badge variant="outline" className="border-destructive text-destructive w-fit">
                   <XCircle className="h-3 w-3 mr-1" />
                   Failed
                 </Badge>
@@ -173,15 +174,15 @@ export default function BadgeShowcase() {
             <div className="space-y-2">
               <p className="text-sm font-medium">Info States</p>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-blue-500 text-blue-600 w-fit">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-1"></div>
+                <Badge variant="outline" className="border-primary text-primary w-fit">
+                  <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
                   Info
                 </Badge>
                 <Badge variant="secondary" className="w-fit">
                   <Zap className="h-3 w-3 mr-1" />
                   New
                 </Badge>
-                <Badge variant="outline" className="border-purple-500 text-purple-600 w-fit">
+                <Badge variant="outline" className="border-accent text-accent w-fit">
                   <Crown className="h-3 w-3 mr-1" />
                   Premium
                 </Badge>
@@ -231,7 +232,7 @@ export default function BadgeShowcase() {
               <p className="text-sm font-medium mb-2">Priority Levels</p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="destructive">High Priority</Badge>
-                <Badge variant="outline" className="border-yellow-500 text-yellow-600">
+                <Badge variant="outline" className="border-warning text-warning">
                   Medium Priority
                 </Badge>
                 <Badge variant="secondary">Low Priority</Badge>
@@ -271,11 +272,11 @@ export default function BadgeShowcase() {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h4 className="font-medium">John Doe</h4>
-                  <Badge variant="outline" className="border-green-500 text-green-600">
+                  <Badge variant="outline" className="border-success text-success">
                     <CheckCircle className="h-3 w-3 mr-1" />
                     Verified
                   </Badge>
-                  <Badge variant="outline" className="border-purple-500 text-purple-600">
+                  <Badge variant="outline" className="border-accent text-accent">
                     <Crown className="h-3 w-3 mr-1" />
                     Pro
                   </Badge>
@@ -290,7 +291,7 @@ export default function BadgeShowcase() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <h4 className="font-medium">System Update Available</h4>
-                    <Badge variant="outline" className="border-blue-500 text-blue-600">
+                    <Badge variant="outline" className="border-primary text-primary">
                       <Zap className="h-3 w-3 mr-1" />
                       New
                     </Badge>
@@ -307,7 +308,7 @@ export default function BadgeShowcase() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <h4 className="font-medium">Customer Review</h4>
-                  <Badge variant="outline" className="border-yellow-500 text-yellow-600">
+                  <Badge variant="outline" className="border-warning text-warning">
                     <Star className="h-3 w-3 mr-1" />
                     5.0
                   </Badge>
@@ -364,9 +365,9 @@ export default function BadgeShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Supabase Integration</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+            <h4 className="font-medium text-primary mb-2">Supabase Integration</h4>
+            <ul className="text-sm text-primary/80 space-y-1">
               <li>• Dynamic badge content from database fields</li>
               <li>• Real-time status updates via Supabase subscriptions</li>
               <li>• User role and permission badges</li>
@@ -374,9 +375,9 @@ export default function BadgeShowcase() {
             </ul>
           </div>
           
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Tailwind Customization</h4>
-            <ul className="text-sm text-green-800 dark:text-green-200 space-y-1">
+          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
+            <h4 className="font-medium text-success mb-2">Tailwind Customization</h4>
+            <ul className="text-sm text-success/80 space-y-1">
               <li>• Custom badge variants via Tailwind classes</li>
               <li>• Responsive badge sizing and positioning</li>
               <li>• Design token integration for consistent theming</li>

@@ -8,23 +8,23 @@ import { X, Info, AlertTriangle, CheckCircle, AlertCircle, Code } from "lucide-r
 import { CodeModal } from "@/components/ui/code-modal";
 
 export default function BannerShowcase() {
-  const basicBannerCode = `<Alert className="border-l-4 border-l-blue-500">
+  const basicBannerCode = `<Alert className="border-l-4 border-l-primary">
   <Info className="h-4 w-4" />
   <AlertDescription>
     This is an informational banner message.
   </AlertDescription>
 </Alert>`;
 
-  const warningBannerCode = `<Alert variant="destructive" className="border-l-4 border-l-orange-500">
+  const warningBannerCode = `<Alert variant="destructive" className="border-l-4 border-l-orange">
   <AlertTriangle className="h-4 w-4" />
   <AlertDescription>
     This is a warning banner with important information.
   </AlertDescription>
 </Alert>`;
 
-  const successBannerCode = `<Alert className="border-l-4 border-l-green-500 bg-green-50">
-  <CheckCircle className="h-4 w-4 text-green-600" />
-  <AlertDescription className="text-green-800">
+  const successBannerCode = `<Alert className="border-l-4 border-l-success bg-success/10">
+  <CheckCircle className="h-4 w-4 text-success" />
+  <AlertDescription className="text-success">
     Success! Your action was completed successfully.
   </AlertDescription>
 </Alert>`;
@@ -32,7 +32,7 @@ export default function BannerShowcase() {
   const dismissibleBannerCode = `const [showBanner, setShowBanner] = useState(true);
 
 {showBanner && (
-  <Alert className="border-l-4 border-l-blue-500">
+  <Alert className="border-l-4 border-l-primary">
     <Info className="h-4 w-4" />
     <AlertDescription className="flex items-center justify-between">
       <span>This banner can be dismissed by the user.</span>
@@ -80,7 +80,7 @@ export default function BannerShowcase() {
           </div>
         </CardHeader>
         <CardContent>
-          <Alert className="border-l-4 border-l-blue-500">
+          <Alert className="border-l-4 border-l-primary">
             <Info className="h-4 w-4" />
             <AlertDescription>
               This is an informational banner message.
@@ -106,7 +106,7 @@ export default function BannerShowcase() {
           </div>
         </CardHeader>
         <CardContent>
-          <Alert variant="destructive" className="border-l-4 border-l-orange-500">
+          <Alert variant="destructive" className="border-l-4 border-l-orange">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
               This is a warning banner with important information.
@@ -132,9 +132,9 @@ export default function BannerShowcase() {
           </div>
         </CardHeader>
         <CardContent>
-          <Alert className="border-l-4 border-l-green-500 bg-green-50">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">
+          <Alert className="border-l-4 border-l-success bg-success/10">
+            <CheckCircle className="h-4 w-4 text-success" />
+            <AlertDescription className="text-success">
               Success! Your action was completed successfully.
             </AlertDescription>
           </Alert>
@@ -159,7 +159,7 @@ export default function BannerShowcase() {
         </CardHeader>
         <CardContent className="space-y-4">
           {showBanner && (
-            <Alert className="border-l-4 border-l-blue-500">
+            <Alert className="border-l-4 border-l-primary">
               <Info className="h-4 w-4" />
               <AlertDescription className="flex items-center justify-between">
                 <span>This banner can be dismissed by the user.</span>

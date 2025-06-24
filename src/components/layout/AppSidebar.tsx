@@ -14,9 +14,7 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
-  Edit,
-  PanelLeftClose,
-  PanelLeftOpen
+  Edit
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -33,7 +31,6 @@ import {
   SidebarMenuSubButton,
   SidebarHeader,
   SidebarFooter,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -112,17 +109,14 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-border bg-background">
       <SidebarHeader className="border-b border-border p-4 bg-background">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <Palette className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold">VybeUI</h2>
-              <p className="text-xs text-muted-foreground">Design Language System</p>
-            </div>
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+            <Palette className="h-4 w-4 text-primary-foreground" />
           </div>
-          <SidebarTrigger />
+          <div>
+            <h2 className="text-lg font-semibold">VybeUI</h2>
+            <p className="text-xs text-muted-foreground">Design Language System</p>
+          </div>
         </div>
       </SidebarHeader>
 
@@ -163,7 +157,6 @@ export function AppSidebar() {
                   const Icon = categoryIcons[category.slug as keyof typeof categoryIcons] || Layers;
                   const isActive = location.pathname === `/category/${category.slug}`;
                   const isExpanded = expandedCategories.includes(category.id);
-                  const categoryComponents = getCategoryComponents(category.id);
                   
                   return (
                     <SidebarMenuItem key={category.id}>
@@ -172,7 +165,7 @@ export function AppSidebar() {
                           <SidebarMenuButton 
                             asChild 
                             isActive={isActive} 
-                            className="w-full justify-between"
+                            className="w-full justify-between py-2"
                             onClick={(e) => {
                               e.preventDefault();
                               toggleCategory(category.id);
@@ -184,7 +177,7 @@ export function AppSidebar() {
                                 <div className="min-w-0 flex-1">
                                   <div className="text-sm font-medium truncate">{category.name}</div>
                                   {category.description && (
-                                    <div className="text-xs text-muted-foreground leading-tight whitespace-normal break-words">
+                                    <div className="text-xs text-muted-foreground leading-relaxed whitespace-normal break-words max-w-[200px]">
                                       {category.description}
                                     </div>
                                   )}
@@ -239,13 +232,6 @@ export function AppSidebar() {
               GitHub
               <ExternalLink className="h-3 w-3" />
             </a>
-          </Button>
-          <Button variant="outline" size="sm" className="flex-1" asChild>
-            <Link to="/documentation">
-              <FileText className="h-4 w-4" />
-              Docs
-              <ExternalLink className="h-3 w-3" />
-            </Link>
           </Button>
         </div>
         <p className="text-xs text-muted-foreground text-center mt-2">

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -44,7 +45,7 @@ export default function AlertShowcase() {
             </AlertDescription>
           </Alert>
 
-          <Alert className="border-yellow-500 text-yellow-800 bg-yellow-50 dark:bg-yellow-950 dark:text-yellow-200">
+          <Alert className="border-warning bg-warning/10 text-warning-foreground">
             <AlertTriangle className="h-4 w-4" />
             <AlertTitle>Warning</AlertTitle>
             <AlertDescription>
@@ -52,7 +53,7 @@ export default function AlertShowcase() {
             </AlertDescription>
           </Alert>
 
-          <Alert className="border-green-500 text-green-800 bg-green-50 dark:bg-green-950 dark:text-green-200">
+          <Alert className="border-success bg-success/10 text-success-foreground">
             <CheckCircle className="h-4 w-4" />
             <AlertTitle>Success</AlertTitle>
             <AlertDescription>
@@ -69,7 +70,7 @@ export default function AlertShowcase() {
           <CardDescription>Different styles and use cases for alerts</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Alert className="border-blue-500 text-blue-800 bg-blue-50 dark:bg-blue-950 dark:text-blue-200">
+          <Alert className="border-primary bg-primary/10 text-primary-foreground">
             <Terminal className="h-4 w-4" />
             <AlertTitle>System Update</AlertTitle>
             <AlertDescription>
@@ -77,7 +78,7 @@ export default function AlertShowcase() {
             </AlertDescription>
           </Alert>
 
-          <Alert className="border-purple-500 text-purple-800 bg-purple-50 dark:bg-purple-950 dark:text-purple-200">
+          <Alert className="border-accent bg-accent/10 text-accent-foreground">
             <Zap className="h-4 w-4" />
             <AlertTitle>New Feature</AlertTitle>
             <AlertDescription>
@@ -85,7 +86,7 @@ export default function AlertShowcase() {
             </AlertDescription>
           </Alert>
 
-          <Alert className="border-orange-500 text-orange-800 bg-orange-50 dark:bg-orange-950 dark:text-orange-200">
+          <Alert className="border-orange bg-orange/10 text-orange-foreground">
             <Lightbulb className="h-4 w-4" />
             <AlertTitle>Pro Tip</AlertTitle>
             <AlertDescription>
@@ -114,7 +115,7 @@ export default function AlertShowcase() {
             </div>
           </Alert>
 
-          <Alert className="border-green-500 text-green-800 bg-green-50 dark:bg-green-950 dark:text-green-200">
+          <Alert className="border-success bg-success/10 text-success-foreground">
             <CheckCircle className="h-4 w-4" />
             <AlertTitle>Backup Completed</AlertTitle>
             <AlertDescription className="mt-2 mb-3">
@@ -127,7 +128,7 @@ export default function AlertShowcase() {
           </Alert>
 
           {showDismissible && (
-            <Alert className="border-yellow-500 text-yellow-800 bg-yellow-50 dark:bg-yellow-950 dark:text-yellow-200">
+            <Alert className="border-warning bg-warning/10 text-warning-foreground">
               <AlertTriangle className="h-4 w-4" />
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -141,7 +142,7 @@ export default function AlertShowcase() {
                   size="sm"
                   variant="ghost"
                   onClick={() => setShowDismissible(false)}
-                  className="ml-2 h-6 w-6 p-0 text-yellow-600 hover:text-yellow-800"
+                  className="ml-2 h-6 w-6 p-0 text-warning hover:text-warning/80"
                 >
                   ×
                 </Button>
@@ -182,14 +183,14 @@ export default function AlertShowcase() {
             </AlertDescription>
           </Alert>
 
-          <Alert className="py-2 border-yellow-500 text-yellow-800 bg-yellow-50 dark:bg-yellow-950 dark:text-yellow-200">
+          <Alert className="py-2 border-warning bg-warning/10 text-warning-foreground">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
               Password expires in 3 days
             </AlertDescription>
           </Alert>
 
-          <Alert className="py-2 border-blue-500 text-blue-800 bg-blue-50 dark:bg-blue-950 dark:text-blue-200">
+          <Alert className="py-2 border-primary bg-primary/10 text-primary-foreground">
             <Info className="h-4 w-4" />
             <AlertDescription>
               2 new messages in your inbox
