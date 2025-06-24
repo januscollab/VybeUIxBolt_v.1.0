@@ -21,8 +21,6 @@ import {
   Tag, Flag, Globe, Users, UserPlus, UserMinus, Shield, Award, Gift, Coffee, Briefcase
 } from "lucide-react";
 
-export { default as EnhancedIconSystemComponent } from './EnhancedIconSystemComponent';
-
 export default function IconSystemComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showUsageExamples, setShowUsageExamples] = useState(false);
