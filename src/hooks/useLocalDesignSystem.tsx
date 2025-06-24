@@ -23,7 +23,7 @@ const DesignSystemContext = createContext<DesignSystemContextType | undefined>(u
 const DEFAULT_COLOR_PALETTE = {
   primary: "#FF4A00",
   secondary: "#6b7280",
-  accent: "#06b6d4",
+  accent: "#FF4A00",
   neutral: "#64748b",
   background: "#ffffff",
   text: "#1e293b",
@@ -99,12 +99,17 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
   const applyDesignSystemToCSS = () => {
     const root = document.documentElement;
     
-    // Apply color palette
+    // Apply color palette with design system tokens
     Object.entries(colorPalette).forEach(([key, value]) => {
       if (value) {
         const hslValue = hexToHSL(value);
         if (hslValue) {
           root.style.setProperty(`--${key}`, hslValue);
+          
+          // Ensure accent uses primary by default for VybeUI consistency
+          if (key === 'primary' && !colorPalette.accent) {
+            root.style.setProperty('--accent', hslValue);
+          }
         }
       }
     });

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -169,7 +170,7 @@ export default function CardShowcase() {
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
                     <p className="text-2xl font-bold">$45,231</p>
-                    <p className="text-xs text-green-600">+20.1% from last month</p>
+                    <p className="text-xs text-success">+20.1% from last month</p>
                   </div>
                   <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Calendar className="h-6 w-6 text-primary" />
@@ -184,10 +185,10 @@ export default function CardShowcase() {
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">New Users</p>
                     <p className="text-2xl font-bold">2,345</p>
-                    <p className="text-xs text-green-600">+15.3% from last month</p>
+                    <p className="text-xs text-success">+15.3% from last month</p>
                   </div>
-                  <div className="h-12 w-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
-                    <Star className="h-6 w-6 text-blue-500" />
+                  <div className="h-12 w-12 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <Star className="h-6 w-6 text-accent" />
                   </div>
                 </div>
               </CardContent>
@@ -199,10 +200,10 @@ export default function CardShowcase() {
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">Active Sessions</p>
                     <p className="text-2xl font-bold">1,234</p>
-                    <p className="text-xs text-red-600">-2.4% from last hour</p>
+                    <p className="text-xs text-destructive">-2.4% from last hour</p>
                   </div>
-                  <div className="h-12 w-12 bg-green-500/10 rounded-lg flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-green-500" />
+                  <div className="h-12 w-12 bg-success/10 rounded-lg flex items-center justify-center">
+                    <Clock className="h-6 w-6 text-success" />
                   </div>
                 </div>
               </CardContent>
@@ -216,8 +217,8 @@ export default function CardShowcase() {
                     <p className="text-2xl font-bold">12</p>
                     <p className="text-xs text-muted-foreground">Across 3 countries</p>
                   </div>
-                  <div className="h-12 w-12 bg-orange-500/10 rounded-lg flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-orange-500" />
+                  <div className="h-12 w-12 bg-orange/10 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-6 w-6 text-orange" />
                   </div>
                 </div>
               </CardContent>
@@ -259,7 +260,7 @@ export default function CardShowcase() {
       <div className="space-y-1">
         <p className="text-sm font-medium text-muted-foreground">Metric</p>
         <p className="text-2xl font-bold">$45,231</p>
-        <p className="text-xs text-green-600">+20.1% from last month</p>
+        <p className="text-xs text-success">+20.1% from last month</p>
       </div>
       <Icon className="h-6 w-6" />
     </div>
