@@ -109,7 +109,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-border bg-background">
       <SidebarHeader className="border-b border-border p-4 bg-background">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <Palette className="h-4 w-4 text-primary-foreground" />
           </div>
@@ -121,7 +121,7 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="p-4 bg-background">
-        <div className="mb-4">
+        <div className="mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -150,9 +150,9 @@ export function AppSidebar() {
 
         {!isLoading && (
           <SidebarGroup>
-            <SidebarGroupLabel>Categories</SidebarGroupLabel>
+            <SidebarGroupLabel className="mb-2">Categories</SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              <SidebarMenu className="space-y-2">
                 {filteredCategories?.map((category) => {
                   const Icon = categoryIcons[category.slug as keyof typeof categoryIcons] || Layers;
                   const isActive = location.pathname === `/category/${category.slug}`;
@@ -165,26 +165,26 @@ export function AppSidebar() {
                           <SidebarMenuButton 
                             asChild 
                             isActive={isActive} 
-                            className="w-full justify-between py-2"
+                            className="w-full justify-between py-3 min-h-[60px]"
                             onClick={(e) => {
                               e.preventDefault();
                               toggleCategory(category.id);
                             }}
                           >
-                            <div className="flex items-center justify-between w-full cursor-pointer">
-                              <div className="flex items-center gap-2 min-w-0 flex-1">
-                                <Icon className="h-4 w-4 flex-shrink-0" />
-                                <div className="min-w-0 flex-1">
-                                  <div className="text-sm font-medium truncate">{category.name}</div>
+                            <div className="flex items-start justify-between w-full cursor-pointer">
+                              <div className="flex items-start gap-3 min-w-0 flex-1">
+                                <Icon className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                                <div className="min-w-0 flex-1 text-left">
+                                  <div className="text-sm font-medium mb-1">{category.name}</div>
                                   {category.description && (
-                                    <div className="text-xs text-muted-foreground leading-relaxed whitespace-normal break-words max-w-[200px]">
+                                    <div className="text-xs text-muted-foreground leading-relaxed whitespace-normal break-words">
                                       {category.description}
                                     </div>
                                   )}
                                 </div>
                               </div>
                               {getFilteredComponents(category.id).length > 0 && (
-                                <div className="ml-2 flex-shrink-0">
+                                <div className="ml-2 flex-shrink-0 mt-0.5">
                                   {isExpanded ? (
                                     <ChevronUp className="h-3 w-3" />
                                   ) : (
@@ -196,7 +196,7 @@ export function AppSidebar() {
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <SidebarMenuSub>
+                          <SidebarMenuSub className="mt-2 mb-2">
                             {getFilteredComponents(category.id).map((component) => {
                               const isComponentActive = location.pathname === `/component/${component.slug}`;
                               return (
@@ -205,7 +205,7 @@ export function AppSidebar() {
                                     <Link to={`/component/${component.slug}`}>
                                       <span>{component.name}</span>
                                       {component.is_experimental && (
-                                        <span className="ml-auto text-xs text-orange-600">EXP</span>
+                                        <span className="ml-auto text-xs text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded">EXP</span>
                                       )}
                                     </Link>
                                   </SidebarMenuSubButton>
@@ -225,7 +225,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border p-4 bg-background">
-        <div className="flex gap-2 mt-4">
+        <div className="flex gap-2">
           <Button variant="outline" size="sm" className="flex-1" asChild>
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4" />
@@ -234,7 +234,7 @@ export function AppSidebar() {
             </a>
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground text-center mt-2">
+        <p className="text-xs text-muted-foreground text-center mt-3">
           v1.0.0 • Built with Lovable
         </p>
       </SidebarFooter>
