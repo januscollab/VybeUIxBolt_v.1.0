@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -126,9 +127,21 @@
     font-family: var(--font-primary);
   }
 
+  /* Orange outline styling for all form elements */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="combobox"]:focus-visible,
+  [role="textbox"]:focus-visible {
+    outline: 2px solid #FF6B35 !important;
+    outline-offset: 2px;
+    border-color: #FF6B35 !important;
+    box-shadow: none !important;
+  }
+
   /* Accessibility improvements */
   /* High contrast focus indicators */
-  *:focus-visible {
+  *:focus-visible:not(input):not(textarea):not(select):not([role="combobox"]):not([role="textbox"]) {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
   }

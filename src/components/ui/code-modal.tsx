@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -24,9 +25,8 @@ export function CodeModal({ title, code, trigger, children }: CodeModalProps) {
     <Dialog>
       <DialogTrigger asChild>
         {children || trigger || (
-          <Button variant="outline" size="sm">
-            <Code className="h-4 w-4 mr-2" />
-            View Code
+          <Button variant="ghost" size="sm">
+            <Code className="h-4 w-4" />
           </Button>
         )}
       </DialogTrigger>

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink, FileCode, Figma, Copy } from "lucide-react";
+import { ExternalLink, FileCode, Copy } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { SafeHtml } from "@/lib/sanitize";
 
@@ -49,14 +49,13 @@ import TooltipShowcase from "@/components/showcase/TooltipShowcase";
 import PopoverShowcase from "@/components/showcase/PopoverShowcase";
 import ListShowcase from "@/components/showcase/ListShowcase";
 import DividerShowcase from "@/components/showcase/DividerShowcase";
-import FigmaExportShowcase from "@/components/showcase/FigmaExportShowcase";
 import RadioButtonShowcase from "@/components/showcase/RadioButtonShowcase";
 import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
 import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsageGuidelinesShowcase";
-import { FigmaIntegrationShowcase } from "@/components/showcase/FigmaIntegrationShowcase";
 import { ComponentAnalyticsShowcase } from "@/components/showcase/ComponentAnalyticsShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
+import RichTextEditorShowcase from "@/components/showcase/RichTextEditorShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -87,6 +86,10 @@ export default function ComponentPage() {
         return <EnhancedIconSystemComponent />;
       case 'interaction-states':
         return <InteractionStatesComponent />;
+      
+      // Rich Text Editor
+      case 'rich-text-editor':
+        return <RichTextEditorShowcase />;
       
       // Experimental
       case 'workflow-builder':
@@ -150,8 +153,6 @@ export default function ComponentPage() {
       case 'divider':
       case 'separator':
         return <DividerShowcase />;
-      case 'figma-export':
-        return <FigmaExportShowcase />;
       case 'radio-button':
       case 'radio-group':
         return <RadioButtonShowcase />;
@@ -160,8 +161,6 @@ export default function ComponentPage() {
         return <LoadingSpinnerShowcase />;
       case 'component-usage-guidelines':
         return <ComponentUsageGuidelinesShowcase />;
-      case 'figma-integration':
-        return <FigmaIntegrationShowcase />;
       case 'component-analytics':
         return <ComponentAnalyticsShowcase />;
       case 'code-block':
@@ -233,15 +232,6 @@ export default function ComponentPage() {
           </div>
           
           <div className="flex items-center gap-2">
-            {component.figma_url && (
-              <Button variant="outline" asChild>
-                <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
-                  <Figma className="h-4 w-4 mr-2" />
-                  Figma
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </a>
-              </Button>
-            )}
             {component.storybook_url && (
               <Button variant="outline" asChild>
                 <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">

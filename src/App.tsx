@@ -10,7 +10,7 @@ import Index from "./pages/Index";
 import CategoryPage from "./pages/CategoryPage";
 import ComponentPage from "./pages/ComponentPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import SettingsPage from "./pages/SettingsPage";
+import DocumentationPage from "./pages/DocumentationPage";
 import AuditPage from "./pages/AuditPage";
 import NotFound from "./pages/NotFound";
 
@@ -44,9 +44,9 @@ const App = () => (
                 <AnalyticsPage />
               </MainLayout>
             } />
-            <Route path="/settings" element={
+            <Route path="/documentation" element={
               <MainLayout>
-                <SettingsPage />
+                <DocumentationPage />
               </MainLayout>
             } />
             <Route path="/audit" element={

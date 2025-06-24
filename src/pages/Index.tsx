@@ -1,10 +1,11 @@
+
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCategories, useComponents, useDesignSystem } from "@/hooks/useDesignSystem";
 import { CategoryCardSkeleton } from "@/components/ui/loading-skeleton";
-import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github, Figma } from "lucide-react";
+import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github } from "lucide-react";
 
 const categoryIcons = {
   'foundations': Palette,
@@ -14,6 +15,7 @@ const categoryIcons = {
   'forms': FileText,
   'feedback': MessageSquare,
   'experimental': Beaker,
+  'rich-text-editor': FileText,
 };
 
 const Index = () => {
@@ -50,19 +52,18 @@ const Index = () => {
           Explore our components, tokens, and patterns based on modern design principles.
         </p>
         <div className="flex items-center justify-center gap-4 pt-4">
-          <Button asChild>
+          <Button size="sm" asChild>
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4 mr-2" />
-              View on GitHub
-              <ExternalLink className="h-3 w-3 ml-1" />
+              <Github className="h-3 w-3 mr-2" />
+              GitHub
+              <ExternalLink className="h-2 w-2 ml-1" />
             </a>
           </Button>
           <Button variant="outline" asChild>
-            <a href="https://figma.com" target="_blank" rel="noopener noreferrer">
-              <Figma className="h-4 w-4 mr-2" />
-              Figma Library
-              <ExternalLink className="h-3 w-3 ml-1" />
-            </a>
+            <Link to="/documentation">
+              <FileText className="h-4 w-4 mr-2" />
+              Documentation
+            </Link>
           </Button>
         </div>
       </div>
@@ -151,7 +152,7 @@ const Index = () => {
             <CardHeader>
               <CardTitle>For Designers</CardTitle>
               <CardDescription>
-                Access our complete Figma component library with design tokens and documentation.
+                Access our complete component library with design tokens and documentation.
               </CardDescription>
             </CardHeader>
             <CardContent>

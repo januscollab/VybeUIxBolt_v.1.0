@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { Building2, Palette, Type, Layout, Sparkles, BarChart, Settings, Home } from 'lucide-react';
+import { Building2, Palette, Type, Layout, Sparkles, BarChart, Home, FileText } from 'lucide-react';
 import { useLocalDesignSystem } from '@/hooks/useLocalDesignSystem';
 
 const navigationItems = [
@@ -20,9 +20,10 @@ const navigationItems = [
   { title: 'Foundations', icon: Layout, url: '/foundations' },
   { title: 'Components', icon: Palette, url: '/components' },
   { title: 'Typography', icon: Type, url: '/typography' },
+  { title: 'Rich Text Editor', icon: FileText, url: '/rich-text-editor' },
   { title: 'Experimental', icon: Sparkles, url: '/experimental' },
   { title: 'Analytics', icon: BarChart, url: '/analytics' },
-  { title: 'Settings', icon: Settings, url: '/settings' },
+  { title: 'Documentation', icon: FileText, url: '/documentation' },
 ];
 
 export function AppSidebar() {

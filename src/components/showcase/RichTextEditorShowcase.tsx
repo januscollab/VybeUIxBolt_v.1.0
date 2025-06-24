@@ -1,10 +1,11 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { CodeModal } from '@/components/ui/code-modal';
 import { Button } from '@/components/ui/button';
-import { Copy } from 'lucide-react';
+import { Code } from 'lucide-react';
 
 export default function RichTextEditorShowcase() {
   const [content, setContent] = useState('<p>Start typing your content here...</p>');
@@ -44,10 +45,19 @@ function Example() {
       {/* Basic Editor */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Rich Text Editor</CardTitle>
-          <CardDescription>
-            Editor with basic formatting controls (Bold, Italic, Underline, Lists)
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Basic Rich Text Editor</CardTitle>
+              <CardDescription>
+                Editor with basic formatting controls (Bold, Italic, Underline, Lists)
+              </CardDescription>
+            </div>
+            <CodeModal code={code} title="Rich Text Editor Example">
+              <Button variant="ghost" size="sm">
+                <Code className="h-4 w-4" />
+              </Button>
+            </CodeModal>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <RichTextEditor
@@ -71,22 +81,6 @@ function Example() {
             value={readOnlyContent}
             readOnly
           />
-        </CardContent>
-      </Card>
-
-      {/* Code Example */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Implementation</CardTitle>
-          <CardDescription>How to use the Rich Text Editor component</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CodeModal code={code} title="Rich Text Editor Example">
-            <Button variant="outline">
-              <Copy className="h-4 w-4 mr-2" />
-              View Code
-            </Button>
-          </CodeModal>
         </CardContent>
       </Card>
     </div>
