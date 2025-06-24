@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -6,539 +8,404 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Copy, Figma, FileCode, AlertCircle, CheckCircle2, Info } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "@/hooks/use-toast";
-
-const formSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string(),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  age: z.number().min(18, "Must be at least 18 years old").max(120, "Must be less than 120 years old"),
-  country: z.string().min(1, "Please select a country"),
-  bio: z.string().max(500, "Bio must not exceed 500 characters"),
-  terms: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { 
+  CheckCircle, AlertCircle, Info, Eye, EyeOff, 
+  User, Mail, Lock, Phone, Calendar
+} from "lucide-react";
 
 export default function FormValidationShowcase() {
-  const [showCode, setShowCode] = useState(false);
-  const [liveValidation, setLiveValidation] = useState({
+  const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
-    emailValid: false,
-    passwordValid: false,
+    confirmPassword: "",
+    phone: "",
+    birthdate: "",
+    country: "",
+    newsletter: false
   });
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      name: "",
-      age: undefined,
-      country: "",
-      bio: "",
-      terms: false,
-    },
-  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (data: FormData) => {
-    toast({
-      title: "Form submitted successfully!",
-      description: "All validation checks passed.",
+  const validateField = (name: string, value: string) => {
+    switch (name) {
+      case 'username':
+        if (!value) return "Username is required";
+        if (value.length < 3) return "Username must be at least 3 characters";
+        if (!/^[a-zA-Z0-9_]+$/.test(value)) return "Username can only contain letters, numbers, and underscores";
+        return "";
+      
+      case 'email':
+        if (!value) return "Email is required";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "Please enter a valid email address";
+        return "";
+      
+      case 'password':
+        if (!value) return "Password is required";
+        if (value.length < 8) return "Password must be at least 8 characters";
+        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) return "Password must contain uppercase, lowercase, and number";
+        return "";
+      
+      case 'confirmPassword':
+        if (!value) return "Please confirm your password";
+        if (value !== formData.password) return "Passwords do not match";
+        return "";
+      
+      case 'phone':
+        if (!value) return "Phone number is required";
+        if (!/^\+?[\d\s-()]+$/.test(value)) return "Please enter a valid phone number";
+        return "";
+      
+      case 'birthdate':
+        if (!value) return "Birthdate is required";
+        const age = new Date().getFullYear() - new Date(value).getFullYear();
+        if (age < 13) return "You must be at least 13 years old";
+        return "";
+      
+      case 'country':
+        if (!value) return "Please select your country";
+        return "";
+      
+      default:
+        return "";
+    }
+  };
+
+  const handleInputChange = (name: string, value: string | boolean) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (typeof value === 'string') {
+      const error = validateField(name, value);
+      setErrors(prev => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleSubmit = () => {
+    const newErrors: Record<string, string> = {};
+    Object.keys(formData).forEach(key => {
+      if (key !== 'newsletter') {
+        const error = validateField(key, formData[key as keyof typeof formData] as string);
+        if (error) newErrors[key] = error;
+      }
     });
-    console.log(data);
+
+    setErrors(newErrors);
+    setIsSubmitted(Object.keys(newErrors).length === 0);
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
+  const getFieldStatus = (fieldName: string) => {
+    const value = formData[fieldName as keyof typeof formData] as string;
+    const error = errors[fieldName];
+    
+    if (!value) return null;
+    if (error) return 'error';
+    return 'success';
   };
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const getFieldIcon = (fieldName: string) => {
+    const status = getFieldStatus(fieldName);
+    if (status === 'success') return <CheckCircle className="h-4 w-4 text-success" />;
+    if (status === 'error') return <AlertCircle className="h-4 w-4 text-destructive" />;
+    return null;
   };
 
-  const validatePassword = (password: string) => {
-    return password.length >= 8;
+  const passwordStrength = () => {
+    const password = formData.password;
+    if (!password) return { strength: 0, label: "", color: "" };
+    
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[^a-zA-Z\d]/.test(password)) score++;
+    
+    if (score <= 2) return { strength: score * 20, label: "Weak", color: "destructive" };
+    if (score <= 3) return { strength: score * 20, label: "Fair", color: "warning" };
+    if (score <= 4) return { strength: score * 20, label: "Good", color: "primary" };
+    return { strength: 100, label: "Strong", color: "success" };
   };
-
-  const handleLiveEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value;
-    setLiveValidation(prev => ({
-      ...prev,
-      email,
-      emailValid: validateEmail(email),
-    }));
-  };
-
-  const handleLivePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const password = e.target.value;
-    setLiveValidation(prev => ({
-      ...prev,
-      password,
-      passwordValid: validatePassword(password),
-    }));
-  };
-
-  const codeExample = `import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const formSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-});
-
-const form = useForm({
-  resolver: zodResolver(formSchema),
-  defaultValues: {
-    email: "",
-    password: "",
-    name: "",
-  },
-});
-
-<Form {...form}>
-  <form onSubmit={form.handleSubmit(onSubmit)}>
-    <FormField
-      control={form.control}
-      name="email"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Email</FormLabel>
-          <FormControl>
-            <Input {...field} type="email" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  </form>
-</Form>`;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 showcase-component">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold">Form Validation</h1>
-            <p className="text-lg text-muted-foreground">
-              Comprehensive form validation with real-time feedback, error handling, and accessibility.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" asChild>
-              <a href="https://www.figma.com/design" target="_blank" rel="noopener noreferrer">
-                <Figma className="h-4 w-4 mr-2" />
-                Figma
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="#storybook" target="_blank" rel="noopener noreferrer">
-                <FileCode className="h-4 w-4 mr-2" />
-                Storybook
-              </a>
-            </Button>
-          </div>
-        </div>
         <div className="flex items-center gap-2">
-          <Badge variant="default">Stable</Badge>
-          <Badge variant="outline">React Hook Form</Badge>
-          <Badge variant="outline">Zod Schema</Badge>
+          <h1 className="text-3xl font-bold">Form Validation</h1>
+          <Badge variant="default">Interactive</Badge>
         </div>
+        <p className="text-lg text-muted-foreground">
+          Comprehensive form validation with real-time feedback and accessibility features.
+        </p>
       </div>
 
-      {/* Live Validation */}
+      {/* Registration Form */}
       <Card>
         <CardHeader>
-          <CardTitle>Live Validation</CardTitle>
-          <CardDescription>Real-time validation feedback as users type</CardDescription>
+          <CardTitle>User Registration Form</CardTitle>
+          <CardDescription>
+            Complete form with validation, password strength, and error handling
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
+          {isSubmitted ? (
+            <Alert className="border-success bg-success/10">
+              <CheckCircle className="h-4 w-4 text-success" />
+              <AlertDescription className="text-success">
+                Registration successful! Welcome to our platform.
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <div className="space-y-6">
+              {/* Username */}
               <div className="space-y-2">
-                <Label htmlFor="live-email">Email Address</Label>
+                <Label htmlFor="username" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Username
+                </Label>
                 <div className="relative">
                   <Input
-                    id="live-email"
+                    id="username"
+                    value={formData.username}
+                    onChange={(e) => handleInputChange('username', e.target.value)}
+                    className={`pr-10 ${
+                      getFieldStatus('username') === 'error' ? 'border-destructive' :
+                      getFieldStatus('username') === 'success' ? 'border-success' : ''
+                    }`}
+                    placeholder="Enter your username"
+                  />
+                  <div className="absolute right-3 top-3">
+                    {getFieldIcon('username')}
+                  </div>
+                </div>
+                {errors.username && (
+                  <p className="text-sm text-destructive">{errors.username}</p>
+                )}
+                {formData.username && !errors.username && (
+                  <p className="text-sm text-success">Username is available!</p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="space-y-2">
+                <Label htmlFor="email" className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  Email Address
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="email"
                     type="email"
-                    placeholder="Enter your email"
-                    value={liveValidation.email}
-                    onChange={handleLiveEmailChange}
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     className={`pr-10 ${
-                      liveValidation.email 
-                        ? liveValidation.emailValid 
-                          ? "border-green-500" 
-                          : "border-red-500"
-                        : ""
+                      getFieldStatus('email') === 'error' ? 'border-destructive' :
+                      getFieldStatus('email') === 'success' ? 'border-success' : ''
                     }`}
+                    placeholder="your@email.com"
                   />
-                  {liveValidation.email && (
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      {liveValidation.emailValid ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <AlertCircle className="h-4 w-4 text-red-500" />
-                      )}
-                    </div>
-                  )}
+                  <div className="absolute right-3 top-3">
+                    {getFieldIcon('email')}
+                  </div>
                 </div>
-                {liveValidation.email && !liveValidation.emailValid && (
-                  <p className="text-sm text-red-600 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    Please enter a valid email address
-                  </p>
+                {errors.email && (
+                  <p className="text-sm text-destructive">{errors.email}</p>
                 )}
               </div>
 
+              {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="live-password">Password</Label>
+                <Label htmlFor="password" className="flex items-center gap-2">
+                  <Lock className="h-4 w-4" />
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
-                    id="live-password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={liveValidation.password}
-                    onChange={handleLivePasswordChange}
-                    className={`pr-10 ${
-                      liveValidation.password 
-                        ? liveValidation.passwordValid 
-                          ? "border-green-500" 
-                          : "border-red-500"
-                        : ""
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className={`pr-20 ${
+                      getFieldStatus('password') === 'error' ? 'border-destructive' :
+                      getFieldStatus('password') === 'success' ? 'border-success' : ''
                     }`}
+                    placeholder="Enter your password"
                   />
-                  {liveValidation.password && (
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      {liveValidation.passwordValid ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <AlertCircle className="h-4 w-4 text-red-500" />
-                      )}
+                  <div className="absolute right-3 top-3 flex items-center gap-1">
+                    {getFieldIcon('password')}
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </Button>
+                  </div>
+                </div>
+                {formData.password && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Password strength:</span>
+                      <span className={`font-medium text-${passwordStrength().color}`}>
+                        {passwordStrength().label}
+                      </span>
                     </div>
-                  )}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Password strength: {liveValidation.password.length}/8 characters
-                </div>
-                {liveValidation.password && !liveValidation.passwordValid && (
-                  <p className="text-sm text-red-600 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    Password must be at least 8 characters long
-                  </p>
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div
+                        className={`h-2 rounded-full transition-all bg-${passwordStrength().color}`}
+                        style={{ width: `${passwordStrength().strength}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+                {errors.password && (
+                  <p className="text-sm text-destructive">{errors.password}</p>
                 )}
               </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Complete Form with Validation */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Complete Form Validation</CardTitle>
-          <CardDescription>Full form with comprehensive validation using React Hook Form and Zod</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John Doe" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+              {/* Confirm Password */}
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    className={`pr-10 ${
+                      getFieldStatus('confirmPassword') === 'error' ? 'border-destructive' :
+                      getFieldStatus('confirmPassword') === 'success' ? 'border-success' : ''
+                    }`}
+                    placeholder="Confirm your password"
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="john@example.com" type="email" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="absolute right-3 top-3">
+                    {getFieldIcon('confirmPassword')}
+                  </div>
                 </div>
+                {errors.confirmPassword && (
+                  <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                )}
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <Input type="password" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          Must be at least 8 characters long
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+              {/* Additional Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    Phone Number
+                  </Label>
+                  <Input
+                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className={
+                      getFieldStatus('phone') === 'error' ? 'border-destructive' :
+                      getFieldStatus('phone') === 'success' ? 'border-success' : ''
+                    }
+                    placeholder="+1 (555) 123-4567"
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
-                        <FormControl>
-                          <Input type="password" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="age"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Age</FormLabel>
-                        <FormControl>
-                          <Input 
-                            type="number" 
-                            {...field} 
-                            onChange={(e) => field.onChange(Number(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="country"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Country</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a country" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="us">United States</SelectItem>
-                            <SelectItem value="uk">United Kingdom</SelectItem>
-                            <SelectItem value="ca">Canada</SelectItem>
-                            <SelectItem value="au">Australia</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="bio"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bio</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Tell us about yourself..."
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        {field.value?.length || 0}/500 characters
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
+                  {errors.phone && (
+                    <p className="text-sm text-destructive">{errors.phone}</p>
                   )}
-                />
+                </div>
 
-                <FormField
-                  control={form.control}
-                  name="terms"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          I accept the terms and conditions
-                        </FormLabel>
-                        <FormDescription>
-                          You agree to our Terms of Service and Privacy Policy.
-                        </FormDescription>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
+                <div className="space-y-2">
+                  <Label htmlFor="birthdate" className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    Birthdate
+                  </Label>
+                  <Input
+                    id="birthdate"
+                    type="date"
+                    value={formData.birthdate}
+                    onChange={(e) => handleInputChange('birthdate', e.target.value)}
+                    className={
+                      getFieldStatus('birthdate') === 'error' ? 'border-destructive' :
+                      getFieldStatus('birthdate') === 'success' ? 'border-success' : ''
+                    }
+                  />
+                  {errors.birthdate && (
+                    <p className="text-sm text-destructive">{errors.birthdate}</p>
                   )}
+                </div>
+              </div>
+
+              {/* Country Selection */}
+              <div className="space-y-2">
+                <Label htmlFor="country">Country</Label>
+                <Select value={formData.country} onValueChange={(value) => handleInputChange('country', value)}>
+                  <SelectTrigger className={
+                    getFieldStatus('country') === 'error' ? 'border-destructive' :
+                    getFieldStatus('country') === 'success' ? 'border-success' : ''
+                  }>
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="us">United States</SelectItem>
+                    <SelectItem value="ca">Canada</SelectItem>
+                    <SelectItem value="uk">United Kingdom</SelectItem>
+                    <SelectItem value="de">Germany</SelectItem>
+                    <SelectItem value="fr">France</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.country && (
+                  <p className="text-sm text-destructive">{errors.country}</p>
+                )}
+              </div>
+
+              {/* Newsletter Checkbox */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="newsletter"
+                  checked={formData.newsletter}
+                  onCheckedChange={(checked) => handleInputChange('newsletter', checked as boolean)}
                 />
+                <Label htmlFor="newsletter" className="text-sm">
+                  Subscribe to our newsletter for updates and tips
+                </Label>
+              </div>
 
-                <Button type="submit" className="w-full">
-                  Create Account
-                </Button>
-              </form>
-            </Form>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium">Code Example</h4>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCode(!showCode)}
-              >
-                {showCode ? "Hide" : "Show"} Code
+              <Button onClick={handleSubmit} className="w-full">
+                Create Account
               </Button>
-              {showCode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(codeExample)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              )}
             </div>
-          </div>
-          {showCode && (
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{codeExample}</code>
-            </pre>
           )}
         </CardContent>
       </Card>
 
-      {/* Error States */}
+      {/* Validation Guidelines */}
       <Card>
         <CardHeader>
-          <CardTitle>Error States</CardTitle>
-          <CardDescription>Different ways to display validation errors</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              {/* Inline Error */}
-              <div className="space-y-2">
-                <Label htmlFor="error-email">Email (Inline Error)</Label>
-                <Input
-                  id="error-email"
-                  type="email"
-                  placeholder="Enter email"
-                  className="border-red-500"
-                  defaultValue="invalid-email"
-                />
-                <p className="text-sm text-red-600 flex items-center gap-1">
-                  <AlertCircle className="h-3 w-3" />
-                  Please enter a valid email address
-                </p>
-              </div>
-
-              {/* Success State */}
-              <div className="space-y-2">
-                <Label htmlFor="success-email">Email (Success State)</Label>
-                <Input
-                  id="success-email"
-                  type="email"
-                  placeholder="Enter email"
-                  className="border-green-500"
-                  defaultValue="user@example.com"
-                />
-                <p className="text-sm text-green-600 flex items-center gap-1">
-                  <CheckCircle2 className="h-3 w-3" />
-                  Email is valid
-                </p>
-              </div>
-
-              {/* Warning State */}
-              <div className="space-y-2">
-                <Label htmlFor="warning-input">Username (Warning)</Label>
-                <Input
-                  id="warning-input"
-                  placeholder="Enter username"
-                  className="border-yellow-500"
-                  defaultValue="user123"
-                />
-                <p className="text-sm text-yellow-600 flex items-center gap-1">
-                  <Info className="h-3 w-3" />
-                  This username is already taken, but you can still use it
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Usage Guidelines */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for form validation implementation</CardDescription>
+          <CardTitle>Validation Best Practices</CardTitle>
+          <CardDescription>
+            Guidelines for implementing effective form validation
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-success">Best Practices</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Validate on submit, provide feedback on blur</li>
-                <li>• Use clear, actionable error messages</li>
-                <li>• Show success states for positive feedback</li>
-                <li>• Validate progressively, not all at once</li>
-                <li>• Preserve user input during validation</li>
-                <li>• Use appropriate input types and constraints</li>
+            <div>
+              <h4 className="font-medium mb-2 text-success">Do</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Provide real-time validation feedback</li>
+                <li>• Use clear, helpful error messages</li>
+                <li>• Show success states for valid fields</li>
+                <li>• Make required fields obvious</li>
+                <li>• Test with screen readers</li>
               </ul>
             </div>
-            <div className="space-y-3">
-              <h4 className="font-medium text-warning">Accessibility</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Associate labels with form controls</li>
-                <li>• Use aria-describedby for error messages</li>
-                <li>• Ensure sufficient color contrast</li>
-                <li>• Provide text alternatives for icons</li>
-                <li>• Support keyboard navigation</li>
-                <li>• Announce errors to screen readers</li>
+            <div>
+              <h4 className="font-medium mb-2 text-destructive">Don't</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Validate too aggressively on first focus</li>
+                <li>• Use vague error messages</li>
+                <li>• Hide validation behind submission</li>
+                <li>• Make forms unnecessarily complex</li>
+                <li>• Forget mobile considerations</li>
               </ul>
             </div>
           </div>
