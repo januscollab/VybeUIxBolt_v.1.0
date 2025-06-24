@@ -2,18 +2,14 @@
 import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
-import { UserMenu } from "@/components/auth/UserMenu";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { LogIn } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
 
 interface MainLayoutProps {
   children: ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
-  const { user, loading } = useAuth();
+  const { brandName, logoUrl } = useLocalDesignSystem();
 
   return (
     <SidebarProvider>
@@ -21,20 +17,18 @@ export function MainLayout({ children }: MainLayoutProps) {
         <AppSidebar />
         <main className="flex-1 flex flex-col">
           <header className="border-b px-6 py-4 flex justify-between items-center">
-            <h1 className="text-xl font-semibold">VybeUI Design System</h1>
-            <div className="flex items-center gap-4">
-              {!loading && (
-                user ? (
-                  <UserMenu />
-                ) : (
-                  <Button asChild variant="outline" size="sm">
-                    <Link to="/auth">
-                      <LogIn className="h-4 w-4 mr-2" />
-                      Sign In
-                    </Link>
-                  </Button>
-                )
+            <div className="flex items-center gap-3">
+              {logoUrl && (
+                <img 
+                  src={logoUrl} 
+                  alt="Logo" 
+                  className="h-8 w-8 object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               )}
+              <h1 className="text-xl font-semibold">{brandName} Design System</h1>
             </div>
           </header>
           <div className="flex-1 p-6">

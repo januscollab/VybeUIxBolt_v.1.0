@@ -1,22 +1,17 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings, Figma, Download, Palette, ExternalLink, BookOpen, Shield, Type, Building2, Upload, Globe } from "lucide-react";
+import { Settings, Figma, Download, Palette, ExternalLink, BookOpen, Type, Building2, Upload, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAdminRole } from "@/hooks/useAdminRole";
-import { ColorPaletteControls, TypographyControls, BrandingControls } from "@/components/admin/AdminControls";
-import { ColorPaletteAdmin } from "@/components/admin/ColorPaletteAdmin";
-import { TypographyAdmin } from "@/components/admin/TypographyAdmin";
-import { BrandingAdmin } from "@/components/admin/BrandingAdmin";
-import { UserInvitations } from "@/components/admin/UserInvitations";
+import { LocalColorPaletteAdmin } from "@/components/admin/LocalColorPaletteAdmin";
+import { LocalTypographyAdmin } from "@/components/admin/LocalTypographyAdmin";
+import { LocalBrandingAdmin } from "@/components/admin/LocalBrandingAdmin";
+import { LocalExportImport } from "@/components/admin/LocalExportImport";
 import { SmartSiteScanner } from "@/components/admin/SmartSiteScanner";
-import { VersionManager } from "@/components/admin/VersionManager";
-import { SecureFigmaConfig } from "@/components/integrations/SecureFigmaConfig";
 
 const SettingsPage = () => {
-  const { isAdmin, loading } = useAdminRole();
-
   return (
     <div className="space-y-6">
       <div>
@@ -25,133 +20,159 @@ const SettingsPage = () => {
           Settings
         </h1>
         <p className="text-muted-foreground mt-2">
-          Configure your design system preferences and integrations.
+          Configure your design system preferences and customize your brand.
         </p>
       </div>
 
-      <Tabs defaultValue={isAdmin ? "design-system" : "integrations"} className="space-y-6">
+      <Tabs defaultValue="design-system" className="space-y-6">
         <TabsList>
-          {isAdmin && (
-            <>
-              <TabsTrigger value="design-system">
-                <Shield className="h-4 w-4 mr-2" />
-                Design System
-              </TabsTrigger>
-              <TabsTrigger value="scanner">
-                <Globe className="h-4 w-4 mr-2" />
-                Smart Scanner
-              </TabsTrigger>
-              <TabsTrigger value="colors">
-                <Palette className="h-4 w-4 mr-2" />
-                Colors
-              </TabsTrigger>
-              <TabsTrigger value="typography">
-                <Type className="h-4 w-4 mr-2" />
-                Typography
-              </TabsTrigger>
-              <TabsTrigger value="branding">
-                <Building2 className="h-4 w-4 mr-2" />
-                Branding
-              </TabsTrigger>
-            </>
-          )}
+          <TabsTrigger value="design-system">
+            <Palette className="h-4 w-4 mr-2" />
+            Design System
+          </TabsTrigger>
+          <TabsTrigger value="scanner">
+            <Globe className="h-4 w-4 mr-2" />
+            Smart Scanner
+          </TabsTrigger>
+          <TabsTrigger value="colors">
+            <Palette className="h-4 w-4 mr-2" />
+            Colors
+          </TabsTrigger>
+          <TabsTrigger value="typography">
+            <Type className="h-4 w-4 mr-2" />
+            Typography
+          </TabsTrigger>
+          <TabsTrigger value="branding">
+            <Building2 className="h-4 w-4 mr-2" />
+            Branding
+          </TabsTrigger>
           <TabsTrigger value="integrations">Integrations</TabsTrigger>
           <TabsTrigger value="export">Import/Export</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
         </TabsList>
 
-        {isAdmin && (
-          <>
-            <TabsContent value="design-system" className="space-y-4">
-              <VersionManager />
-              <UserInvitations />
-            </TabsContent>
+        <TabsContent value="design-system" className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Design System Overview</h2>
+            <p className="text-muted-foreground mb-6">
+              This is a frontend-only design system that stores all settings in your browser's local storage. 
+              All customizations are saved locally and can be exported/imported as needed.
+            </p>
+          </div>
 
-            <TabsContent value="scanner" className="space-y-4">
-              <SmartSiteScanner />
-            </TabsContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Palette className="h-5 w-5" />
+                  Colors
+                </CardTitle>
+                <CardDescription>
+                  Customize your color palette
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="#colors">Manage Colors</Link>
+                </Button>
+              </CardContent>
+            </Card>
 
-            <TabsContent value="colors" className="space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold flex items-center gap-2">
-                    <Palette className="h-6 w-6" />
-                    Color Palette Administration
-                    <Badge variant="destructive">Admin Only</Badge>
-                  </h2>
-                  <p className="text-muted-foreground mt-2">
-                    Customize your design system colors and create color palette versions.
-                  </p>
-                </div>
-                <ColorPaletteAdmin isOpen={true} onOpenChange={() => {}} />
-              </div>
-            </TabsContent>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Type className="h-5 w-5" />
+                  Typography
+                </CardTitle>
+                <CardDescription>
+                  Configure fonts and typography
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="#typography">Manage Fonts</Link>
+                </Button>
+              </CardContent>
+            </Card>
 
-            <TabsContent value="typography" className="space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold flex items-center gap-2">
-                    <Type className="h-6 w-6" />
-                    Typography Administration
-                    <Badge variant="destructive">Admin Only</Badge>
-                  </h2>
-                  <p className="text-muted-foreground mt-2">
-                    Configure fonts, upload custom fonts, and manage typography scales.
-                  </p>
-                </div>
-                <TypographyAdmin isOpen={true} onOpenChange={() => {}} />
-              </div>
-            </TabsContent>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5" />
+                  Branding
+                </CardTitle>
+                <CardDescription>
+                  Set your brand identity
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="#branding">Manage Brand</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
 
-            <TabsContent value="branding" className="space-y-4">
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold flex items-center gap-2">
-                    <Building2 className="h-6 w-6" />
-                    VybeUI Brand Administration
-                    <Badge variant="destructive">Admin Only</Badge>
-                  </h2>
-                  <p className="text-muted-foreground mt-2">
-                    Upload your logo, set brand name, and customize brand assets.
-                  </p>
-                </div>
-                <BrandingAdmin isOpen={true} onOpenChange={() => {}} />
-              </div>
-            </TabsContent>
-          </>
-        )}
+        <TabsContent value="scanner" className="space-y-4">
+          <SmartSiteScanner />
+        </TabsContent>
+
+        <TabsContent value="colors" className="space-y-4">
+          <LocalColorPaletteAdmin />
+        </TabsContent>
+
+        <TabsContent value="typography" className="space-y-4">
+          <LocalTypographyAdmin />
+        </TabsContent>
+
+        <TabsContent value="branding" className="space-y-4">
+          <LocalBrandingAdmin />
+        </TabsContent>
 
         <TabsContent value="integrations" className="space-y-4">
-          <SecureFigmaConfig />
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Figma className="h-5 w-5" />
+                Figma Integration
+                <Badge variant="outline">Not Available</Badge>
+              </CardTitle>
+              <CardDescription>
+                Connect your design system to Figma for seamless component synchronization.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-muted p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Features (Requires Backend)</h4>
+                <ul className="text-sm space-y-1 text-muted-foreground">
+                  <li>• Automatic component export from Figma</li>
+                  <li>• Design token synchronization</li>
+                  <li>• Component documentation generation</li>
+                  <li>• Real-time design system updates</li>
+                </ul>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Figma integration requires a backend service to securely store API tokens and handle synchronization.
+              </p>
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="h-5 w-5" />
                 Storybook Integration
-                <Badge variant="outline">Not Configured</Badge>
+                <Badge variant="outline">Not Available</Badge>
               </CardTitle>
               <CardDescription>
-                Generate and maintain Storybook stories for all your components automatically. 
-                Perfect for component documentation and testing in isolation.
+                Generate and maintain Storybook stories for all your components.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold mb-2">Features (Available)</h4>
-                <ul className="text-sm space-y-1 text-muted-foreground">
-                  <li>• Automatic story generation for all components</li>
-                  <li>• Component props documentation</li>
-                  <li>• Interactive controls and knobs</li>
-                  <li>• Design token integration</li>
-                  <li>• Export stories for existing Storybook setups</li>
-                </ul>
-              </div>
-              <Button disabled className="w-full">
-                <BookOpen className="h-4 w-4 mr-2" />
-                Configure Storybook Integration
-                <Badge variant="secondary" className="ml-2">Coming Soon</Badge>
-              </Button>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Storybook integration requires backend processing to generate stories and documentation.
+              </p>
             </CardContent>
           </Card>
 
@@ -159,7 +180,7 @@ const SettingsPage = () => {
             <CardHeader>
               <CardTitle>GitHub Integration</CardTitle>
               <CardDescription>
-                Connect your design system to GitHub for version control and collaboration.
+                Connect your design system to GitHub for version control.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -174,31 +195,7 @@ const SettingsPage = () => {
         </TabsContent>
 
         <TabsContent value="export" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Download className="h-5 w-5" />
-                Import & Export
-              </CardTitle>
-              <CardDescription>
-                Simple tools for importing and exporting your design system data.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button className="h-20 flex-col">
-                  <Download className="h-6 w-6 mb-2" />
-                  Export Design System
-                  <span className="text-xs text-muted-foreground">Download as JSON</span>
-                </Button>
-                <Button variant="outline" className="h-20 flex-col">
-                  <Upload className="h-6 w-6 mb-2" />
-                  Import Design System
-                  <span className="text-xs text-muted-foreground">Upload JSON file</span>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <LocalExportImport />
         </TabsContent>
 
         <TabsContent value="appearance" className="space-y-4">
@@ -217,18 +214,17 @@ const SettingsPage = () => {
                 <h4 className="font-semibold">Design Tokens</h4>
                 <p className="text-sm text-muted-foreground">
                   All theming is handled through design tokens defined in your CSS variables.
-                  Modify <code className="bg-muted px-1 py-0.5 rounded text-xs">index.css</code> and 
-                  <code className="bg-muted px-1 py-0.5 rounded text-xs">tailwind.config.ts</code> to customize colors, fonts, and spacing.
+                  Colors and fonts are automatically applied when you update them in the design system.
                 </p>
               </div>
               
               <div className="bg-muted p-4 rounded-lg">
-                <h5 className="font-semibold mb-2">Current Theme Variables</h5>
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                  <div>--primary: 16 100% 50%</div>
-                  <div>--secondary: 210 40% 96.1%</div>
-                  <div>--accent: 16 100% 50%</div>
-                  <div>--background: 0 0% 100%</div>
+                <h5 className="font-semibold mb-2">How it works</h5>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>• Colors are converted to HSL and applied as CSS custom properties</p>
+                  <p>• Google Fonts are dynamically loaded when typography changes</p>
+                  <p>• All changes are saved to localStorage automatically</p>
+                  <p>• Settings persist across browser sessions</p>
                 </div>
               </div>
             </CardContent>

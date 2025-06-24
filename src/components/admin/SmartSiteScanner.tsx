@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Globe, Palette, Type, Eye, Check, X, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { useDesignSystem } from '@/hooks/useDesignSystem';
+import { useLocalDesignSystem } from '@/hooks/useLocalDesignSystem';
 
 interface ScannedColors {
   primary: string;
@@ -41,23 +42,13 @@ interface ScanResult {
 }
 
 export function SmartSiteScanner() {
-  const { updateColorPalette, updateTypography, isAdmin } = useDesignSystem();
+  const { updateColorPalette, updateTypography } = useLocalDesignSystem();
   const [url, setUrl] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [selectedColors, setSelectedColors] = useState<Record<string, boolean>>({});
   const [selectedFonts, setSelectedFonts] = useState<Record<string, boolean>>({});
-
-  if (!isAdmin) {
-    return (
-      <Alert>
-        <AlertDescription>
-          Admin access required to use the Smart Site Scanner.
-        </AlertDescription>
-      </Alert>
-    );
-  }
 
   const validateUrl = (url: string): boolean => {
     try {
@@ -69,12 +60,10 @@ export function SmartSiteScanner() {
   };
 
   const extractColors = async (url: string): Promise<ScannedColors> => {
-    // Simulate color extraction based on domain
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     const domain = new URL(url).hostname.toLowerCase();
     
-    // Return different color schemes based on popular websites
     if (domain.includes('zapier')) {
       return {
         primary: '#FF4A00',
@@ -112,7 +101,6 @@ export function SmartSiteScanner() {
         text: '#FFFFFF'
       };
     } else {
-      // Default modern color scheme
       return {
         primary: '#2563EB',
         secondary: '#64748B',
@@ -125,12 +113,10 @@ export function SmartSiteScanner() {
   };
 
   const extractFonts = async (url: string): Promise<ScannedFonts> => {
-    // Simulate font extraction based on domain
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     const domain = new URL(url).hostname.toLowerCase();
     
-    // Return different font schemes based on popular websites
     if (domain.includes('zapier')) {
       return {
         primary: {
@@ -180,7 +166,6 @@ export function SmartSiteScanner() {
         }
       };
     } else {
-      // Default modern font scheme
       return {
         primary: {
           family: 'Inter',
@@ -211,7 +196,6 @@ export function SmartSiteScanner() {
     setScanResult(null);
 
     try {
-      // Simulate scanning progress
       setScanProgress(25);
       toast({
         title: "Scanning Started",
@@ -224,7 +208,6 @@ export function SmartSiteScanner() {
       const fonts = await extractFonts(url);
       setScanProgress(75);
 
-      // Finalize scan
       await new Promise(resolve => setTimeout(resolve, 500));
       setScanProgress(100);
 
@@ -236,7 +219,6 @@ export function SmartSiteScanner() {
 
       setScanResult(result);
       
-      // Initialize all selections as true
       setSelectedColors({
         primary: true,
         secondary: true,
@@ -272,7 +254,6 @@ export function SmartSiteScanner() {
     if (!scanResult) return;
 
     try {
-      // Apply selected colors
       const colorsToApply: Record<string, string> = {};
       Object.entries(selectedColors).forEach(([key, selected]) => {
         if (selected) {
@@ -281,10 +262,9 @@ export function SmartSiteScanner() {
       });
 
       if (Object.keys(colorsToApply).length > 0) {
-        await updateColorPalette(colorsToApply);
+        updateColorPalette(colorsToApply);
       }
 
-      // Apply selected fonts
       const fontsToApply: Record<string, any> = {};
       Object.entries(selectedFonts).forEach(([key, selected]) => {
         if (selected) {
@@ -293,7 +273,7 @@ export function SmartSiteScanner() {
       });
 
       if (Object.keys(fontsToApply).length > 0) {
-        await updateTypography(fontsToApply);
+        updateTypography(fontsToApply);
       }
 
       toast({
@@ -371,7 +351,6 @@ export function SmartSiteScanner() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* URL Input */}
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="website-url">Website URL</Label>
@@ -414,7 +393,6 @@ export function SmartSiteScanner() {
           )}
         </div>
 
-        {/* Scan Results */}
         {scanResult && (
           <div className="space-y-6">
             <Separator />
