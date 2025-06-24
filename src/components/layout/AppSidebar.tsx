@@ -213,7 +213,7 @@ export function AppSidebar() {
                                     <Link to={`/component/${component.slug}`}>
                                       <span>{component.name}</span>
                                       {component.is_experimental && (
-                                        <span className="ml-auto text-xs text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded">EXP</span>
+                                        <span className="ml-auto text-xs bg-accent/10 text-accent px-1.5 py-0.5 rounded">EXP</span>
                                       )}
                                     </Link>
                                   </SidebarMenuSubButton>
