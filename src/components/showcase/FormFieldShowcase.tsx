@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -44,9 +45,9 @@ export default function FormFieldShowcase() {
   <Input 
     id="password" 
     type="password" 
-    className="border-red-500" 
+    className="border-destructive" 
   />
-  <p className="text-sm text-red-500 flex items-center gap-1">
+  <p className="text-sm text-destructive flex items-center gap-1">
     <AlertCircle className="h-4 w-4" />
     Password must be at least 8 characters
   </p>
@@ -55,10 +56,10 @@ export default function FormFieldShowcase() {
   <Label htmlFor="username">Username</Label>
   <Input 
     id="username" 
-    className="border-green-500" 
+    className="border-success" 
     placeholder="johndoe" 
   />
-  <p className="text-sm text-green-600 flex items-center gap-1">
+  <p className="text-sm text-success flex items-center gap-1">
     <CheckCircle className="h-4 w-4" />
     Username is available
   </p>
@@ -186,10 +187,10 @@ export default function FormFieldShowcase() {
               <Label htmlFor="success-field">Success State</Label>
               <Input 
                 id="success-field" 
-                className="border-green-500 focus-visible:ring-green-500" 
+                className="border-success focus-visible:ring-success" 
                 placeholder="Valid input" 
               />
-              <p className="text-sm text-green-600 flex items-center gap-1">
+              <p className="text-sm text-success flex items-center gap-1">
                 <CheckCircle className="h-4 w-4" />
                 Looks good!
               </p>
@@ -339,9 +340,9 @@ export default function FormFieldShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Integration Features</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+            <h4 className="font-medium text-primary mb-2">Integration Features</h4>
+            <ul className="text-sm text-primary space-y-1">
               <li>• Real-time form validation with Supabase schemas</li>
               <li>• Automatic data persistence and state management</li>
               <li>• Built-in authentication field validation</li>
@@ -350,9 +351,9 @@ export default function FormFieldShowcase() {
             </ul>
           </div>
           
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Tailwind Integration</h4>
-            <ul className="text-sm text-green-800 dark:text-green-200 space-y-1">
+          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
+            <h4 className="font-medium text-success mb-2">Tailwind Integration</h4>
+            <ul className="text-sm text-success space-y-1">
               <li>• Design tokens mapped to Tailwind classes</li>
               <li>• Consistent spacing and typography scales</li>
               <li>• Dark mode support with semantic tokens</li>

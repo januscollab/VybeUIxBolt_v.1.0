@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -131,9 +132,9 @@ export default function InputShowcase() {
               <p className="text-sm text-destructive">This field is required</p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="success" className="text-green-600">Success State</Label>
-              <Input id="success" placeholder="Success input..." className="border-green-500 focus-visible:ring-green-500" />
-              <p className="text-sm text-green-600">Looks good!</p>
+              <Label htmlFor="success" className="text-success">Success State</Label>
+              <Input id="success" placeholder="Success input..." className="border-success focus-visible:ring-success" />
+              <p className="text-sm text-success">Looks good!</p>
             </div>
           </div>
         </CardContent>

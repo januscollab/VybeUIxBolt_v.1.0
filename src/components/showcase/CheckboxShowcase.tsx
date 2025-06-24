@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -255,9 +256,9 @@ export default function CheckboxShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Database Integration</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+            <h4 className="font-medium text-primary mb-2">Database Integration</h4>
+            <ul className="text-sm text-primary space-y-1">
               <li>• Boolean column mapping for checkbox states</li>
               <li>• Array column support for multi-select checkboxes</li>
               <li>• Real-time updates with Supabase subscriptions</li>
@@ -266,9 +267,9 @@ export default function CheckboxShowcase() {
             </ul>
           </div>
           
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Usage Patterns</h4>
-            <div className="text-sm text-green-800 dark:text-green-200 space-y-1">
+          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
+            <h4 className="font-medium text-success mb-2">Usage Patterns</h4>
+            <div className="text-sm text-success space-y-1">
               <code className="block">// User preferences</code>
               <code className="block">user_preferences: boolean[]</code>
               <code className="block">// Feature flags</code>
