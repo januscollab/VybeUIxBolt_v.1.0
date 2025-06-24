@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Palette, 
@@ -233,24 +232,8 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border p-4 bg-background">
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1" asChild>
-            <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4" />
-              GitHub
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          </Button>
-          <Button variant="default" size="sm" className="flex-1" asChild>
-            <a href="/documentation" target="_blank" rel="noopener noreferrer">
-              <FileText className="h-4 w-4" />
-              Docs
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          </Button>
-        </div>
-        <p className="text-xs text-muted-foreground text-center mt-3">
-          v1.0.0 • Built with Lovable
+        <p className="text-xs text-muted-foreground text-center">
+          VybeUI Design System v1.0.0
         </p>
       </SidebarFooter>
     </Sidebar>

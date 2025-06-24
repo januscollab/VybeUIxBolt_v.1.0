@@ -1,11 +1,9 @@
+
 import { useParams } from "react-router-dom";
 import { useComponent } from "@/hooks/useDesignSystem";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink, FileCode, Copy } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import { SafeHtml } from "@/lib/sanitize";
 
 // Import design system components
@@ -60,14 +58,6 @@ import ContainerShowcase from "@/components/showcase/ContainerShowcase";
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: component, isLoading } = useComponent(slug!);
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
 
   // Render specific design system components
   const renderComponentContent = () => {
@@ -231,18 +221,6 @@ export default function ComponentPage() {
               <p className="text-lg text-muted-foreground">{component.description}</p>
             )}
           </div>
-          
-          <div className="flex items-center gap-2">
-            {component.storybook_url && (
-              <Button variant="outline" asChild>
-                <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
-                  <FileCode className="h-4 w-4 mr-2" />
-                  Storybook
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </a>
-              </Button>
-            )}
-          </div>
         </div>
 
         <div className="flex items-center gap-2">
@@ -257,7 +235,7 @@ export default function ComponentPage() {
             {component.status}
           </Badge>
           {component.is_experimental && (
-            <Badge variant="outline" className="border-orange-500 text-orange-600">
+            <Badge variant="outline" className="bg-accent/10 text-accent">
               Experimental
             </Badge>
           )}
@@ -326,14 +304,6 @@ export default function ComponentPage() {
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="font-medium">Code Example</h4>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => copyToClipboard(variant.code_example!)}
-                          >
-                            <Copy className="h-4 w-4 mr-1" />
-                            Copy
-                          </Button>
                         </div>
                         <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
                           <code>{variant.code_example}</code>
