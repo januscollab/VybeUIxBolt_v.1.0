@@ -1,3 +1,4 @@
+
 import { Component } from "@/types/design-system";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,13 +30,13 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
   };
 
   return (
-    <Card className="group hover:shadow-md transition-shadow border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
+    <Card className="group hover:shadow-md transition-shadow border-accent/20 bg-accent/5 dark:border-accent/30 dark:bg-accent/10">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <CardTitle className="text-lg">{component.name}</CardTitle>
-              <Badge variant="outline" className="text-xs border-orange-500 text-orange-600 bg-orange-100 dark:bg-orange-950">
+              <Badge variant="outline" className="text-xs border-accent text-accent bg-accent/10 dark:bg-accent/20">
                 Experimental
               </Badge>
             </div>
@@ -64,13 +65,13 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
         </div>
         
         {/* Experimental CTA Section */}
-        <div className="bg-orange-100 dark:bg-orange-950/40 p-3 rounded-lg border border-orange-200 dark:border-orange-800">
+        <div className="bg-accent/10 dark:bg-accent/20 p-3 rounded-lg border border-accent/20 dark:border-accent/30">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
-              <h4 className="text-sm font-medium text-orange-800 dark:text-orange-200">
+              <h4 className="text-sm font-medium text-accent-foreground dark:text-accent">
                 Try this experimental feature
               </h4>
-              <p className="text-xs text-orange-600 dark:text-orange-300">
+              <p className="text-xs text-accent-foreground/80 dark:text-accent/80">
                 This component is in early development. Help us improve by testing it.
               </p>
             </div>
@@ -79,14 +80,14 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
                 variant="outline"
                 size="sm"
                 onClick={handleReject}
-                className="h-8 w-8 p-0 border-orange-300 text-orange-600 hover:bg-orange-200 dark:border-orange-700 dark:text-orange-400 dark:hover:bg-orange-900"
+                className="h-8 w-8 p-0 border-accent/30 text-accent hover:bg-accent/20 dark:border-accent/50 dark:text-accent dark:hover:bg-accent/30"
               >
                 <X className="h-3 w-3" />
               </Button>
               <Button
                 size="sm"
                 onClick={handleAccept}
-                className="h-8 w-8 p-0 bg-orange-600 hover:bg-orange-700 text-white dark:bg-orange-500 dark:hover:bg-orange-600"
+                className="h-8 w-8 p-0 bg-accent hover:bg-accent/80 text-accent-foreground dark:bg-accent/80 dark:hover:bg-accent"
               >
                 <Check className="h-3 w-3" />
               </Button>
