@@ -1,4 +1,3 @@
-
 export interface Category {
   id: string;
   name: string;
@@ -20,6 +19,8 @@ export interface Component {
   documentation?: Documentation[];
   figma_url?: string;
   storybook_url?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ComponentVariant {
@@ -109,7 +110,9 @@ export const components: Component[] = [
     description: 'Comprehensive color system with semantic tokens',
     category_id: '1',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'typography-scale',
@@ -118,7 +121,9 @@ export const components: Component[] = [
     description: 'Type hierarchy and typography system',
     category_id: '1',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'spacing-system',
@@ -127,7 +132,9 @@ export const components: Component[] = [
     description: 'Consistent spacing scale and layout tokens',
     category_id: '1',
     status: 'stable',
-    sort_order: 3
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'elevation-shadows',
@@ -136,7 +143,9 @@ export const components: Component[] = [
     description: 'Shadow system for depth and hierarchy',
     category_id: '1',
     status: 'stable',
-    sort_order: 4
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'icon-system',
@@ -145,7 +154,9 @@ export const components: Component[] = [
     description: 'Comprehensive icon library and guidelines',
     category_id: '1',
     status: 'stable',
-    sort_order: 5
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'interaction-states',
@@ -154,7 +165,9 @@ export const components: Component[] = [
     description: 'Hover, focus, and active state patterns',
     category_id: '1',
     status: 'stable',
-    sort_order: 6
+    sort_order: 6,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Core UI
@@ -165,7 +178,9 @@ export const components: Component[] = [
     description: 'Primary action component with multiple variants',
     category_id: '2',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'input',
@@ -174,7 +189,9 @@ export const components: Component[] = [
     description: 'Text input field with validation states',
     category_id: '2',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'select-dropdown',
@@ -183,7 +200,9 @@ export const components: Component[] = [
     description: 'Dropdown selection component',
     category_id: '2',
     status: 'stable',
-    sort_order: 3
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'badge',
@@ -192,7 +211,9 @@ export const components: Component[] = [
     description: 'Small status and labeling component',
     category_id: '2',
     status: 'stable',
-    sort_order: 4
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'card',
@@ -201,7 +222,9 @@ export const components: Component[] = [
     description: 'Container component for grouping content',
     category_id: '2',
     status: 'stable',
-    sort_order: 5
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'avatar',
@@ -210,7 +233,9 @@ export const components: Component[] = [
     description: 'User profile image or initials display',
     category_id: '2',
     status: 'stable',
-    sort_order: 6
+    sort_order: 6,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'progress-bar',
@@ -219,7 +244,9 @@ export const components: Component[] = [
     description: 'Visual progress indicator',
     category_id: '2',
     status: 'stable',
-    sort_order: 7
+    sort_order: 7,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'slider',
@@ -228,7 +255,9 @@ export const components: Component[] = [
     description: 'Range input control',
     category_id: '2',
     status: 'stable',
-    sort_order: 8
+    sort_order: 8,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'checkbox',
@@ -237,7 +266,9 @@ export const components: Component[] = [
     description: 'Boolean input control',
     category_id: '2',
     status: 'stable',
-    sort_order: 9
+    sort_order: 9,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'switch-toggle',
@@ -246,7 +277,9 @@ export const components: Component[] = [
     description: 'On/off toggle control',
     category_id: '2',
     status: 'stable',
-    sort_order: 10
+    sort_order: 10,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'textarea',
@@ -255,7 +288,9 @@ export const components: Component[] = [
     description: 'Multi-line text input',
     category_id: '2',
     status: 'stable',
-    sort_order: 11
+    sort_order: 11,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'radio-button',
@@ -264,7 +299,9 @@ export const components: Component[] = [
     description: 'Single selection from multiple options',
     category_id: '2',
     status: 'stable',
-    sort_order: 12
+    sort_order: 12,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'loading-spinner',
@@ -273,7 +310,9 @@ export const components: Component[] = [
     description: 'Loading state indicator',
     category_id: '2',
     status: 'stable',
-    sort_order: 13
+    sort_order: 13,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'tooltip',
@@ -282,7 +321,9 @@ export const components: Component[] = [
     description: 'Contextual information overlay',
     category_id: '2',
     status: 'stable',
-    sort_order: 14
+    sort_order: 14,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'popover',
@@ -291,7 +332,9 @@ export const components: Component[] = [
     description: 'Floating content container',
     category_id: '2',
     status: 'stable',
-    sort_order: 15
+    sort_order: 15,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'accordion',
@@ -300,7 +343,9 @@ export const components: Component[] = [
     description: 'Collapsible content sections',
     category_id: '2',
     status: 'stable',
-    sort_order: 16
+    sort_order: 16,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'divider',
@@ -309,7 +354,9 @@ export const components: Component[] = [
     description: 'Content separator',
     category_id: '2',
     status: 'stable',
-    sort_order: 17
+    sort_order: 17,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'list',
@@ -318,7 +365,9 @@ export const components: Component[] = [
     description: 'Structured data display',
     category_id: '2',
     status: 'stable',
-    sort_order: 18
+    sort_order: 18,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Navigation
@@ -329,7 +378,9 @@ export const components: Component[] = [
     description: 'Navigation path indicator',
     category_id: '3',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'navigation',
@@ -338,7 +389,9 @@ export const components: Component[] = [
     description: 'Main navigation component',
     category_id: '3',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'sidebar',
@@ -347,7 +400,9 @@ export const components: Component[] = [
     description: 'Side navigation panel',
     category_id: '3',
     status: 'stable',
-    sort_order: 3
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'command-menu',
@@ -356,7 +411,9 @@ export const components: Component[] = [
     description: 'Keyboard-driven command interface',
     category_id: '3',
     status: 'stable',
-    sort_order: 4
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'steps-stepper',
@@ -365,7 +422,9 @@ export const components: Component[] = [
     description: 'Multi-step process indicator',
     category_id: '3',
     status: 'stable',
-    sort_order: 5
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'ai-command-palette',
@@ -374,7 +433,9 @@ export const components: Component[] = [
     description: 'AI-powered command interface',
     category_id: '3',
     status: 'stable',
-    sort_order: 6
+    sort_order: 6,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Content & Layout
@@ -385,7 +446,9 @@ export const components: Component[] = [
     description: 'Data table component',
     category_id: '4',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'banner',
@@ -394,7 +457,9 @@ export const components: Component[] = [
     description: 'Prominent announcement component',
     category_id: '4',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'container',
@@ -403,7 +468,9 @@ export const components: Component[] = [
     description: 'Layout container component',
     category_id: '4',
     status: 'stable',
-    sort_order: 3
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Forms
@@ -414,7 +481,9 @@ export const components: Component[] = [
     description: 'Form wrapper and validation',
     category_id: '5',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'form-field',
@@ -423,7 +492,9 @@ export const components: Component[] = [
     description: 'Form field with label and validation',
     category_id: '5',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'search-bar',
@@ -432,7 +503,9 @@ export const components: Component[] = [
     description: 'Search input component',
     category_id: '5',
     status: 'stable',
-    sort_order: 3
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'phone-input',
@@ -441,7 +514,9 @@ export const components: Component[] = [
     description: 'International phone number input',
     category_id: '5',
     status: 'stable',
-    sort_order: 4
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'code-block',
@@ -450,7 +525,9 @@ export const components: Component[] = [
     description: 'Syntax-highlighted code display',
     category_id: '5',
     status: 'stable',
-    sort_order: 5
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Feedback & Messaging
@@ -461,7 +538,9 @@ export const components: Component[] = [
     description: 'Important message component',
     category_id: '6',
     status: 'stable',
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'toast',
@@ -470,7 +549,9 @@ export const components: Component[] = [
     description: 'Temporary notification',
     category_id: '6',
     status: 'stable',
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
 
   // Experimental
@@ -482,7 +563,9 @@ export const components: Component[] = [
     category_id: '8',
     status: 'draft',
     is_experimental: true,
-    sort_order: 1
+    sort_order: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   },
   {
     id: 'collaboration-panel',
@@ -492,6 +575,8 @@ export const components: Component[] = [
     category_id: '8',
     status: 'draft',
     is_experimental: true,
-    sort_order: 2
+    sort_order: 2,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   }
 ];

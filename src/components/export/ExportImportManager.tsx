@@ -1,251 +1,78 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Download, Upload, FileJson, Code, Palette, AlertCircle, CheckCircle } from "lucide-react";
-import { useComponents, useCategories } from "@/hooks/useDesignSystem";
-import { useToast } from "@/hooks/use-toast";
 
-interface ExportOptions {
-  format: 'json' | 'css' | 'figma-tokens' | 'storybook';
-  includeCategories: boolean;
-  includeComponents: boolean;
-  includeTokens: boolean;
-  includeDocumentation: boolean;
-}
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Download, Upload, FileJson, Palette, Type, Copy, Check } from "lucide-react";
+import { useState } from "react";
+import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
+import { toast } from "@/hooks/use-toast";
 
 export function ExportImportManager() {
-  const { data: components } = useComponents();
-  const { data: categories } = useCategories();
-  const { toast } = useToast();
-  
-  const [exportOptions, setExportOptions] = useState<ExportOptions>({
-    format: 'json',
-    includeCategories: true,
-    includeComponents: true,
-    includeTokens: true,
-    includeDocumentation: true
-  });
-  
+  const [exportData, setExportData] = useState("");
   const [importData, setImportData] = useState("");
-  const [validationResults, setValidationResults] = useState<{
-    valid: boolean;
-    errors: string[];
-    warnings: string[];
-    stats?: {
-      categories: number;
-      components: number;
-      tokens: number;
-    };
-  } | null>(null);
-
-  const generateExportData = () => {
-    const exportData: any = {
-      version: "1.0.0",
-      exportedAt: new Date().toISOString(),
-      metadata: {
-        totalCategories: categories?.length || 0,
-        totalComponents: components?.length || 0,
-      }
-    };
-
-    if (exportOptions.includeCategories) {
-      exportData.categories = categories?.map(cat => ({
-        id: cat.id,
-        name: cat.name,
-        slug: cat.slug,
-        description: cat.description,
-        sortOrder: cat.sort_order
-      }));
-    }
-
-    if (exportOptions.includeComponents) {
-      exportData.components = components?.map(comp => ({
-        id: comp.id,
-        name: comp.name,
-        slug: comp.slug,
-        description: comp.description,
-        categoryId: comp.category_id,
-        status: comp.status,
-        isExperimental: comp.is_experimental,
-        figmaUrl: comp.figma_url,
-        sortOrder: comp.sort_order
-      }));
-    }
-
-    // Mock design tokens for export
-    if (exportOptions.includeTokens) {
-      exportData.designTokens = {
-        colors: {
-          primary: "hsl(16 100% 50%)",
-          secondary: "hsl(210 40% 96.1%)",
-          accent: "hsl(16 100% 50%)",
-          background: "hsl(0 0% 100%)",
-          foreground: "hsl(222.2 84% 4.9%)"
-        },
-        typography: {
-          fontFamily: "Inter",
-          fontSize: {
-            sm: "0.875rem",
-            base: "1rem",
-            lg: "1.125rem",
-            xl: "1.25rem"
-          }
-        },
-        spacing: {
-          xs: "0.25rem",
-          sm: "0.5rem",
-          md: "1rem",
-          lg: "1.5rem",
-          xl: "2rem"
-        }
-      };
-    }
-
-    return exportData;
-  };
-
-  const formatForExport = (data: any) => {
-    switch (exportOptions.format) {
-      case 'json':
-        return JSON.stringify(data, null, 2);
-      
-      case 'css':
-        // Convert to CSS custom properties
-        let css = ':root {\n';
-        if (data.designTokens?.colors) {
-          Object.entries(data.designTokens.colors).forEach(([key, value]) => {
-            css += `  --color-${key}: ${value};\n`;
-          });
-        }
-        if (data.designTokens?.spacing) {
-          Object.entries(data.designTokens.spacing).forEach(([key, value]) => {
-            css += `  --spacing-${key}: ${value};\n`;
-          });
-        }
-        css += '}';
-        return css;
-      
-      case 'figma-tokens':
-        // Format for Figma Tokens plugin
-        return JSON.stringify({
-          colors: data.designTokens?.colors || {},
-          typography: data.designTokens?.typography || {},
-          spacing: data.designTokens?.spacing || {}
-        }, null, 2);
-      
-      case 'storybook':
-        // Format for Storybook integration
-        return `export const designTokens = ${JSON.stringify(data.designTokens, null, 2)};
-
-export const components = ${JSON.stringify(data.components, null, 2)};`;
-      
-      default:
-        return JSON.stringify(data, null, 2);
-    }
-  };
+  const [copied, setCopied] = useState(false);
+  
+  const {
+    colorPalette,
+    typography,
+    brandName,
+    logoUrl,
+    exportSettings,
+    importSettings
+  } = useLocalDesignSystem();
 
   const handleExport = () => {
-    try {
-      const data = generateExportData();
-      const formattedData = formatForExport(data);
-      
-      const fileExtension = exportOptions.format === 'css' ? 'css' : 
-                           exportOptions.format === 'storybook' ? 'js' : 'json';
-      const fileName = `design-system-export.${fileExtension}`;
-      
-      const blob = new Blob([formattedData], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      toast({
-        title: "Export successful",
-        description: `Design system exported as ${fileName}`,
-      });
-    } catch (error) {
-      toast({
-        title: "Export failed",
-        description: "There was an error exporting your design system",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const validateImportData = (data: string) => {
-    try {
-      const parsed = JSON.parse(data);
-      const errors: string[] = [];
-      const warnings: string[] = [];
-      
-      // Basic structure validation
-      if (!parsed.version) {
-        warnings.push("No version specified");
-      }
-      
-      if (!parsed.categories && !parsed.components && !parsed.designTokens) {
-        errors.push("No valid data found");
-      }
-      
-      // Component validation
-      if (parsed.components) {
-        parsed.components.forEach((comp: any, index: number) => {
-          if (!comp.name || !comp.slug) {
-            errors.push(`Component at index ${index} missing required fields`);
-          }
-        });
-      }
-      
-      const stats = {
-        categories: parsed.categories?.length || 0,
-        components: parsed.components?.length || 0,
-        tokens: Object.keys(parsed.designTokens || {}).length
-      };
-      
-      setValidationResults({
-        valid: errors.length === 0,
-        errors,
-        warnings,
-        stats
-      });
-      
-    } catch (error) {
-      setValidationResults({
-        valid: false,
-        errors: ["Invalid JSON format"],
-        warnings: []
-      });
-    }
+    const data = exportSettings();
+    setExportData(JSON.stringify(data, null, 2));
+    toast({
+      title: "Settings Exported",
+      description: "Your design system settings have been exported.",
+    });
   };
 
   const handleImport = () => {
-    if (!validationResults?.valid) {
+    try {
+      const parsed = JSON.parse(importData);
+      importSettings(parsed);
       toast({
-        title: "Import failed",
-        description: "Please fix validation errors first",
-        variant: "destructive"
+        title: "Settings Imported",
+        description: "Your design system settings have been imported successfully.",
       });
-      return;
+      setImportData("");
+    } catch (error) {
+      toast({
+        title: "Import Failed",
+        description: "Invalid JSON format. Please check your data.",
+        variant: "destructive",
+      });
     }
-    
-    // In a real app, this would call your import API
+  };
+
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(exportData);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
     toast({
-      title: "Import successful",
-      description: "Design system data imported successfully",
+      title: "Copied!",
+      description: "Export data copied to clipboard.",
     });
-    
-    setImportData("");
-    setValidationResults(null);
+  };
+
+  const downloadJson = () => {
+    const blob = new Blob([exportData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'vybeui-settings.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -254,12 +81,15 @@ export const components = ${JSON.stringify(data.components, null, 2)};`;
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileJson className="h-5 w-5" />
-            Export & Import Manager
+            Export & Import Design System Settings
           </CardTitle>
+          <CardDescription>
+            Export your current design system configuration or import settings from a backup.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="export" className="space-y-4">
-            <TabsList>
+          <Tabs defaultValue="export" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="export" className="flex items-center gap-2">
                 <Download className="h-4 w-4" />
                 Export
@@ -271,137 +101,95 @@ export const components = ${JSON.stringify(data.components, null, 2)};`;
             </TabsList>
 
             <TabsContent value="export" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="format">Export Format</Label>
-                    <Select 
-                      value={exportOptions.format} 
-                      onValueChange={(value: any) => setExportOptions(prev => ({ ...prev, format: value }))}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="json">JSON</SelectItem>
-                        <SelectItem value="css">CSS Variables</SelectItem>
-                        <SelectItem value="figma-tokens">Figma Tokens</SelectItem>
-                        <SelectItem value="storybook">Storybook</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Include in Export</Label>
-                    <div className="space-y-2">
-                      {[
-                        { key: 'includeCategories', label: 'Categories' },
-                        { key: 'includeComponents', label: 'Components' },
-                        { key: 'includeTokens', label: 'Design Tokens' },
-                        { key: 'includeDocumentation', label: 'Documentation' }
-                      ].map(({ key, label }) => (
-                        <div key={key} className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            id={key}
-                            checked={exportOptions[key as keyof ExportOptions] as boolean}
-                            onChange={(e) => setExportOptions(prev => ({ 
-                              ...prev, 
-                              [key]: e.target.checked 
-                            }))}
-                          />
-                          <Label htmlFor={key}>{label}</Label>
-                        </div>
-                      ))}
+                    <Label>Current Brand</Label>
+                    <div className="text-sm text-muted-foreground">{brandName || 'VybeUI'}</div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Settings Include</Label>
+                    <div className="flex gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        <Palette className="h-3 w-3 mr-1" />
+                        Colors
+                      </Badge>
+                      <Badge variant="secondary" className="text-xs">
+                        <Type className="h-3 w-3 mr-1" />
+                        Typography
+                      </Badge>
                     </div>
                   </div>
                 </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-semibold">Export Preview</h4>
-                  <div className="bg-muted p-4 rounded-lg space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Categories:</span>
-                      <Badge variant="outline">{categories?.length || 0}</Badge>
+                
+                <Button onClick={handleExport} className="w-full">
+                  <Download className="h-4 w-4 mr-2" />
+                  Generate Export Data
+                </Button>
+                
+                {exportData && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Export Data</Label>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={copyToClipboard}
+                          className="flex items-center gap-2"
+                        >
+                          {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                          {copied ? 'Copied!' : 'Copy'}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={downloadJson}
+                          className="flex items-center gap-2"
+                        >
+                          <Download className="h-3 w-3" />
+                          Download
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Components:</span>
-                      <Badge variant="outline">{components?.length || 0}</Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Format:</span>
-                      <Badge>{exportOptions.format.toUpperCase()}</Badge>
-                    </div>
+                    <Textarea
+                      value={exportData}
+                      readOnly
+                      className="h-48 font-mono text-xs"
+                      placeholder="Export data will appear here..."
+                    />
                   </div>
-                  <Button onClick={handleExport} className="w-full">
-                    <Download className="h-4 w-4 mr-2" />
-                    Export Design System
-                  </Button>
-                </div>
+                )}
               </div>
             </TabsContent>
 
             <TabsContent value="import" className="space-y-4">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="import-data">Import Data (JSON)</Label>
-                  <Textarea
-                    id="import-data"
-                    placeholder="Paste your design system JSON data here..."
-                    value={importData}
-                    onChange={(e) => {
-                      setImportData(e.target.value);
-                      if (e.target.value) {
-                        validateImportData(e.target.value);
-                      } else {
-                        setValidationResults(null);
-                      }
-                    }}
-                    rows={8}
-                  />
-                </div>
-
-                {validationResults && (
-                  <div className="space-y-2">
-                    {validationResults.valid ? (
-                      <Alert>
-                        <CheckCircle className="h-4 w-4" />
-                        <AlertDescription>
-                          Validation successful! Ready to import{' '}
-                          {validationResults.stats?.categories} categories,{' '}
-                          {validationResults.stats?.components} components, and{' '}
-                          {validationResults.stats?.tokens} design tokens.
-                        </AlertDescription>
-                      </Alert>
-                    ) : (
-                      <Alert variant="destructive">
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertDescription>
-                          Validation failed: {validationResults.errors.join(', ')}
-                        </AlertDescription>
-                      </Alert>
-                    )}
-
-                    {validationResults.warnings.length > 0 && (
-                      <Alert>
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertDescription>
-                          Warnings: {validationResults.warnings.join(', ')}
-                        </AlertDescription>
-                      </Alert>
-                    )}
-                  </div>
-                )}
-
-                <Button 
-                  onClick={handleImport} 
-                  disabled={!validationResults?.valid}
-                  className="w-full"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Import Design System
-                </Button>
+              <Alert>
+                <Upload className="h-4 w-4" />
+                <AlertDescription>
+                  Importing will overwrite your current design system settings. Make sure to export your current settings first if you want to keep a backup.
+                </AlertDescription>
+              </Alert>
+              
+              <div className="space-y-2">
+                <Label htmlFor="import-data">Import Data (JSON)</Label>
+                <Textarea
+                  id="import-data"
+                  value={importData}
+                  onChange={(e) => setImportData(e.target.value)}
+                  className="h-48 font-mono text-xs"
+                  placeholder="Paste your exported settings JSON here..."
+                />
               </div>
+              
+              <Button 
+                onClick={handleImport} 
+                disabled={!importData.trim()}
+                className="w-full"
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                Import Settings
+              </Button>
             </TabsContent>
           </Tabs>
         </CardContent>

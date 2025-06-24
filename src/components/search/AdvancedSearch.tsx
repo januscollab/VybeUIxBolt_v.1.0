@@ -1,220 +1,204 @@
+
 import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Search, Filter, X } from "lucide-react";
-import { useCategories } from "@/hooks/useDesignSystem";
-
-interface SearchFilters {
-  categories: string[];
-  status: string[];
-  isExperimental?: boolean;
-}
+import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
 
 interface AdvancedSearchProps {
-  onSearch: (query: string, filters: SearchFilters) => void;
+  onSearch: (query: string, filters: any) => void;
   onClearFilters: () => void;
 }
 
 export function AdvancedSearch({ onSearch, onClearFilters }: AdvancedSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState<SearchFilters>({
-    categories: [],
-    status: [],
-  });
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [includeExperimental, setIncludeExperimental] = useState(false);
+  const [results, setResults] = useState<any[]>([]);
+
   const { data: categories } = useCategories();
+  const { data: allComponents } = useComponents();
 
   const handleSearch = () => {
+    const filters = {
+      category: selectedCategory,
+      status: selectedStatus,
+      experimental: includeExperimental,
+    };
+
+    let filteredComponents = allComponents || [];
+
+    // Apply search query
+    if (searchQuery) {
+      filteredComponents = filteredComponents.filter(component =>
+        component.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        component.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        component.slug.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply category filter
+    if (selectedCategory) {
+      const category = categories?.find(c => c.slug === selectedCategory);
+      if (category) {
+        filteredComponents = filteredComponents.filter(c => c.category_id === category.id);
+      }
+    }
+
+    // Apply status filter
+    if (selectedStatus) {
+      filteredComponents = filteredComponents.filter(c => c.status === selectedStatus);
+    }
+
+    // Apply experimental filter
+    if (!includeExperimental) {
+      filteredComponents = filteredComponents.filter(c => !c.is_experimental);
+    }
+
+    setResults(filteredComponents);
     onSearch(searchQuery, filters);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const updateFilters = (type: keyof SearchFilters, value: string, checked: boolean) => {
-    setFilters(prev => {
-      const currentValues = Array.isArray(prev[type]) ? prev[type] as string[] : [];
-      
-      if (checked) {
-        return {
-          ...prev,
-          [type]: [...currentValues, value]
-        };
-      } else {
-        return {
-          ...prev,
-          [type]: currentValues.filter(v => v !== value)
-        };
-      }
-    });
-  };
-
-  const clearAllFilters = () => {
-    setFilters({ categories: [], status: [] });
+  const handleClear = () => {
     setSearchQuery("");
+    setSelectedCategory("");
+    setSelectedStatus("");
+    setIncludeExperimental(false);
+    setResults([]);
     onClearFilters();
   };
 
-  const hasActiveFilters = filters.categories.length > 0 || filters.status.length > 0 || filters.isExperimental !== undefined;
-  const totalFilters = filters.categories.length + filters.status.length + (filters.isExperimental !== undefined ? 1 : 0);
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Search className="h-5 w-5" />
-          Search Components
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <Input
-              placeholder="Search components, categories, or features..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
-              className="w-full"
-            />
-          </div>
-          <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="relative">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-                {totalFilters > 0 && (
-                  <Badge variant="secondary" className="ml-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
-                    {totalFilters}
-                  </Badge>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80" align="end">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold">Filters</h4>
-                  {hasActiveFilters && (
-                    <Button variant="ghost" size="sm" onClick={clearAllFilters}>
-                      Clear all
-                    </Button>
-                  )}
-                </div>
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="h-5 w-5" />
+            Advanced Component Search
+          </CardTitle>
+          <CardDescription>
+            Search and filter components across the design system with advanced criteria.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="search-query">Search Query</Label>
+              <Input
+                id="search-query"
+                placeholder="Component name or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
 
-                {/* Categories Filter */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Categories</Label>
-                  <div className="grid grid-cols-1 gap-2">
-                    {categories?.map((category) => (
-                      <div key={category.id} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`category-${category.id}`}
-                          checked={filters.categories.includes(category.id)}
-                          onCheckedChange={(checked) =>
-                            updateFilters('categories', category.id, checked as boolean)
-                          }
-                        />
-                        <Label htmlFor={`category-${category.id}`} className="text-sm">
-                          {category.name}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            <div className="space-y-2">
+              <Label>Category</Label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All categories</SelectItem>
+                  {categories?.map((category) => (
+                    <SelectItem key={category.id} value={category.slug}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-                {/* Status Filter */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Status</Label>
-                  <div className="grid grid-cols-1 gap-2">
-                    {['stable', 'beta', 'alpha', 'draft'].map((status) => (
-                      <div key={status} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`status-${status}`}
-                          checked={filters.status.includes(status)}
-                          onCheckedChange={(checked) =>
-                            updateFilters('status', status, checked as boolean)
-                          }
-                        />
-                        <Label htmlFor={`status-${status}`} className="text-sm capitalize">
-                          {status}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All statuses</SelectItem>
+                  <SelectItem value="draft">Draft</SelectItem>
+                  <SelectItem value="review">Review</SelectItem>
+                  <SelectItem value="stable">Stable</SelectItem>
+                  <SelectItem value="deprecated">Deprecated</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                {/* Experimental Filter */}
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Type</Label>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="experimental"
-                      checked={filters.isExperimental === true}
-                      onCheckedChange={(checked) =>
-                        setFilters(prev => ({
-                          ...prev,
-                          isExperimental: checked ? true : undefined
-                        }))
-                      }
-                    />
-                    <Label htmlFor="experimental" className="text-sm">
-                      Experimental only
-                    </Label>
-                  </div>
-                </div>
+            <div className="space-y-2">
+              <Label>Options</Label>
+              <div className="flex items-center space-x-2 pt-2">
+                <Checkbox
+                  id="experimental"
+                  checked={includeExperimental}
+                  onCheckedChange={(checked) => setIncludeExperimental(checked as boolean)}
+                />
+                <Label htmlFor="experimental" className="text-sm">
+                  Include experimental
+                </Label>
               </div>
-            </PopoverContent>
-          </Popover>
-          <Button onClick={handleSearch}>
-            Search
-          </Button>
-        </div>
-
-        {/* Active Filters Display */}
-        {hasActiveFilters && (
-          <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-sm text-muted-foreground">Active filters:</span>
-            {filters.categories.map((categoryId) => {
-              const category = categories?.find(c => c.id === categoryId);
-              return category ? (
-                <Badge key={categoryId} variant="secondary" className="flex items-center gap-1">
-                  {category.name}
-                  <X 
-                    className="h-3 w-3 cursor-pointer" 
-                    onClick={() => updateFilters('categories', categoryId, false)}
-                  />
-                </Badge>
-              ) : null;
-            })}
-            {filters.status.map((status) => (
-              <Badge key={status} variant="secondary" className="flex items-center gap-1">
-                {status}
-                <X 
-                  className="h-3 w-3 cursor-pointer" 
-                  onClick={() => updateFilters('status', status, false)}
-                />
-              </Badge>
-            ))}
-            {filters.isExperimental && (
-              <Badge variant="secondary" className="flex items-center gap-1">
-                Experimental
-                <X 
-                  className="h-3 w-3 cursor-pointer" 
-                  onClick={() => setFilters(prev => ({ ...prev, isExperimental: undefined }))}
-                />
-              </Badge>
-            )}
+            </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          <div className="flex gap-2">
+            <Button onClick={handleSearch} className="flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              Search Components
+            </Button>
+            <Button variant="outline" onClick={handleClear} className="flex items-center gap-2">
+              <X className="h-4 w-4" />
+              Clear Filters
+            </Button>
+          </div>
+
+          {results.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-medium">Search Results</h3>
+                <Badge variant="secondary">{results.length} components found</Badge>
+              </div>
+              <div className="grid gap-3">
+                {results.map((component) => (
+                  <Card key={component.id} className="p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1">
+                        <h4 className="font-medium">{component.name}</h4>
+                        {component.description && (
+                          <p className="text-sm text-muted-foreground">{component.description}</p>
+                        )}
+                      </div>
+                      <div className="flex gap-2">
+                        <Badge
+                          variant={
+                            component.status === 'stable' ? 'default' :
+                            component.status === 'review' ? 'secondary' :
+                            component.status === 'deprecated' ? 'destructive' :
+                            'outline'
+                          }
+                          className="text-xs"
+                        >
+                          {component.status}
+                        </Badge>
+                        {component.is_experimental && (
+                          <Badge variant="outline" className="text-xs bg-accent/10 text-accent border-accent">
+                            Experimental
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

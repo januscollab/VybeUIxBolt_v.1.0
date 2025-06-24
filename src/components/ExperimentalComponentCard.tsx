@@ -1,5 +1,5 @@
 
-import { Component } from "@/types/design-system";
+import { Component } from "@/data/staticData";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ interface ExperimentalComponentCardProps {
 
 export function ExperimentalComponentCard({ component }: ExperimentalComponentCardProps) {
   const handleAccept = () => {
-    // TODO: Implement accept logic - could save to local storage or user preferences
     toast({
       title: "Component Accepted",
       description: `${component.name} has been added to your accepted experimental components.`,
@@ -21,7 +20,6 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
   };
 
   const handleReject = () => {
-    // TODO: Implement reject logic - could hide component or save preference
     toast({
       title: "Component Rejected",
       description: `${component.name} has been rejected and will be hidden.`,
@@ -30,13 +28,13 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
   };
 
   return (
-    <Card className="group hover:shadow-md transition-shadow border-accent/20 bg-accent/5 dark:border-accent/30 dark:bg-accent/10">
+    <Card className="group hover:shadow-md transition-shadow border-accent/20 bg-accent/5">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <CardTitle className="text-lg">{component.name}</CardTitle>
-              <Badge variant="outline" className="text-xs border-accent text-accent bg-accent/10 dark:bg-accent/20">
+              <Badge variant="outline" className="text-xs border-accent text-accent bg-accent/10">
                 Experimental
               </Badge>
             </div>
@@ -65,13 +63,13 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
         </div>
         
         {/* Experimental CTA Section */}
-        <div className="bg-accent/10 dark:bg-accent/20 p-3 rounded-lg border border-accent/20 dark:border-accent/30">
+        <div className="bg-accent/10 p-3 rounded-lg border border-accent/20">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
-              <h4 className="text-sm font-medium text-accent-foreground dark:text-accent">
+              <h4 className="text-sm font-medium text-accent">
                 Try this experimental feature
               </h4>
-              <p className="text-xs text-accent-foreground/80 dark:text-accent/80">
+              <p className="text-xs text-accent/80">
                 This component is in early development. Help us improve by testing it.
               </p>
             </div>
@@ -80,14 +78,14 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
                 variant="outline"
                 size="sm"
                 onClick={handleReject}
-                className="h-8 w-8 p-0 border-accent/30 text-accent hover:bg-accent/20 dark:border-accent/50 dark:text-accent dark:hover:bg-accent/30"
+                className="h-8 w-8 p-0 border-accent/30 text-accent hover:bg-accent/20"
               >
                 <X className="h-3 w-3" />
               </Button>
               <Button
                 size="sm"
                 onClick={handleAccept}
-                className="h-8 w-8 p-0 bg-accent hover:bg-accent/80 text-accent-foreground dark:bg-accent/80 dark:hover:bg-accent"
+                className="h-8 w-8 p-0 bg-accent hover:bg-accent/80 text-accent-foreground"
               >
                 <Check className="h-3 w-3" />
               </Button>
