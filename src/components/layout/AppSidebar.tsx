@@ -35,7 +35,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useCategories, useComponents } from "@/hooks/useDesignSystem";
-import { UserMenu } from "@/components/auth/UserMenu";
 
 const categoryIcons = {
   'foundations': Palette,

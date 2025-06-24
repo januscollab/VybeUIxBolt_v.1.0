@@ -13,82 +13,58 @@ export function AdminControls() {
 }
 
 export function ColorPaletteControls() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Palette className="h-5 w-5" />
-            Color Palette Management
-          </CardTitle>
-          <CardDescription>
-            Customize your design system colors and create color palette versions.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button onClick={() => setIsOpen(true)} className="w-full">
-            <Palette className="h-4 w-4 mr-2" />
-            Open Color Palette Editor
-          </Button>
-        </CardContent>
-      </Card>
-      <LocalColorPaletteAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Palette className="h-5 w-5" />
+          Color Palette Management
+        </CardTitle>
+        <CardDescription>
+          Customize your design system colors and create color palette versions.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <LocalColorPaletteAdmin />
+      </CardContent>
+    </Card>
   );
 }
 
 export function TypographyControls() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Type className="h-5 w-5" />
-            Typography Management
-          </CardTitle>
-          <CardDescription>
-            Configure fonts, upload custom fonts, and manage typography scales.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button onClick={() => setIsOpen(true)} className="w-full">
-            <Type className="h-4 w-4 mr-2" />
-            Open Typography Editor
-          </Button>
-        </CardContent>
-      </Card>
-      <LocalTypographyAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Type className="h-5 w-5" />
+          Typography Management
+        </CardTitle>
+        <CardDescription>
+          Configure fonts, upload custom fonts, and manage typography scales.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <LocalTypographyAdmin />
+      </CardContent>
+    </Card>
   );
 }
 
 export function BrandingControls() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building2 className="h-5 w-5" />
-            Brand Management
-          </CardTitle>
-          <CardDescription>
-            Upload your logo, set brand name, and customize brand assets.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button onClick={() => setIsOpen(true)} className="w-full">
-            <Building2 className="h-4 w-4 mr-2" />
-            Open Brand Editor
-          </Button>
-        </CardContent>
-      </Card>
-      <LocalBrandingAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Building2 className="h-5 w-5" />
+          Brand Management
+        </CardTitle>
+        <CardDescription>
+          Upload your logo, set brand name, and customize brand assets.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <LocalBrandingAdmin />
+      </CardContent>
+    </Card>
   );
 }
