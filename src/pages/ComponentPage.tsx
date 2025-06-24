@@ -147,8 +147,6 @@ export default function ComponentPage() {
       case 'divider':
       case 'separator':
         return <DividerShowcase />;
-      case 'figma-export':
-        return <FigmaExportShowcase />;
       case 'radio-button':
       case 'radio-group':
         return <RadioButtonShowcase />;
@@ -157,8 +155,6 @@ export default function ComponentPage() {
         return <LoadingSpinnerShowcase />;
       case 'component-usage-guidelines':
         return <ComponentUsageGuidelinesShowcase />;
-      case 'figma-integration':
-        return <FigmaIntegrationShowcase />;
       case 'component-analytics':
         return <ComponentAnalyticsShowcase />;
       case 'code-block':
@@ -230,15 +226,6 @@ export default function ComponentPage() {
           </div>
           
           <div className="flex items-center gap-2">
-            {component.figma_url && (
-              <Button variant="outline" asChild>
-                <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
-                  <Figma className="h-4 w-4 mr-2" />
-                  Figma
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </a>
-              </Button>
-            )}
             {component.storybook_url && (
               <Button variant="outline" asChild>
                 <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
