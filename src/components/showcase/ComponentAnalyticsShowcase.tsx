@@ -159,3 +159,5 @@ export function ComponentAnalyticsShowcase() {
     </div>
   );
 }
+
+export default ComponentAnalyticsShowcase;

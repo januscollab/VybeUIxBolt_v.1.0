@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { useComponent } from "@/hooks/useDesignSystem";
 import { Badge } from "@/components/ui/badge";
@@ -52,8 +53,8 @@ import FigmaExportShowcase from "@/components/showcase/FigmaExportShowcase";
 import RadioButtonShowcase from "@/components/showcase/RadioButtonShowcase";
 import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
 import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsageGuidelinesShowcase";
-import FigmaIntegrationShowcase from "@/components/showcase/FigmaIntegrationShowcase";
-import ComponentAnalyticsShowcase from "@/components/showcase/ComponentAnalyticsShowcase";
+import { FigmaIntegrationShowcase } from "@/components/showcase/FigmaIntegrationShowcase";
+import { ComponentAnalyticsShowcase } from "@/components/showcase/ComponentAnalyticsShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
 
