@@ -54,6 +54,8 @@ import ComponentUsageGuidelinesShowcase from "@/components/showcase/ComponentUsa
 import { ComponentAnalyticsShowcase } from "@/components/showcase/ComponentAnalyticsShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
+import BannerShowcase from "@/components/showcase/BannerShowcase";
+import ContainerShowcase from "@/components/showcase/ContainerShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -184,6 +186,11 @@ export default function ComponentPage() {
       case 'progress-bar':
       case 'skeleton':
         return <FeedbackShowcase />;
+      
+      case 'banner':
+        return <BannerShowcase />;
+      case 'container':
+        return <ContainerShowcase />;
       
       default:
         return null;

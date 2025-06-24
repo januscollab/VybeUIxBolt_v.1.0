@@ -1,48 +1,60 @@
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Copy } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export default function ColorPaletteComponent() {
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied to clipboard",
+      description: `Color value ${text} has been copied to your clipboard.`,
+    });
+  };
+
   const colorGroups = [
     {
       name: "Brand Colors",
       colors: [
-        { name: "Orange", value: "hsl(16, 100%, 50%)", css: "bg-orange", description: "Vibrant orange accent color" },
-        { name: "Earth", value: "hsl(25, 12%, 14%)", css: "bg-earth", description: "Deep earth tone for contrast" },
-        { name: "Cream", value: "hsl(43, 47%, 89%)", css: "bg-cream", description: "Warm neutral background" },
-        { name: "Almost White", value: "hsl(210, 20%, 98%)", css: "bg-almost-white", description: "Subtle off-white tone" },
+        { name: "Orange", value: "hsl(16, 100%, 50%)", hex: "#FF4A00", css: "bg-orange", description: "VybeUI signature orange accent color" },
+        { name: "Earth", value: "hsl(225, 25%, 15%)", hex: "#2A3441", css: "bg-earth", description: "Deep earth tone for contrast" },
+        { name: "Cream", value: "hsl(45, 25%, 95%)", hex: "#F8F6F3", css: "bg-cream", description: "Warm neutral background" },
+        { name: "Almost White", value: "hsl(210, 20%, 98%)", hex: "#FBFCFC", css: "bg-almost-white", description: "Subtle off-white tone" },
       ]
     },
     {
       name: "Primary Colors",
       colors: [
-        { name: "Primary", value: "hsl(16, 100%, 50%)", css: "bg-primary", description: "Main brand color" },
-        { name: "Primary Foreground", value: "hsl(210, 40%, 98%)", css: "bg-primary-foreground", description: "Text on primary background" },
+        { name: "Primary", value: "hsl(16, 100%, 50%)", hex: "#FF4A00", css: "bg-primary", description: "Main brand color" },
+        { name: "Primary Foreground", value: "hsl(0, 0%, 100%)", hex: "#FFFFFF", css: "bg-primary-foreground", description: "Text on primary background" },
       ]
     },
     {
       name: "Secondary Colors", 
       colors: [
-        { name: "Secondary", value: "hsl(210, 40%, 96%)", css: "bg-secondary", description: "Secondary brand color" },
-        { name: "Secondary Foreground", value: "hsl(222, 47%, 11%)", css: "bg-secondary-foreground", description: "Text on secondary background" },
+        { name: "Secondary", value: "hsl(210, 20%, 96%)", hex: "#F1F3F4", css: "bg-secondary", description: "Secondary brand color" },
+        { name: "Secondary Foreground", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "bg-secondary-foreground", description: "Text on secondary background" },
       ]
     },
     {
       name: "Semantic Colors",
       colors: [
-        { name: "Success", value: "hsl(160, 92%, 44%)", css: "bg-success", description: "Success states" },
-        { name: "Warning", value: "hsl(49, 100%, 62%)", css: "bg-warning", description: "Warning states" },
-        { name: "Destructive", value: "hsl(356, 77%, 58%)", css: "bg-destructive", description: "Error states" },
-        { name: "Info", value: "hsl(196, 82%, 39%)", css: "bg-info", description: "Information states" },
+        { name: "Success", value: "hsl(142, 71%, 45%)", hex: "#22C55E", css: "bg-success", description: "Success states" },
+        { name: "Warning", value: "hsl(38, 92%, 50%)", hex: "#F59E0B", css: "bg-warning", description: "Warning states" },
+        { name: "Destructive", value: "hsl(0, 70%, 50%)", hex: "#EF4444", css: "bg-destructive", description: "Error states" },
+        { name: "Info", value: "hsl(200, 95%, 40%)", hex: "#0EA5E9", css: "bg-info", description: "Information states" },
       ]
     },
     {
       name: "Neutral Colors",
       colors: [
-        { name: "Background", value: "hsl(0, 0%, 100%)", css: "bg-background", description: "Page background" },
-        { name: "Foreground", value: "hsl(222, 84%, 5%)", css: "bg-foreground", description: "Primary text" },
-        { name: "Muted", value: "hsl(210, 40%, 96%)", css: "bg-muted", description: "Subtle background" },
-        { name: "Muted Foreground", value: "hsl(215, 16%, 47%)", css: "bg-muted-foreground", description: "Subtle text" },
-        { name: "Border", value: "hsl(214, 32%, 91%)", css: "bg-border", description: "Default borders" },
+        { name: "Background", value: "hsl(0, 0%, 100%)", hex: "#FFFFFF", css: "bg-background", description: "Page background" },
+        { name: "Foreground", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "bg-foreground", description: "Primary text" },
+        { name: "Muted", value: "hsl(210, 20%, 96%)", hex: "#F1F3F4", css: "bg-muted", description: "Subtle background" },
+        { name: "Muted Foreground", value: "hsl(225, 8%, 60%)", hex: "#8B9299", css: "bg-muted-foreground", description: "Subtle text" },
+        { name: "Border", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "bg-border", description: "Default borders" },
       ]
     }
   ];
@@ -81,12 +93,46 @@ export default function ColorPaletteComponent() {
                     <CardDescription>{color.description}</CardDescription>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">HEX:</span>
+                        <div className="flex items-center gap-2">
+                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.hex}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0"
+                            onClick={() => copyToClipboard(color.hex)}
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">HSL:</span>
-                        <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.value}</code>
+                        <div className="flex items-center gap-2">
+                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.value}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0"
+                            onClick={() => copyToClipboard(color.value)}
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">CSS:</span>
-                        <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.css}</code>
+                        <div className="flex items-center gap-2">
+                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.css}</code>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0"
+                            onClick={() => copyToClipboard(color.css)}
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                     {/* Color swatch */}
@@ -114,6 +160,7 @@ export default function ColorPaletteComponent() {
                 <li>• Maintain sufficient contrast ratios (4.5:1 minimum)</li>
                 <li>• Use CSS custom properties for theming</li>
                 <li>• Test colors in both light and dark modes</li>
+                <li>• Copy hex values for consistent implementation</li>
               </ul>
             </div>
             <div className="space-y-2">
@@ -123,6 +170,7 @@ export default function ColorPaletteComponent() {
                 <li>• Mix semantic meanings (e.g., red for success)</li>
                 <li>• Rely solely on color to convey information</li>
                 <li>• Use too many colors in a single interface</li>
+                <li>• Modify the VybeUI orange without approval</li>
               </ul>
             </div>
           </div>

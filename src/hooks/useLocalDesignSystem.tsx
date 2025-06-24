@@ -21,7 +21,7 @@ interface DesignSystemContextType {
 const DesignSystemContext = createContext<DesignSystemContextType | undefined>(undefined);
 
 const DEFAULT_COLOR_PALETTE = {
-  primary: "#3b82f6",
+  primary: "#FF4A00",
   secondary: "#6b7280",
   accent: "#06b6d4",
   neutral: "#64748b",
@@ -30,19 +30,19 @@ const DEFAULT_COLOR_PALETTE = {
   success: "#10b981",
   warning: "#f59e0b",
   error: "#ef4444",
-  orange: "#f97316"
+  orange: "#FF4A00"
 };
 
 const DEFAULT_TYPOGRAPHY = {
   primary: { 
-    family: "Inter", 
+    family: "Poppins", 
     weights: ["400", "500", "600", "700"],
-    googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    googleFontUrl: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
   },
   secondary: { 
-    family: "JetBrains Mono", 
+    family: "Inter", 
     weights: ["400", "500"],
-    googleFontUrl: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+    googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
   }
 };
 

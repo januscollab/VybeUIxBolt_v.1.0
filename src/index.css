@@ -3,15 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Zapier-inspired color palette and design system */
+/* VybeUI-inspired color palette and design system */
 
 @layer base {
   :root {
     /* Dynamic font variables that can be updated by the design system */
-    --font-primary: "Inter", system-ui, sans-serif;
-    --font-secondary: "JetBrains Mono", monospace;
+    --font-primary: "Poppins", system-ui, sans-serif;
+    --font-secondary: "Inter", monospace;
     
-    /* Zapier-inspired color palette */
+    /* VybeUI color palette with correct orange */
     --background: 0 0% 100%;
     --foreground: 225 15% 20%;
 
@@ -21,8 +21,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 225 15% 20%;
 
-    /* Zapier Orange as primary */
-    --primary: 21 100% 52%;
+    /* VybeUI Orange as primary (#FF4A00) */
+    --primary: 16 100% 50%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 20% 96%;
@@ -35,7 +35,7 @@
     --bass: 225 15% 85%;
     --bass-foreground: 225 15% 20%;
 
-    --accent: 21 100% 52%;
+    --accent: 16 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 70% 50%;
@@ -50,12 +50,12 @@
     --info: 200 95% 40%;
     --info-foreground: 0 0% 100%;
 
-    /* Zapier dark navy */
+    /* VybeUI dark navy */
     --earth: 225 25% 15%;
     --earth-foreground: 0 0% 100%;
 
-    /* Zapier Orange */
-    --orange: 21 100% 52%;
+    /* VybeUI Orange (#FF4A00) */
+    --orange: 16 100% 50%;
     --orange-foreground: 0 0% 100%;
 
     /* Light cream */
@@ -68,18 +68,19 @@
 
     --border: 214 20% 88%;
     --input: 214 20% 88%;
-    --ring: 21 100% 52%;
+    --ring: 16 100% 50%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 225 25% 15%;
-    --sidebar-foreground: 210 20% 96%;
-    --sidebar-primary: 21 100% 52%;
+    /* Light sidebar theme */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 225 15% 20%;
+    --sidebar-primary: 16 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 20% 20%;
-    --sidebar-accent-foreground: 210 20% 96%;
-    --sidebar-border: 225 20% 25%;
-    --sidebar-ring: 21 100% 52%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 225 15% 20%;
+    --sidebar-border: 214 20% 88%;
+    --sidebar-ring: 16 100% 50%;
   }
 
   .dark {
@@ -92,7 +93,7 @@
     --popover: 225 25% 15%;
     --popover-foreground: 210 20% 96%;
 
-    --primary: 21 100% 52%;
+    --primary: 16 100% 50%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 225 20% 20%;
@@ -112,16 +113,17 @@
 
     --border: 225 20% 25%;
     --input: 225 20% 25%;
-    --ring: 21 100% 52%;
+    --ring: 16 100% 50%;
 
+    /* Dark sidebar theme */
     --sidebar-background: 225 30% 10%;
     --sidebar-foreground: 210 20% 96%;
-    --sidebar-primary: 21 100% 52%;
+    --sidebar-primary: 16 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 225 25% 15%;
     --sidebar-accent-foreground: 210 20% 96%;
     --sidebar-border: 225 20% 20%;
-    --sidebar-ring: 21 100% 52%;
+    --sidebar-ring: 16 100% 50%;
   }
 }
 
@@ -135,7 +137,7 @@
     font-family: var(--font-primary);
   }
 
-  /* Orange-focused form styling */
+  /* Orange-focused form styling with correct orange */
   input[type="text"],
   input[type="email"],
   input[type="password"],
@@ -145,7 +147,7 @@
   input[type="search"],
   textarea,
   select {
-    @apply border-orange-500 focus:border-orange-500 focus:ring-orange-500;
+    border-color: #FF4A00 !important;
     border-width: 1px;
     box-shadow: none !important;
   }
@@ -159,15 +161,15 @@
   input[type="search"]:focus,
   textarea:focus,
   select:focus {
-    @apply ring-1 ring-orange-500 border-orange-500;
+    border-color: #FF4A00 !important;
     outline: none;
-    box-shadow: 0 0 0 1px hsl(var(--orange)) !important;
+    box-shadow: 0 0 0 1px #FF4A00 !important;
   }
 
   /* Accessibility improvements */
   /* High contrast focus indicators */
   *:focus-visible {
-    outline: 2px solid hsl(var(--orange));
+    outline: 2px solid #FF4A00;
     outline-offset: 2px;
   }
 

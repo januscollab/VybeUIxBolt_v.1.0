@@ -15,7 +15,8 @@ import {
   ChevronDown,
   ChevronUp,
   Edit,
-  BookOpen
+  PanelLeftClose,
+  PanelLeftOpen
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -108,20 +109,20 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r border-border">
-      <SidebarHeader className="border-b border-border p-4">
+    <Sidebar className="border-r border-border bg-background">
+      <SidebarHeader className="border-b border-border p-4 bg-background">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
             <Palette className="h-4 w-4 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold">DLS</h2>
+            <h2 className="text-lg font-semibold">VybeUI</h2>
             <p className="text-xs text-muted-foreground">Design Language System</p>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="p-4">
+      <SidebarContent className="p-4 bg-background">
         <div className="mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -142,14 +143,6 @@ export function AppSidebar() {
                   <Link to="/">
                     <Home className="h-4 w-4" />
                     <span>Overview</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={location.pathname === "/documentation"}>
-                  <Link to="/documentation">
-                    <BookOpen className="h-4 w-4" />
-                    <span>Documentation</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -182,12 +175,19 @@ export function AppSidebar() {
                             }}
                           >
                             <div className="flex items-center justify-between w-full cursor-pointer">
-                              <div className="flex items-center gap-2">
-                                <Icon className="h-4 w-4" />
-                                <span>{category.name}</span>
+                              <div className="flex items-center gap-2 min-w-0 flex-1">
+                                <Icon className="h-4 w-4 flex-shrink-0" />
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-medium truncate">{category.name}</div>
+                                  {category.description && (
+                                    <div className="text-xs text-muted-foreground line-clamp-2 leading-tight">
+                                      {category.description}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                               {getFilteredComponents(category.id).length > 0 && (
-                                <div className="ml-auto">
+                                <div className="ml-2 flex-shrink-0">
                                   {isExpanded ? (
                                     <ChevronUp className="h-3 w-3" />
                                   ) : (
@@ -227,7 +227,7 @@ export function AppSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-border p-4">
+      <SidebarFooter className="border-t border-border p-4 bg-background">
         <div className="flex gap-2 mt-4">
           <Button variant="outline" size="sm" className="flex-1" asChild>
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
@@ -235,6 +235,13 @@ export function AppSidebar() {
               GitHub
               <ExternalLink className="h-3 w-3" />
             </a>
+          </Button>
+          <Button variant="outline" size="sm" className="flex-1" asChild>
+            <Link to="/documentation">
+              <FileText className="h-4 w-4" />
+              Docs
+              <ExternalLink className="h-3 w-3" />
+            </Link>
           </Button>
         </div>
         <p className="text-xs text-muted-foreground text-center mt-2">
