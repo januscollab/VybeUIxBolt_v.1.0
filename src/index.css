@@ -1,118 +1,127 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Zapier-inspired color palette and design system */
 
 @layer base {
   :root {
     /* Dynamic font variables that can be updated by the design system */
     --font-primary: "Inter", system-ui, sans-serif;
     --font-secondary: "JetBrains Mono", monospace;
+    
+    /* Zapier-inspired color palette */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 225 15% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 225 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 225 15% 20%;
 
-    --primary: 16 100% 50%;
-    --primary-foreground: 210 40% 98%;
+    /* Zapier Orange as primary */
+    --primary: 21 100% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 225 15% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 225 8% 60%;
 
-    --accent: 16 100% 50%;
-    --accent-foreground: 210 40% 98%;
+    /* Bass color (promoted from muted) */
+    --bass: 225 15% 85%;
+    --bass-foreground: 225 15% 20%;
 
-    --destructive: 356 77% 58%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 21 100% 52%;
+    --accent-foreground: 0 0% 100%;
 
-    --success: 160 92% 44%;
-    --success-foreground: 210 40% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --warning: 49 100% 62%;
-    --warning-foreground: 222.2 84% 4.9%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
 
-    --info: 196 82% 39%;
-    --info-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 225 15% 20%;
 
-    --earth: 25 12% 14%;
-    --earth-foreground: 210 40% 98%;
+    --info: 200 95% 40%;
+    --info-foreground: 0 0% 100%;
 
-    --orange: 16 100% 50%;
-    --orange-foreground: 210 40% 98%;
+    /* Zapier dark navy */
+    --earth: 225 25% 15%;
+    --earth-foreground: 0 0% 100%;
 
-    --cream: 43 47% 89%;
-    --cream-foreground: 222.2 84% 4.9%;
+    /* Zapier Orange */
+    --orange: 21 100% 52%;
+    --orange-foreground: 0 0% 100%;
 
+    /* Light cream */
+    --cream: 45 25% 95%;
+    --cream-foreground: 225 15% 20%;
+
+    /* Almost white */
     --almost-white: 210 20% 98%;
-    --almost-white-foreground: 222.2 84% 4.9%;
+    --almost-white-foreground: 225 15% 20%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 21 100% 52%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 225 25% 15%;
+    --sidebar-foreground: 210 20% 96%;
+    --sidebar-primary: 21 100% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 225 20% 20%;
+    --sidebar-accent-foreground: 210 20% 96%;
+    --sidebar-border: 225 20% 25%;
+    --sidebar-ring: 21 100% 52%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 225 25% 15%;
+    --foreground: 210 20% 96%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 225 25% 15%;
+    --card-foreground: 210 20% 96%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 225 25% 15%;
+    --popover-foreground: 210 20% 96%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 21 100% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 225 20% 20%;
+    --secondary-foreground: 210 20% 96%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 225 20% 20%;
+    --muted-foreground: 225 8% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --bass: 225 15% 25%;
+    --bass-foreground: 210 20% 96%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: 225 20% 20%;
+    --accent-foreground: 210 20% 96%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 210 20% 96%;
+
+    --border: 225 20% 25%;
+    --input: 225 20% 25%;
+    --ring: 21 100% 52%;
+
+    --sidebar-background: 225 30% 10%;
+    --sidebar-foreground: 210 20% 96%;
+    --sidebar-primary: 21 100% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 225 25% 15%;
+    --sidebar-accent-foreground: 210 20% 96%;
+    --sidebar-border: 225 20% 20%;
+    --sidebar-ring: 21 100% 52%;
   }
 }
 
@@ -126,10 +135,39 @@
     font-family: var(--font-primary);
   }
 
+  /* Orange-focused form styling */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea,
+  select {
+    @apply border-orange-500 focus:border-orange-500 focus:ring-orange-500;
+    border-width: 1px;
+    box-shadow: none !important;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="search"]:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-1 ring-orange-500 border-orange-500;
+    outline: none;
+    box-shadow: 0 0 0 1px hsl(var(--orange)) !important;
+  }
+
   /* Accessibility improvements */
   /* High contrast focus indicators */
   *:focus-visible {
-    outline: 2px solid hsl(var(--ring));
+    outline: 2px solid hsl(var(--orange));
     outline-offset: 2px;
   }
 

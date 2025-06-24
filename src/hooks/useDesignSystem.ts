@@ -68,10 +68,19 @@ const mockCategories: Category[] = [
   },
   {
     id: '8',
+    name: 'Rich Text Editor',
+    description: 'Rich text editing components and tools',
+    slug: 'rich-text-editor',
+    sort_order: 8,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: '9',
     name: 'Experimental',
     description: 'Cutting-edge experimental components',
     slug: 'experimental',
-    sort_order: 8,
+    sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   }
@@ -91,8 +100,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -107,8 +114,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -123,8 +128,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -139,8 +142,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -155,8 +156,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -171,8 +170,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -187,8 +184,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -205,8 +200,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -221,8 +214,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -237,8 +228,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -253,8 +242,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -269,8 +256,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -285,8 +270,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -301,8 +284,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -317,8 +298,6 @@ const mockComponents: Component[] = [
     sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -333,8 +312,6 @@ const mockComponents: Component[] = [
     sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -349,8 +326,6 @@ const mockComponents: Component[] = [
     sort_order: 10,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -365,8 +340,6 @@ const mockComponents: Component[] = [
     sort_order: 11,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -381,8 +354,6 @@ const mockComponents: Component[] = [
     sort_order: 12,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -397,8 +368,6 @@ const mockComponents: Component[] = [
     sort_order: 13,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -413,8 +382,6 @@ const mockComponents: Component[] = [
     sort_order: 14,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -429,8 +396,6 @@ const mockComponents: Component[] = [
     sort_order: 15,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -445,8 +410,6 @@ const mockComponents: Component[] = [
     sort_order: 16,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -461,8 +424,6 @@ const mockComponents: Component[] = [
     sort_order: 17,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -477,8 +438,6 @@ const mockComponents: Component[] = [
     sort_order: 18,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -493,8 +452,6 @@ const mockComponents: Component[] = [
     sort_order: 19,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -509,8 +466,6 @@ const mockComponents: Component[] = [
     sort_order: 20,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -525,8 +480,6 @@ const mockComponents: Component[] = [
     sort_order: 21,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -541,8 +494,6 @@ const mockComponents: Component[] = [
     sort_order: 22,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -557,8 +508,6 @@ const mockComponents: Component[] = [
     sort_order: 23,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -573,8 +522,6 @@ const mockComponents: Component[] = [
     sort_order: 24,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -589,8 +536,6 @@ const mockComponents: Component[] = [
     sort_order: 25,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -605,8 +550,6 @@ const mockComponents: Component[] = [
     sort_order: 26,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -621,8 +564,6 @@ const mockComponents: Component[] = [
     sort_order: 27,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -639,8 +580,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -655,8 +594,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -671,8 +608,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -687,8 +622,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -703,8 +636,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -719,8 +650,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -735,8 +664,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -751,8 +678,6 @@ const mockComponents: Component[] = [
     sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -767,8 +692,6 @@ const mockComponents: Component[] = [
     sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -783,8 +706,6 @@ const mockComponents: Component[] = [
     sort_order: 10,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -799,8 +720,6 @@ const mockComponents: Component[] = [
     sort_order: 11,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -815,8 +734,6 @@ const mockComponents: Component[] = [
     sort_order: 12,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -831,8 +748,6 @@ const mockComponents: Component[] = [
     sort_order: 13,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -847,8 +762,6 @@ const mockComponents: Component[] = [
     sort_order: 14,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -863,8 +776,6 @@ const mockComponents: Component[] = [
     sort_order: 15,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -879,8 +790,6 @@ const mockComponents: Component[] = [
     sort_order: 16,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -895,8 +804,6 @@ const mockComponents: Component[] = [
     sort_order: 17,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -911,8 +818,6 @@ const mockComponents: Component[] = [
     sort_order: 18,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -927,8 +832,6 @@ const mockComponents: Component[] = [
     sort_order: 19,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -945,8 +848,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -961,8 +862,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -977,8 +876,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -993,8 +890,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1009,8 +904,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1025,8 +918,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1041,8 +932,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1057,8 +946,6 @@ const mockComponents: Component[] = [
     sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1073,8 +960,6 @@ const mockComponents: Component[] = [
     sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1089,8 +974,6 @@ const mockComponents: Component[] = [
     sort_order: 10,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1107,8 +990,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1123,8 +1004,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1139,8 +1018,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1155,8 +1032,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1171,8 +1046,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1187,8 +1060,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1203,8 +1074,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1221,8 +1090,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1237,8 +1104,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1253,8 +1118,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1269,8 +1132,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1287,8 +1148,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1303,8 +1162,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1319,8 +1176,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1335,8 +1190,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1351,8 +1204,6 @@ const mockComponents: Component[] = [
     sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1367,8 +1218,6 @@ const mockComponents: Component[] = [
     sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1383,8 +1232,6 @@ const mockComponents: Component[] = [
     sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1399,8 +1246,6 @@ const mockComponents: Component[] = [
     sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1415,8 +1260,6 @@ const mockComponents: Component[] = [
     sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1431,8 +1274,6 @@ const mockComponents: Component[] = [
     sort_order: 10,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1447,8 +1288,6 @@ const mockComponents: Component[] = [
     sort_order: 11,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1465,8 +1304,6 @@ const mockComponents: Component[] = [
     sort_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1481,8 +1318,6 @@ const mockComponents: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1497,8 +1332,6 @@ const mockComponents: Component[] = [
     sort_order: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   },
@@ -1513,40 +1346,6 @@ const mockComponents: Component[] = [
     sort_order: 4,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: 'e5',
-    name: 'Figma Export',
-    description: 'Export components to Figma',
-    slug: 'figma-export',
-    category_id: '8',
-    status: 'review' as any,
-    is_experimental: true,
-    sort_order: 5,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: 'e6',
-    name: 'Figma Integration',
-    description: 'Figma design system integration',
-    slug: 'figma-integration',
-    category_id: '8',
-    status: 'review' as any,
-    is_experimental: true,
-    sort_order: 6,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    figma_url: null,
-    storybook_url: null,
     variants: [],
     documentation: []
   }
@@ -1559,7 +1358,7 @@ const mockDesignTokens: DesignToken[] = [
     name: 'Primary Color',
     description: 'Main brand color',
     token_type: 'color' as any,
-    value: { hex: '#3b82f6' },
+    value: { hex: '#ff6900' },
     category_id: null,
     sort_order: 1,
     created_at: new Date().toISOString(),

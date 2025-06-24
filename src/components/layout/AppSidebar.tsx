@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { 
   Palette, 
   Layers, 
@@ -13,7 +14,8 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
-  Settings
+  Edit,
+  BookOpen
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -43,6 +45,7 @@ const categoryIcons = {
   'content-layout': Layout,
   'forms': FileText,
   'feedback': MessageSquare,
+  'rich-text-editor': Edit,
   'experimental': Beaker,
 };
 
@@ -52,6 +55,18 @@ export function AppSidebar() {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
+
+  // Auto-expand category when on category page
+  useEffect(() => {
+    const pathMatch = location.pathname.match(/^\/category\/(.+)$/);
+    if (pathMatch) {
+      const categorySlug = pathMatch[1];
+      const category = categories?.find(cat => cat.slug === categorySlug);
+      if (category && !expandedCategories.includes(category.id)) {
+        setExpandedCategories(prev => [...prev, category.id]);
+      }
+    }
+  }, [location.pathname, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -127,6 +142,14 @@ export function AppSidebar() {
                   <Link to="/">
                     <Home className="h-4 w-4" />
                     <span>Overview</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={location.pathname === "/documentation"}>
+                  <Link to="/documentation">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Documentation</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

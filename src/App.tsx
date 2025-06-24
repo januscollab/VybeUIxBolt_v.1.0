@@ -9,9 +9,7 @@ import { LocalDesignSystemProvider } from "@/hooks/useLocalDesignSystem";
 import Index from "./pages/Index";
 import CategoryPage from "./pages/CategoryPage";
 import ComponentPage from "./pages/ComponentPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-import SettingsPage from "./pages/SettingsPage";
-import AuditPage from "./pages/AuditPage";
+import DocumentationPage from "./pages/DocumentationPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,19 +37,9 @@ const App = () => (
                 <ComponentPage />
               </MainLayout>
             } />
-            <Route path="/analytics" element={
+            <Route path="/documentation" element={
               <MainLayout>
-                <AnalyticsPage />
-              </MainLayout>
-            } />
-            <Route path="/settings" element={
-              <MainLayout>
-                <SettingsPage />
-              </MainLayout>
-            } />
-            <Route path="/audit" element={
-              <MainLayout>
-                <AuditPage />
+                <DocumentationPage />
               </MainLayout>
             } />
             <Route path="*" element={<NotFound />} />
