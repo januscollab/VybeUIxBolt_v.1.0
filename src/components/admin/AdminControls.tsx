@@ -1,20 +1,14 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Settings, Palette, Type, Image, Building2 } from 'lucide-react';
-import { ColorPaletteAdmin } from '@/components/admin/ColorPaletteAdmin';
-import { TypographyAdmin } from '@/components/admin/TypographyAdmin';
-import { BrandingAdmin } from '@/components/admin/BrandingAdmin';
-import { useDesignSystem } from '@/hooks/useDesignSystem';
+import { LocalColorPaletteAdmin } from '@/components/admin/LocalColorPaletteAdmin';
+import { LocalTypographyAdmin } from '@/components/admin/LocalTypographyAdmin';
+import { LocalBrandingAdmin } from '@/components/admin/LocalBrandingAdmin';
 
 export function AdminControls() {
-  const { isAdmin } = useDesignSystem();
-
-  if (!isAdmin) {
-    return null;
-  }
-
-  // Remove the floating nav - it's no longer needed since we have inline admin panels
+  // Since we removed authentication, admin controls are always available
   return null;
 }
 
@@ -40,7 +34,7 @@ export function ColorPaletteControls() {
           </Button>
         </CardContent>
       </Card>
-      <ColorPaletteAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
+      <LocalColorPaletteAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }
@@ -67,7 +61,7 @@ export function TypographyControls() {
           </Button>
         </CardContent>
       </Card>
-      <TypographyAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
+      <LocalTypographyAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }
@@ -94,7 +88,7 @@ export function BrandingControls() {
           </Button>
         </CardContent>
       </Card>
-      <BrandingAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
+      <LocalBrandingAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }

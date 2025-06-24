@@ -4,209 +4,236 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Type } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Save, Type, Upload } from 'lucide-react';
 import { useLocalDesignSystem } from '@/hooks/useLocalDesignSystem';
-
-const GOOGLE_FONTS = [
-  { name: 'Inter', url: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' },
-  { name: 'Roboto', url: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap' },
-  { name: 'Open Sans', url: 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap' },
-  { name: 'Lato', url: 'https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&display=swap' },
-  { name: 'Montserrat', url: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap' },
-  { name: 'Poppins', url: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap' },
-  { name: 'Source Sans Pro', url: 'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600;700&display=swap' },
-  { name: 'JetBrains Mono', url: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap' },
-  { name: 'Fira Code', url: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap' },
-  { name: 'Source Code Pro', url: 'https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap' }
-];
+import { toast } from '@/hooks/use-toast';
 
 export function LocalTypographyAdmin() {
   const { typography, updateTypography } = useLocalDesignSystem();
-  const [customFontName, setCustomFontName] = useState('');
-  const [customFontUrl, setCustomFontUrl] = useState('');
+  const [localTypography, setLocalTypography] = useState(typography);
+  const [googleFonts] = useState<string[]>([
+    'Inter', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Source Sans Pro',
+    'Raleway', 'Nunito', 'Poppins', 'Playfair Display', 'Merriweather',
+    'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', 'Space Mono'
+  ]);
 
-  const handleFontChange = (fontType: 'primary' | 'secondary', fontName: string) => {
-    const googleFont = GOOGLE_FONTS.find(font => font.name === fontName);
+  const handleFontFamilyChange = (fontType: 'primary' | 'secondary', fontFamily: string) => {
+    const googleFontUrl = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@400;500;600;700&display=swap`;
     
-    updateTypography({
-      ...typography,
+    setLocalTypography(prev => ({
+      ...prev,
       [fontType]: {
-        family: fontName,
-        weights: fontType === 'primary' ? ['400', '500', '600', '700'] : ['400', '500'],
-        googleFontUrl: googleFont?.url
+        ...prev[fontType],
+        family: fontFamily,
+        googleFontUrl: googleFontUrl,
+        weights: ['400', '500', '600', '700']
       }
-    });
+    }));
+  };
 
+  const handleWeightChange = (fontType: 'primary' | 'secondary', weights: string[]) => {
+    setLocalTypography(prev => ({
+      ...prev,
+      [fontType]: {
+        ...prev[fontType],
+        weights: weights
+      }
+    }));
+  };
+
+  const handleSave = () => {
+    updateTypography(localTypography);
     toast({
-      title: "Font updated",
-      description: `${fontType} font has been set to ${fontName}`
+      title: "Typography Updated",
+      description: "Typography settings have been updated successfully.",
     });
   };
 
-  const handleCustomFont = () => {
-    if (!customFontName.trim() || !customFontUrl.trim()) {
-      toast({
-        title: "Font details required",
-        description: "Please enter both font name and Google Fonts URL",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    updateTypography({
-      ...typography,
-      primary: {
-        family: customFontName,
-        weights: ['400', '500', '600', '700'],
-        googleFontUrl: customFontUrl
-      }
-    });
-
-    setCustomFontName('');
-    setCustomFontUrl('');
-
-    toast({
-      title: "Custom font added",
-      description: `Custom font "${customFontName}" has been set as primary font`
-    });
-  };
-
-  const resetToDefaults = () => {
-    const defaultTypography = {
-      primary: { 
-        family: "Inter", 
-        weights: ["400", "500", "600", "700"],
-        googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      },
-      secondary: { 
-        family: "JetBrains Mono", 
-        weights: ["400", "500"],
-        googleFontUrl: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
-      }
-    };
-    
-    updateTypography(defaultTypography);
-    
-    toast({
-      title: "Typography reset",
-      description: "Typography has been reset to default values"
-    });
-  };
+  const fontWeights = [
+    { value: '300', label: 'Light (300)' },
+    { value: '400', label: 'Regular (400)' },
+    { value: '500', label: 'Medium (500)' },
+    { value: '600', label: 'Semi Bold (600)' },
+    { value: '700', label: 'Bold (700)' },
+    { value: '800', label: 'Extra Bold (800)' },
+    { value: '900', label: 'Black (900)' }
+  ];
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Type className="h-5 w-5" />
-          Typography Administration
-        </CardTitle>
-        <CardDescription>
-          Configure fonts and manage typography scales for your design system.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Current Fonts Display */}
-        <div className="space-y-4">
-          <div className="p-4 border rounded-lg">
-            <h4 className="font-semibold mb-2">Primary Font</h4>
+    <div className="space-y-6">
+      {/* Primary Typography */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Primary Typography</CardTitle>
+          <CardDescription>
+            Main font used for headings and body text
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Font Family</Label>
+              <Select 
+                value={localTypography.primary?.family || ''}
+                onValueChange={(value) => handleFontFamilyChange('primary', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select primary font" />
+                </SelectTrigger>
+                <SelectContent>
+                  {googleFonts.map(font => (
+                    <SelectItem key={font} value={font}>
+                      <span style={{ fontFamily: font }}>{font}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Font Weights</Label>
+              <div className="flex flex-wrap gap-2">
+                {fontWeights.map(weight => (
+                  <Badge
+                    key={weight.value}
+                    variant={localTypography.primary?.weights?.includes(weight.value) ? 'default' : 'outline'}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const currentWeights = localTypography.primary?.weights || [];
+                      const newWeights = currentWeights.includes(weight.value)
+                        ? currentWeights.filter(w => w !== weight.value)
+                        : [...currentWeights, weight.value];
+                      handleWeightChange('primary', newWeights);
+                    }}
+                  >
+                    {weight.label}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Font Preview */}
+          <div className="p-4 border rounded-lg bg-muted/50">
             <div 
-              className="text-2xl mb-2"
-              style={{ fontFamily: typography.primary?.family }}
+              style={{ 
+                fontFamily: localTypography.primary?.family || 'Inter',
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '8px'
+              }}
             >
-              {typography.primary?.family || 'Not set'}
+              VybeUI Design System
             </div>
-            <p className="text-sm text-muted-foreground">
-              The quick brown fox jumps over the lazy dog
-            </p>
-          </div>
-
-          <div className="p-4 border rounded-lg">
-            <h4 className="font-semibold mb-2">Secondary Font</h4>
             <div 
-              className="text-lg font-mono mb-2"
-              style={{ fontFamily: typography.secondary?.family }}
+              style={{ 
+                fontFamily: localTypography.primary?.family || 'Inter',
+                fontSize: '16px',
+                fontWeight: '400'
+              }}
             >
-              {typography.secondary?.family || 'Not set'}
-            </div>
-            <p className="text-sm text-muted-foreground font-mono">
-              const message = "Hello, World!";
-            </p>
-          </div>
-        </div>
-
-        {/* Font Selection */}
-        <div className="space-y-4">
-          <h4 className="font-semibold">Select Fonts</h4>
-          
-          <div className="space-y-3">
-            <Label>Primary Font (Headings & Body)</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {GOOGLE_FONTS.filter(font => !font.name.includes('Mono')).map((font) => (
-                <Button
-                  key={font.name}
-                  variant={typography.primary?.family === font.name ? "default" : "outline"}
-                  onClick={() => handleFontChange('primary', font.name)}
-                  className="text-left justify-start"
-                >
-                  {font.name}
-                </Button>
-              ))}
+              This is how your primary typography will look in the design system.
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="space-y-3">
-            <Label>Secondary Font (Code & Monospace)</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {GOOGLE_FONTS.filter(font => font.name.includes('Mono') || font.name.includes('Code')).map((font) => (
-                <Button
-                  key={font.name}
-                  variant={typography.secondary?.family === font.name ? "default" : "outline"}
-                  onClick={() => handleFontChange('secondary', font.name)}
-                  className="text-left justify-start"
-                >
-                  {font.name}
-                </Button>
-              ))}
+      {/* Secondary Typography */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Secondary Typography</CardTitle>
+          <CardDescription>
+            Secondary font used for code, captions, and special elements
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Font Family</Label>
+              <Select 
+                value={localTypography.secondary?.family || ''}
+                onValueChange={(value) => handleFontFamilyChange('secondary', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select secondary font" />
+                </SelectTrigger>
+                <SelectContent>
+                  {googleFonts.map(font => (
+                    <SelectItem key={font} value={font}>
+                      <span style={{ fontFamily: font }}>{font}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Font Weights</Label>
+              <div className="flex flex-wrap gap-2">
+                {fontWeights.map(weight => (
+                  <Badge
+                    key={weight.value}
+                    variant={localTypography.secondary?.weights?.includes(weight.value) ? 'default' : 'outline'}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const currentWeights = localTypography.secondary?.weights || [];
+                      const newWeights = currentWeights.includes(weight.value)
+                        ? currentWeights.filter(w => w !== weight.value)
+                        : [...currentWeights, weight.value];
+                      handleWeightChange('secondary', newWeights);
+                    }}
+                  >
+                    {weight.label}
+                  </Badge>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Custom Font */}
-        <div className="border-t pt-6 space-y-4">
-          <h4 className="font-semibold">Add Custom Google Font</h4>
-          <div className="space-y-3">
-            <div>
-              <Label htmlFor="custom-font-name">Font Name</Label>
-              <Input
-                id="custom-font-name"
-                placeholder="e.g., Playfair Display"
-                value={customFontName}
-                onChange={(e) => setCustomFontName(e.target.value)}
-              />
+          {/* Font Preview */}
+          <div className="p-4 border rounded-lg bg-muted/50">
+            <div 
+              className="font-mono text-sm"
+              style={{ 
+                fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
+                fontWeight: '500',
+                marginBottom: '8px',
+                lineHeight: '1.5'
+              }}
+            >
+              const VybeUI = () =&gt; &#123;
             </div>
-            <div>
-              <Label htmlFor="custom-font-url">Google Fonts URL</Label>
-              <Input
-                id="custom-font-url"
-                placeholder="https://fonts.googleapis.com/css2?family=..."
-                value={customFontUrl}
-                onChange={(e) => setCustomFontUrl(e.target.value)}
-              />
+            <div 
+              className="font-mono text-sm"
+              style={{ 
+                fontFamily: localTypography.secondary?.family || 'JetBrains Mono',
+                fontWeight: '400',
+                lineHeight: '1.5'
+              }}
+            >
+              &nbsp;&nbsp;return &lt;div&gt;Secondary typography&lt;/div&gt;;
+              <br />
+              &#125;
             </div>
-            <Button onClick={handleCustomFont}>
-              Add Custom Font
-            </Button>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Reset Button */}
-        <div className="border-t pt-6">
-          <Button variant="outline" onClick={resetToDefaults}>
-            Reset to Defaults
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+      {/* Actions */}
+      <div className="flex justify-end gap-2">
+        <Button
+          variant="outline"
+          onClick={() => setLocalTypography(typography)}
+        >
+          Reset
+        </Button>
+        <Button onClick={handleSave}>
+          <Save className="h-4 w-4 mr-1" />
+          Apply Changes
+        </Button>
+      </div>
+    </div>
   );
 }
