@@ -15,7 +15,7 @@ export default function BannerShowcase() {
   </AlertDescription>
 </Alert>`;
 
-  const warningBannerCode = `<Alert variant="destructive" className="border-l-4 border-l-warning">
+  const warningBannerCode = `<Alert variant="destructive" className="border-l-4 border-l-destructive">
   <AlertTriangle className="h-4 w-4" />
   <AlertDescription>
     This is a warning banner with important information.
@@ -106,7 +106,7 @@ export default function BannerShowcase() {
           </div>
         </CardHeader>
         <CardContent>
-          <Alert variant="destructive" className="border-l-4 border-l-warning">
+          <Alert variant="destructive" className="border-l-4 border-l-destructive">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
               This is a warning banner with important information.

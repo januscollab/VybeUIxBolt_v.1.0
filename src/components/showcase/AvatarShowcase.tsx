@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ export default function AvatarShowcase() {
     <AvatarImage src="/avatar.jpg" />
     <AvatarFallback>JD</AvatarFallback>
   </Avatar>
-  <span className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
+  <span className="absolute bottom-0 right-0 h-3 w-3 bg-success border-2 border-white rounded-full"></span>
 </div>`,
     group: `<div className="flex -space-x-2">
   <Avatar className="border-2 border-white">
@@ -230,9 +231,9 @@ export default function AvatarShowcase() {
                     </Avatar>
                     <span 
                       className={`absolute bottom-0 right-0 h-3 w-3 border-2 border-white rounded-full ${
-                        user.status === 'online' ? 'bg-green-500' :
-                        user.status === 'away' ? 'bg-yellow-500' :
-                        'bg-gray-400'
+                        user.status === 'online' ? 'bg-success' :
+                        user.status === 'away' ? 'bg-warning' :
+                        'bg-muted-foreground'
                       }`}
                     />
                   </div>
@@ -251,9 +252,9 @@ export default function AvatarShowcase() {
                   <div className="relative">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback className="bg-yellow-100 text-yellow-800">AD</AvatarFallback>
+                      <AvatarFallback className="bg-warning/20 text-warning">AD</AvatarFallback>
                     </Avatar>
-                    <Crown className="absolute -top-1 -right-1 h-4 w-4 text-yellow-500" />
+                    <Crown className="absolute -top-1 -right-1 h-4 w-4 text-warning" />
                   </div>
                   <p className="text-xs text-muted-foreground">Admin</p>
                 </div>
@@ -261,9 +262,9 @@ export default function AvatarShowcase() {
                   <div className="relative">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback className="bg-blue-100 text-blue-800">MD</AvatarFallback>
+                      <AvatarFallback className="bg-primary/20 text-primary">MD</AvatarFallback>
                     </Avatar>
-                    <Star className="absolute -top-1 -right-1 h-4 w-4 text-blue-500 fill-current" />
+                    <Star className="absolute -top-1 -right-1 h-4 w-4 text-primary fill-current" />
                   </div>
                   <p className="text-xs text-muted-foreground">Moderator</p>
                 </div>
@@ -383,9 +384,9 @@ export default function AvatarShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Database Integration</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+            <h4 className="font-medium text-primary mb-2">Database Integration</h4>
+            <ul className="text-sm text-primary/80 space-y-1">
               <li>• User profiles table with avatar URLs</li>
               <li>• Supabase Storage for image uploads</li>
               <li>• Automatic fallback to initials</li>
@@ -394,9 +395,9 @@ export default function AvatarShowcase() {
             </ul>
           </div>
           
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Storage Patterns</h4>
-            <div className="text-sm text-green-800 dark:text-green-200 space-y-1">
+          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
+            <h4 className="font-medium text-success mb-2">Storage Patterns</h4>
+            <div className="text-sm text-success/80 space-y-1">
               <code className="block">// User profiles</code>
               <code className="block">avatar_url: text</code>
               <code className="block">first_name: text</code>
