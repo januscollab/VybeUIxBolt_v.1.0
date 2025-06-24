@@ -137,7 +137,28 @@
     font-family: var(--font-primary);
   }
 
-  /* Orange-focused form styling - only on focus */
+  /* Comprehensive Orange Focus States - Phase 4 Implementation */
+  /* All form inputs show orange borders ONLY on focus/active state */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"],
+  input[type="color"],
+  textarea,
+  select {
+    border-color: hsl(var(--border));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* Orange focus states for all form elements */
   input[type="text"]:focus,
   input[type="email"]:focus,
   input[type="password"]:focus,
@@ -145,17 +166,42 @@
   input[type="tel"]:focus,
   input[type="url"]:focus,
   input[type="search"]:focus,
+  input[type="date"]:focus,
+  input[type="time"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="week"]:focus,
+  input[type="color"]:focus,
   textarea:focus,
   select:focus {
-    border-color: #FF4A00 !important;
+    border-color: hsl(var(--primary)) !important;
     outline: none;
-    box-shadow: 0 0 0 1px #FF4A00 !important;
+    box-shadow: 0 0 0 1px hsl(var(--primary)) !important;
+  }
+
+  /* Ensure buttons use orange hover states consistently */
+  button:not(.btn-secondary):not(.btn-outline):hover {
+    background-color: hsl(var(--primary));
+  }
+
+  /* Orange focus states for interactive elements */
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  a:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Standardize checkbox and radio button focus states */
+  input[type="checkbox"]:focus,
+  input[type="radio"]:focus {
+    box-shadow: 0 0 0 2px hsl(var(--primary)) !important;
   }
 
   /* Accessibility improvements */
-  /* High contrast focus indicators */
+  /* High contrast focus indicators using orange */
   *:focus-visible {
-    outline: 2px solid #FF4A00;
+    outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
   }
 
@@ -185,5 +231,21 @@
 
   .text-code-foreground {
     color: hsl(var(--foreground));
+  }
+
+  /* Enhanced form field styling consistency */
+  .form-field-focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 1px hsl(var(--primary));
+  }
+
+  /* Remove default browser focus rings in favor of our orange ones */
+  input, textarea, select, button {
+    outline: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 1px hsl(var(--primary));
   }
 }
