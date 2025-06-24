@@ -1,71 +1,223 @@
-
-import React from 'react';
+import { useState } from "react";
+import { 
+  Palette, 
+  Layers, 
+  Navigation, 
+  Layout, 
+  FileText, 
+  MessageSquare, 
+  Beaker, 
+  Search,
+  Home,
+  Github,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+  Settings
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { Building2, Palette, Type, Layout, Sparkles, BarChart, Home, FileText } from 'lucide-react';
-import { useLocalDesignSystem } from '@/hooks/useLocalDesignSystem';
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  SidebarHeader,
+  SidebarFooter,
+} from "@/components/ui/sidebar";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useCategories, useComponents } from "@/hooks/useDesignSystem";
+import { UserMenu } from "@/components/auth/UserMenu";
 
-const navigationItems = [
-  { title: 'Home', icon: Home, url: '/' },
-  { title: 'Foundations', icon: Layout, url: '/foundations' },
-  { title: 'Components', icon: Palette, url: '/components' },
-  { title: 'Typography', icon: Type, url: '/typography' },
-  { title: 'Rich Text Editor', icon: FileText, url: '/rich-text-editor' },
-  { title: 'Experimental', icon: Sparkles, url: '/experimental' },
-  { title: 'Analytics', icon: BarChart, url: '/analytics' },
-  { title: 'Documentation', icon: FileText, url: '/documentation' },
-];
+const categoryIcons = {
+  'foundations': Palette,
+  'core-ui': Layers,
+  'navigation': Navigation,
+  'content-layout': Layout,
+  'forms': FileText,
+  'feedback': MessageSquare,
+  'experimental': Beaker,
+};
 
 export function AppSidebar() {
-  const { brandName, logoUrl } = useLocalDesignSystem();
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const { data: categories, isLoading } = useCategories();
+  const { data: allComponents } = useComponents();
+
+  const getCategoryComponents = (categoryId: string) => {
+    return allComponents?.filter(component => component.category_id === categoryId) || [];
+  };
+
+  // Enhanced search: filter both categories and components
+  const searchQueryLower = searchQuery.toLowerCase();
+  
+  const filteredCategories = categories?.filter(category => {
+    // Search in category name
+    if (category.name.toLowerCase().includes(searchQueryLower)) return true;
+    
+    // Search in category components
+    const categoryComponents = getCategoryComponents(category.id);
+    return categoryComponents.some(component => 
+      component.name.toLowerCase().includes(searchQueryLower) ||
+      component.description?.toLowerCase().includes(searchQueryLower) ||
+      component.slug.toLowerCase().includes(searchQueryLower)
+    );
+  });
+
+  const getFilteredComponents = (categoryId: string) => {
+    const categoryComponents = getCategoryComponents(categoryId);
+    if (!searchQuery) return categoryComponents;
+    
+    return categoryComponents.filter(component =>
+      component.name.toLowerCase().includes(searchQueryLower) ||
+      component.description?.toLowerCase().includes(searchQueryLower) ||
+      component.slug.toLowerCase().includes(searchQueryLower)
+    );
+  };
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   return (
-    <Sidebar>
-      <SidebarHeader className="border-b">
-        <div className="flex items-center gap-2 px-2 py-1">
-          {logoUrl ? (
-            <img src={logoUrl} alt={brandName} className="h-8 w-8 object-contain" />
-          ) : (
-            <Building2 className="h-8 w-8 text-primary" />
-          )}
-          <span className="font-semibold text-lg">{brandName}</span>
+    <Sidebar className="border-r border-border">
+      <SidebarHeader className="border-b border-border p-4">
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+            <Palette className="h-4 w-4 text-primary-foreground" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold">DLS</h2>
+            <p className="text-xs text-muted-foreground">Design Language System</p>
+          </div>
         </div>
       </SidebarHeader>
-      
-      <SidebarContent>
+
+      <SidebarContent className="p-4">
+        <div className="mb-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search components..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+        </div>
+
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url} className="flex items-center gap-2">
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={location.pathname === "/"}>
+                  <Link to="/">
+                    <Home className="h-4 w-4" />
+                    <span>Overview</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {!isLoading && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Categories</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredCategories?.map((category) => {
+                  const Icon = categoryIcons[category.slug as keyof typeof categoryIcons] || Layers;
+                  const isActive = location.pathname === `/category/${category.slug}`;
+                  const isExpanded = expandedCategories.includes(category.id);
+                  const categoryComponents = getCategoryComponents(category.id);
+                  
+                  return (
+                    <SidebarMenuItem key={category.id}>
+                      <Collapsible open={isExpanded} onOpenChange={() => toggleCategory(category.id)}>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton 
+                            asChild 
+                            isActive={isActive} 
+                            className="w-full justify-between"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleCategory(category.id);
+                            }}
+                          >
+                            <div className="flex items-center justify-between w-full cursor-pointer">
+                              <div className="flex items-center gap-2">
+                                <Icon className="h-4 w-4" />
+                                <span>{category.name}</span>
+                              </div>
+                              {getFilteredComponents(category.id).length > 0 && (
+                                <div className="ml-auto">
+                                  {isExpanded ? (
+                                    <ChevronUp className="h-3 w-3" />
+                                  ) : (
+                                    <ChevronDown className="h-3 w-3" />
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {getFilteredComponents(category.id).map((component) => {
+                              const isComponentActive = location.pathname === `/component/${component.slug}`;
+                              return (
+                                <SidebarMenuSubItem key={component.id}>
+                                  <SidebarMenuSubButton asChild isActive={isComponentActive}>
+                                    <Link to={`/component/${component.slug}`}>
+                                      <span>{component.name}</span>
+                                      {component.is_experimental && (
+                                        <span className="ml-auto text-xs text-orange-600">EXP</span>
+                                      )}
+                                    </Link>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              );
+                            })}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
-      
-      <SidebarFooter className="border-t">
-        <div className="p-2 text-sm text-muted-foreground">
-          Design System v1.0
+
+      <SidebarFooter className="border-t border-border p-4">
+        <div className="flex gap-2 mt-4">
+          <Button variant="outline" size="sm" className="flex-1" asChild>
+            <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
+              <Github className="h-4 w-4" />
+              GitHub
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </Button>
         </div>
+        <p className="text-xs text-muted-foreground text-center mt-2">
+          v1.0.0 • Built with Lovable
+        </p>
       </SidebarFooter>
     </Sidebar>
   );

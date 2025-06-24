@@ -34,21 +34,7 @@ export function ColorPaletteControls() {
           </Button>
         </CardContent>
       </Card>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Color Palette Editor</h2>
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
-                  Close
-                </Button>
-              </div>
-              <LocalColorPaletteAdmin />
-            </div>
-          </div>
-        </div>
-      )}
+      <LocalColorPaletteAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }
@@ -75,21 +61,7 @@ export function TypographyControls() {
           </Button>
         </CardContent>
       </Card>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Typography Editor</h2>
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
-                  Close
-                </Button>
-              </div>
-              <LocalTypographyAdmin />
-            </div>
-          </div>
-        </div>
-      )}
+      <LocalTypographyAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }
@@ -116,21 +88,7 @@ export function BrandingControls() {
           </Button>
         </CardContent>
       </Card>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Brand Editor</h2>
-                <Button variant="outline" onClick={() => setIsOpen(false)}>
-                  Close
-                </Button>
-              </div>
-              <LocalBrandingAdmin />
-            </div>
-          </div>
-        </div>
-      )}
+      <LocalBrandingAdmin isOpen={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 }
