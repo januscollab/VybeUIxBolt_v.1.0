@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -81,7 +82,7 @@ export default function BreadcrumbShowcase() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 showcase-component">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-start justify-between">

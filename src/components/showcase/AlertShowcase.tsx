@@ -10,7 +10,7 @@ export default function AlertShowcase() {
   const [showDismissible, setShowDismissible] = useState(true);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 showcase-component">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
