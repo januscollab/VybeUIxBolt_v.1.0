@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Copy, Palette, undo, edit } from "lucide-react";
+import { Copy, Palette, Undo, Edit } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
 
@@ -136,7 +136,7 @@ export default function ColorPaletteComponent() {
               />
             </div>
             <Button variant="outline" onClick={resetToDefault} className="gap-2">
-              <undo className="h-4 w-4" />
+              <Undo className="h-4 w-4" />
               Reset to Default
             </Button>
           </div>
@@ -168,7 +168,7 @@ export default function ColorPaletteComponent() {
                       <CardTitle className="text-base flex items-center gap-2">
                         {color.name}
                         {isLiveEditEnabled && (
-                          <edit className="h-3 w-3 text-muted-foreground group-hover:text-primary" />
+                          <Edit className="h-3 w-3 text-muted-foreground group-hover:text-primary" />
                         )}
                       </CardTitle>
                       <div 
