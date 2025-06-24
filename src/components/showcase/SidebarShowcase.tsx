@@ -1,8 +1,9 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Copy, Figma, FileCode, Home, Settings, Users, BarChart3, Mail, Calendar, Search, Bell, User, LogOut, ChevronRight, Folder, File } from "lucide-react";
+import { Copy, Home, Settings, Users, BarChart3, Mail, Calendar, Search, Bell, User, LogOut, ChevronRight, Folder, File } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 
@@ -112,20 +113,6 @@ export default function SidebarShowcase() {
             <p className="text-lg text-muted-foreground">
               Collapsible navigation sidebar with organized menu groups and responsive behavior.
             </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" asChild>
-              <a href="https://www.figma.com/design" target="_blank" rel="noopener noreferrer">
-                <Figma className="h-4 w-4 mr-2" />
-                Figma
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="#storybook" target="_blank" rel="noopener noreferrer">
-                <FileCode className="h-4 w-4 mr-2" />
-                Storybook
-              </a>
-            </Button>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -368,9 +355,9 @@ export default App;`}
         <CardContent className="space-y-6">
           <div className="p-6 border rounded-lg bg-muted/50">
             <div className="space-y-4">
-              <div className="bg-info/10 border border-info/20 rounded-lg p-4">
-                <h4 className="font-medium text-info mb-2">Responsive Behavior</h4>
-                <ul className="text-sm text-info/80 space-y-1">
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                <h4 className="font-medium text-primary mb-2">Responsive Behavior</h4>
+                <ul className="text-sm text-primary/80 space-y-1">
                   <li>• Desktop: Persistent sidebar with collapse toggle</li>
                   <li>• Tablet: Auto-collapse with overlay option</li>
                   <li>• Mobile: Hidden by default, slide-out overlay</li>
@@ -404,38 +391,6 @@ export default App;`}
           <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
             <code>{codeExamples.collapsible}</code>
           </pre>
-        </CardContent>
-      </Card>
-
-      {/* Supabase Integration */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Supabase Integration</CardTitle>
-          <CardDescription>
-            Sidebar with dynamic navigation based on user roles and real-time updates.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Database Integration</h4>
-            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-              <li>• Role-based navigation menu generation</li>
-              <li>• User preferences for sidebar state</li>
-              <li>• Real-time notifications and badges</li>
-              <li>• Dynamic menu items from database</li>
-              <li>• Permission-based menu filtering</li>
-            </ul>
-          </div>
-          
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Navigation Patterns</h4>
-            <div className="text-sm text-green-800 dark:text-green-200 space-y-1">
-              <code className="block">// Menu items table</code>
-              <code className="block">navigation_items: id, title, url, icon, role_required</code>
-              <code className="block">// User preferences</code>
-              <code className="block">user_preferences: sidebar_collapsed, theme, layout</code>
-            </div>
-          </div>
         </CardContent>
       </Card>
 

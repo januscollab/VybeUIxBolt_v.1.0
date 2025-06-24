@@ -14,7 +14,8 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
-  Edit
+  Edit,
+  X
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -106,6 +107,10 @@ export function AppSidebar() {
     );
   };
 
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
+
   return (
     <Sidebar className="border-r border-border bg-background">
       <SidebarHeader className="border-b border-border p-4 bg-background">
@@ -128,8 +133,18 @@ export function AppSidebar() {
               placeholder="Search components..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
+              className="pl-9 pr-9"
             />
+            {searchQuery && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearSearch}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-muted"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -223,6 +238,13 @@ export function AppSidebar() {
             <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4" />
               GitHub
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </Button>
+          <Button variant="default" size="sm" className="flex-1" asChild>
+            <a href="/documentation" target="_blank" rel="noopener noreferrer">
+              <FileText className="h-4 w-4" />
+              Docs
               <ExternalLink className="h-3 w-3" />
             </a>
           </Button>
