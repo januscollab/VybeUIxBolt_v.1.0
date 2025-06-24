@@ -8,8 +8,6 @@ import { X, Info, AlertTriangle, CheckCircle, AlertCircle, Code } from "lucide-r
 import { CodeModal } from "@/components/ui/code-modal";
 
 export default function BannerShowcase() {
-  const [showCode, setShowCode] = useState<string | null>(null);
-
   const basicBannerCode = `<Alert className="border-l-4 border-l-blue-500">
   <Info className="h-4 w-4" />
   <AlertDescription>
@@ -73,15 +71,12 @@ export default function BannerShowcase() {
               <CardTitle>Basic Banner</CardTitle>
               <CardDescription>Simple informational banner</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('basic')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Basic Banner" code={basicBannerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -102,15 +97,12 @@ export default function BannerShowcase() {
               <CardTitle>Warning Banner</CardTitle>
               <CardDescription>Banner for warnings and important notices</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('warning')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Warning Banner" code={warningBannerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -131,15 +123,12 @@ export default function BannerShowcase() {
               <CardTitle>Success Banner</CardTitle>
               <CardDescription>Banner for successful actions</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('success')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Success Banner" code={successBannerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -160,15 +149,12 @@ export default function BannerShowcase() {
               <CardTitle>Dismissible Banner</CardTitle>
               <CardDescription>Banner that users can dismiss</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('dismissible')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Dismissible Banner" code={dismissibleBannerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -198,32 +184,6 @@ export default function BannerShowcase() {
           )}
         </CardContent>
       </Card>
-
-      {/* Code Modals */}
-      <CodeModal
-        isOpen={showCode === 'basic'}
-        onClose={() => setShowCode(null)}
-        title="Basic Banner"
-        code={basicBannerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'warning'}
-        onClose={() => setShowCode(null)}
-        title="Warning Banner"
-        code={warningBannerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'success'}
-        onClose={() => setShowCode(null)}
-        title="Success Banner"
-        code={successBannerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'dismissible'}
-        onClose={() => setShowCode(null)}
-        title="Dismissible Banner"
-        code={dismissibleBannerCode}
-      />
     </div>
   );
 }

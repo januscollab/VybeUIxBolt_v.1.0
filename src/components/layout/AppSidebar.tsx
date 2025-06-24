@@ -33,6 +33,7 @@ import {
   SidebarMenuSubButton,
   SidebarHeader,
   SidebarFooter,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -111,14 +112,17 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-r border-border bg-background">
       <SidebarHeader className="border-b border-border p-4 bg-background">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-            <Palette className="h-4 w-4 text-primary-foreground" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+              <Palette className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">VybeUI</h2>
+              <p className="text-xs text-muted-foreground">Design Language System</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold">VybeUI</h2>
-            <p className="text-xs text-muted-foreground">Design Language System</p>
-          </div>
+          <SidebarTrigger />
         </div>
       </SidebarHeader>
 
@@ -180,7 +184,7 @@ export function AppSidebar() {
                                 <div className="min-w-0 flex-1">
                                   <div className="text-sm font-medium truncate">{category.name}</div>
                                   {category.description && (
-                                    <div className="text-xs text-muted-foreground line-clamp-2 leading-tight">
+                                    <div className="text-xs text-muted-foreground leading-tight whitespace-normal break-words">
                                       {category.description}
                                     </div>
                                   )}

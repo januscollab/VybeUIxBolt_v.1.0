@@ -7,8 +7,6 @@ import { Code } from "lucide-react";
 import { CodeModal } from "@/components/ui/code-modal";
 
 export default function ContainerShowcase() {
-  const [showCode, setShowCode] = useState<string | null>(null);
-
   const basicContainerCode = `<div className="container mx-auto px-4">
   <h2 className="text-2xl font-bold mb-4">Container Content</h2>
   <p>This content is contained within a responsive container.</p>
@@ -56,15 +54,12 @@ export default function ContainerShowcase() {
               <CardTitle>Basic Container</CardTitle>
               <CardDescription>Standard container with responsive max-width</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('basic')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Basic Container" code={basicContainerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -85,15 +80,12 @@ export default function ContainerShowcase() {
               <CardTitle>Fluid Container</CardTitle>
               <CardDescription>Full-width container that spans the entire viewport</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('fluid')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Fluid Container" code={fluidContainerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -114,15 +106,12 @@ export default function ContainerShowcase() {
               <CardTitle>Constrained Container</CardTitle>
               <CardDescription>Container with a specific maximum width</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('constrained')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Constrained Container" code={constrainedContainerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -143,15 +132,12 @@ export default function ContainerShowcase() {
               <CardTitle>Section Container</CardTitle>
               <CardDescription>Container designed for page sections</CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowCode('section')}
-              className="gap-2"
-            >
-              <Code className="h-4 w-4" />
-              View Code
-            </Button>
+            <CodeModal title="Section Container" code={sectionContainerCode}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Code className="h-4 w-4" />
+                View Code
+              </Button>
+            </CodeModal>
           </div>
         </CardHeader>
         <CardContent>
@@ -203,32 +189,6 @@ export default function ContainerShowcase() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Code Modals */}
-      <CodeModal
-        isOpen={showCode === 'basic'}
-        onClose={() => setShowCode(null)}
-        title="Basic Container"
-        code={basicContainerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'fluid'}
-        onClose={() => setShowCode(null)}
-        title="Fluid Container"
-        code={fluidContainerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'constrained'}
-        onClose={() => setShowCode(null)}
-        title="Constrained Container"
-        code={constrainedContainerCode}
-      />
-      <CodeModal
-        isOpen={showCode === 'section'}
-        onClose={() => setShowCode(null)}
-        title="Section Container"
-        code={sectionContainerCode}
-      />
     </div>
   );
 }

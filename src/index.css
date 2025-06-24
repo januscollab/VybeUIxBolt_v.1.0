@@ -137,21 +137,7 @@
     font-family: var(--font-primary);
   }
 
-  /* Orange-focused form styling with correct orange */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="search"],
-  textarea,
-  select {
-    border-color: #FF4A00 !important;
-    border-width: 1px;
-    box-shadow: none !important;
-  }
-
+  /* Orange-focused form styling - only on focus */
   input[type="text"]:focus,
   input[type="email"]:focus,
   input[type="password"]:focus,
