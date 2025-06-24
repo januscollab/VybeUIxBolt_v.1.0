@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ export default function CVInspiredShowcase() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 showcase-component">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -50,127 +51,123 @@ export default function CVInspiredShowcase() {
           <Badge variant="default">Professional</Badge>
         </div>
         <p className="text-lg text-muted-foreground">
-          Professional components inspired by CV/resume design patterns for portfolio and profile applications.
+          Professional profile components inspired by modern CV and resume layouts for career platforms.
         </p>
       </div>
 
-      {/* Professional Profile Card */}
+      {/* Profile Header */}
       <Card>
         <CardHeader>
-          <CardTitle>Professional Profile Card</CardTitle>
-          <CardDescription>Complete profile overview with score and quick actions</CardDescription>
+          <CardTitle>Professional Profile Header</CardTitle>
+          <CardDescription>
+            Comprehensive profile overview with completion scoring and quick actions
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col md:flex-row gap-6">
-            {/* Profile Section */}
-            <div className="flex-1">
-              <div className="flex items-start gap-4">
-                <Avatar className="h-20 w-20">
-                  <AvatarImage src="/placeholder.svg" />
-                  <AvatarFallback className="text-lg">JD</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 space-y-2">
-                  <div>
-                    <h3 className="text-xl font-semibold">John Doe</h3>
-                    <p className="text-muted-foreground">Senior Frontend Developer</p>
+            <div className="flex-shrink-0">
+              <Avatar className="h-24 w-24">
+                <AvatarImage src="/placeholder.svg" />
+                <AvatarFallback>JD</AvatarFallback>
+              </Avatar>
+            </div>
+            
+            <div className="flex-1 space-y-4">
+              <div>
+                <h3 className="text-2xl font-bold">John Doe</h3>
+                <p className="text-lg text-muted-foreground">Senior Frontend Developer</p>
+                <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4" />
+                    San Francisco, CA
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Mail className="h-4 w-4" />
-                      john@example.com
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Phone className="h-4 w-4" />
-                      +1 (555) 123-4567
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      San Francisco, CA
-                    </div>
+                  <div className="flex items-center gap-1">
+                    <Mail className="h-4 w-4" />
+                    john.doe@email.com
                   </div>
-                  <div className="flex gap-2 mt-3">
-                    <Button size="sm">
-                      <Eye className="h-4 w-4 mr-2" />
-                      Preview CV
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Download className="h-4 w-4 mr-2" />
-                      Export PDF
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Edit3 className="h-4 w-4 mr-2" />
-                      Edit Profile
-                    </Button>
+                  <div className="flex items-center gap-1">
+                    <Phone className="h-4 w-4" />
+                    +1 (555) 123-4567
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Score Section */}
-            <div className="md:w-80">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="text-center space-y-2">
-                    <div className="text-3xl font-bold text-green-600">{profileScore}%</div>
-                    <p className="text-sm text-muted-foreground">Profile Strength</p>
-                    <Progress value={profileScore} className="w-full" />
-                  </div>
-                  <Separator className="my-4" />
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Profile Views</span>
-                      <span className="font-medium">247 this week</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Applications</span>
-                      <span className="font-medium">12 active</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Response Rate</span>
-                      <span className="font-medium text-green-600">68%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Profile Completion</span>
+                  <span className="text-sm text-muted-foreground">{profileScore}%</span>
+                </div>
+                <Progress value={profileScore} className="h-2" />
+              </div>
+
+              <div className="flex gap-2">
+                <Button size="sm" className="gap-1">
+                  <Edit3 className="h-4 w-4" />
+                  Edit Profile
+                </Button>
+                <Button size="sm" variant="outline" className="gap-1">
+                  <Eye className="h-4 w-4" />
+                  View Public
+                </Button>
+                <Button size="sm" variant="outline" className="gap-1">
+                  <Download className="h-4 w-4" />
+                  Download CV
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Skills Matrix */}
+      {/* Skills Assessment */}
       <Card>
         <CardHeader>
-          <CardTitle>Skills Assessment Matrix</CardTitle>
-          <CardDescription>Visual representation of skills with progress indicators</CardDescription>
+          <CardTitle>Skills & Expertise</CardTitle>
+          <CardDescription>
+            Interactive skills visualization with proficiency levels and categories
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             {skills.map((skill, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
                     <span className="font-medium">{skill.name}</span>
-                    <Badge variant="outline" className="ml-2 text-xs">
+                    <Badge variant="outline" className="text-xs">
                       {skill.category}
                     </Badge>
                   </div>
-                  <span className="text-sm font-medium">{skill.level}%</span>
+                  <span className="text-sm text-muted-foreground">{skill.level}%</span>
                 </div>
-                <Progress value={skill.level} className="h-2" />
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Beginner</span>
-                  <span>Expert</span>
+                <div className="flex items-center gap-2">
+                  <Progress value={skill.level} className="flex-1 h-2" />
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-3 w-3 ${
+                          star <= Math.floor(skill.level / 20) 
+                            ? 'text-warning fill-warning' 
+                            : 'text-muted-foreground'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="flex gap-2 pt-4">
-            <Button size="sm" variant="outline">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Skill
-            </Button>
-            <Button size="sm" variant="outline">
-              <Target className="h-4 w-4 mr-2" />
+
+          <Separator />
+
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-medium">Skill Assessment</h4>
+              <p className="text-sm text-muted-foreground">Take assessments to verify your skills</p>
+            </div>
+            <Button variant="outline" size="sm" className="gap-1">
+              <Target className="h-4 w-4" />
               Take Assessment
             </Button>
           </div>
@@ -180,69 +177,89 @@ export default function CVInspiredShowcase() {
       {/* Achievement System */}
       <Card>
         <CardHeader>
-          <CardTitle>Achievement System</CardTitle>
-          <CardDescription>Gamified progress tracking and milestones</CardDescription>
+          <CardTitle>Professional Achievements</CardTitle>
+          <CardDescription>
+            Track progress and unlock achievements in your professional journey
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {achievements.map((achievement, index) => (
-              <div key={index} className="flex items-start gap-3 p-4 rounded-lg border">
-                <div className={`p-2 rounded-full ${
-                  achievement.status === 'completed' 
-                    ? 'bg-green-100 text-green-600' 
-                    : 'bg-orange-100 text-orange-600'
-                }`}>
-                  <achievement.icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-medium">{achievement.title}</h4>
-                    {achievement.status === 'completed' && (
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                    )}
-                    {achievement.status === 'in-progress' && (
-                      <Clock className="h-4 w-4 text-orange-600" />
-                    )}
+            {achievements.map((achievement, index) => {
+              const Icon = achievement.icon;
+              const isCompleted = achievement.status === 'completed';
+              
+              return (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border ${
+                    isCompleted 
+                      ? 'bg-success/10 border-success/20' 
+                      : 'bg-muted/50 border-muted'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-full ${
+                      isCompleted 
+                        ? 'bg-success text-success-foreground' 
+                        : 'bg-muted text-muted-foreground'
+                    }`}>
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium">{achievement.title}</h4>
+                      <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                      <Badge 
+                        variant={isCompleted ? "default" : "secondary"} 
+                        className="mt-2 text-xs"
+                      >
+                        {isCompleted ? 'Completed' : 'In Progress'}
+                      </Badge>
+                    </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{achievement.description}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
-          <div className="text-center">
-            <Button variant="outline">
-              <Trophy className="h-4 w-4 mr-2" />
-              View All Achievements
-            </Button>
+
+          <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+            <div className="flex items-center gap-3">
+              <Trophy className="h-5 w-5 text-primary" />
+              <div>
+                <h4 className="font-medium text-primary">Achievement Unlocked!</h4>
+                <p className="text-sm text-primary/80">You've completed your profile setup. Keep up the great work!</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Professional Timeline */}
+      {/* Career Timeline */}
       <Card>
         <CardHeader>
-          <CardTitle>Professional Timeline</CardTitle>
-          <CardDescription>Career progression and education history</CardDescription>
+          <CardTitle>Career Timeline</CardTitle>
+          <CardDescription>
+            Visual representation of professional experience and education
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="relative">
-            <div className="absolute left-4 top-0 bottom-0 w-px bg-border"></div>
+            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
             <div className="space-y-6">
               {timeline.map((item, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 ${
+                <div key={index} className="relative flex items-start gap-4">
+                  <div className={`relative z-10 w-8 h-8 rounded-full border-4 border-background flex items-center justify-center ${
                     item.type === 'work' 
-                      ? 'bg-blue-100 border-blue-500 text-blue-600' 
-                      : 'bg-green-100 border-green-500 text-green-600'
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-accent text-accent-foreground'
                   }`}>
                     {item.type === 'work' ? (
-                      <Briefcase className="h-4 w-4" />
+                      <Briefcase className="h-3 w-3" />
                     ) : (
-                      <GraduationCap className="h-4 w-4" />
+                      <GraduationCap className="h-3 w-3" />
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1 pb-6">
+                    <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-medium">{item.title}</h4>
                       <Badge variant="outline" className="text-xs">
                         {item.date}
@@ -254,212 +271,97 @@ export default function CVInspiredShowcase() {
               ))}
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button size="sm" variant="outline">
-              <Plus className="h-4 w-4 mr-2" />
+
+          <div className="flex items-center justify-center pt-4">
+            <Button variant="outline" size="sm" className="gap-1">
+              <Plus className="h-4 w-4" />
               Add Experience
             </Button>
-            <Button size="sm" variant="outline">
-              <GraduationCap className="h-4 w-4 mr-2" />
-              Add Education
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Portfolio Showcase */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Portfolio & Projects</CardTitle>
+          <CardDescription>
+            Showcase your best work with visual previews and project details
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((project) => (
+              <div key={project} className="border rounded-lg overflow-hidden group hover:shadow-md transition-shadow">
+                <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                  <div className="text-center">
+                    <FileText className="h-8 w-8 mx-auto mb-2 text-primary" />
+                    <p className="text-sm font-medium">Project {project}</p>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h4 className="font-medium">E-commerce Platform</h4>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Modern React application with TypeScript and Tailwind CSS
+                  </p>
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex gap-1">
+                      <Badge variant="secondary" className="text-xs">React</Badge>
+                      <Badge variant="secondary" className="text-xs">TypeScript</Badge>
+                    </div>
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <Eye className="h-3 w-3" />
+                      View
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center">
+            <Upload className="h-8 w-8 mx-auto mb-3 text-muted-foreground" />
+            <h4 className="font-medium mb-1">Upload Portfolio Item</h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Drag and drop files or click to browse
+            </p>
+            <Button variant="outline" size="sm">
+              Choose Files
             </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* File Upload Component */}
+      {/* Professional Stats */}
       <Card>
         <CardHeader>
-          <CardTitle>Document Upload System</CardTitle>
-          <CardDescription>Professional file upload with progress tracking</CardDescription>
+          <CardTitle>Professional Metrics</CardTitle>
+          <CardDescription>
+            Track your professional growth and market positioning
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center space-y-4">
-            <div className="flex justify-center">
-              <Upload className="h-12 w-12 text-muted-foreground" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center p-4 border rounded-lg">
+              <TrendingUp className="h-6 w-6 mx-auto mb-2 text-success" />
+              <div className="text-2xl font-bold">95%</div>
+              <div className="text-xs text-muted-foreground">Profile Views</div>
             </div>
-            <div>
-              <h3 className="font-medium">Upload your CV/Resume</h3>
-              <p className="text-sm text-muted-foreground">
-                Drag and drop your file here, or click to browse
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Supports PDF, DOC, DOCX (max 10MB)
-              </p>
+            <div className="text-center p-4 border rounded-lg">
+              <Star className="h-6 w-6 mx-auto mb-2 text-warning" />
+              <div className="text-2xl font-bold">4.9</div>
+              <div className="text-xs text-muted-foreground">Rating</div>
             </div>
-            <Button>
-              <FileText className="h-4 w-4 mr-2" />
-              Choose File
-            </Button>
-          </div>
-          
-          {uploadProgress > 0 && (
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Uploading resume.pdf...</span>
-                <span>{uploadProgress}%</span>
-              </div>
-              <Progress value={uploadProgress} />
+            <div className="text-center p-4 border rounded-lg">
+              <User className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <div className="text-2xl font-bold">24</div>
+              <div className="text-xs text-muted-foreground">Connections</div>
             </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex items-center gap-3 p-3 border rounded-lg">
-              <FileText className="h-8 w-8 text-blue-600" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">John_Doe_Resume.pdf</p>
-                <p className="text-sm text-muted-foreground">2.4 MB • Uploaded today</p>
-              </div>
-              <Button size="sm" variant="ghost">
-                <Download className="h-4 w-4" />
-              </Button>
+            <div className="text-center p-4 border rounded-lg">
+              <Zap className="h-6 w-6 mx-auto mb-2 text-accent" />
+              <div className="text-2xl font-bold">12</div>
+              <div className="text-xs text-muted-foreground">Projects</div>
             </div>
-
-            <div className="flex items-center gap-3 p-3 border rounded-lg">
-              <FileText className="h-8 w-8 text-green-600" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">Cover_Letter.pdf</p>
-                <p className="text-sm text-muted-foreground">1.8 MB • 2 days ago</p>
-              </div>
-              <Button size="sm" variant="ghost">
-                <Download className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="flex items-center gap-3 p-3 border rounded-lg">
-              <FileText className="h-8 w-8 text-purple-600" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium truncate">Portfolio.pdf</p>
-                <p className="text-sm text-muted-foreground">5.2 MB • 1 week ago</p>
-              </div>
-              <Button size="sm" variant="ghost">
-                <Download className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Analytics Dashboard */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Profile Analytics</CardTitle>
-          <CardDescription>Track your profile performance and engagement</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Profile Views</p>
-                    <p className="text-2xl font-bold">1,247</p>
-                    <p className="text-xs text-green-600 flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3" />
-                      +12% from last week
-                    </p>
-                  </div>
-                  <Eye className="h-8 w-8 text-blue-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Applications</p>
-                    <p className="text-2xl font-bold">23</p>
-                    <p className="text-xs text-green-600 flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3" />
-                      +8% from last week
-                    </p>
-                  </div>
-                  <FileText className="h-8 w-8 text-green-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Response Rate</p>
-                    <p className="text-2xl font-bold">68%</p>
-                    <p className="text-xs text-red-600 flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3 rotate-180" />
-                      -3% from last week
-                    </p>
-                  </div>
-                  <Zap className="h-8 w-8 text-orange-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Profile Score</p>
-                    <p className="text-2xl font-bold">85%</p>
-                    <p className="text-xs text-green-600 flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3" />
-                      +5% from last week
-                    </p>
-                  </div>
-                  <Award className="h-8 w-8 text-purple-500" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Code Examples */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Code Examples</CardTitle>
-          <CardDescription>Implementation examples for CV-inspired components</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <h4 className="font-medium">Skills Progress Component</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`const SkillItem = ({ name, level, category }) => (
-  <div className="space-y-2">
-    <div className="flex justify-between items-center">
-      <div>
-        <span className="font-medium">{name}</span>
-        <Badge variant="outline" className="ml-2">
-          {category}
-        </Badge>
-      </div>
-      <span className="text-sm font-medium">{level}%</span>
-    </div>
-    <Progress value={level} className="h-2" />
-  </div>
-);`}</code>
-            </pre>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-medium">Achievement Badge</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`const Achievement = ({ title, description, icon: Icon, status }) => (
-  <div className="flex items-start gap-3 p-4 rounded-lg border">
-    <div className={\`p-2 rounded-full \${
-      status === 'completed' 
-        ? 'bg-green-100 text-green-600' 
-        : 'bg-orange-100 text-orange-600'
-    }\`}>
-      <Icon className="h-5 w-5" />
-    </div>
-    <div className="flex-1">
-      <h4 className="font-medium">{title}</h4>
-      <p className="text-sm text-muted-foreground">{description}</p>
-    </div>
-  </div>
-);`}</code>
-            </pre>
           </div>
         </CardContent>
       </Card>

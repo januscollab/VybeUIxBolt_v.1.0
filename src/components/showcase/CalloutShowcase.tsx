@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { InfoIcon, AlertTriangleIcon, CheckCircleIcon, AlertCircleIcon, LightbulbIcon, BookOpenIcon } from 'lucide-react';
 
 interface CalloutProps {
@@ -67,7 +68,18 @@ function Callout({ variant, title, children }: CalloutProps) {
 
 export default function CalloutShowcase() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 showcase-component">
+      {/* Header */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold">Callout</h1>
+          <Badge variant="default">Stable</Badge>
+        </div>
+        <p className="text-lg text-muted-foreground">
+          Highlighted content blocks for tips and warnings
+        </p>
+      </div>
+
       <Card>
         <CardHeader>
           <CardTitle>Callout</CardTitle>

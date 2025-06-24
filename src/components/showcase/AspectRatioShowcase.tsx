@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,7 +60,7 @@ export default function AspectRatioShowcase() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 showcase-component">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-start justify-between">
@@ -145,7 +146,7 @@ export default function AspectRatioShowcase() {
               {commonRatios.map((item, index) => (
                 <div key={index} className="space-y-2">
                   <AspectRatio ratio={item.ratio} className="bg-muted rounded-md overflow-hidden">
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/20 to-primary/20">
                       <div className="text-center">
                         <div className="text-lg font-bold">{item.label}</div>
                         <div className="text-xs text-muted-foreground">{item.description}</div>
@@ -175,12 +176,12 @@ export default function AspectRatioShowcase() {
               <div className="space-y-2">
                 <h4 className="text-sm font-medium">Video Player (16:9)</h4>
                 <AspectRatio ratio={16 / 9} className="bg-black rounded-md overflow-hidden">
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted-foreground/20">
                     <div className="text-center text-white">
                       <Play className="h-12 w-12 mx-auto mb-2" />
                       <p className="text-sm">Video Content</p>
                       <div className="flex items-center justify-center gap-1 mt-2">
-                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-destructive rounded-full animate-pulse"></div>
                         <span className="text-xs">LIVE</span>
                       </div>
                     </div>
@@ -192,10 +193,10 @@ export default function AspectRatioShowcase() {
               <div className="space-y-2">
                 <h4 className="text-sm font-medium">Profile Image (1:1)</h4>
                 <AspectRatio ratio={1} className="bg-muted rounded-md overflow-hidden">
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500/20 to-emerald-500/20">
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-success/20 to-success/40">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-2 flex items-center justify-center">
-                        <ImageIcon className="h-8 w-8 text-white" />
+                      <div className="w-16 h-16 bg-success rounded-full mx-auto mb-2 flex items-center justify-center">
+                        <ImageIcon className="h-8 w-8 text-success-foreground" />
                       </div>
                       <p className="text-sm font-medium">Square Image</p>
                     </div>
@@ -207,9 +208,9 @@ export default function AspectRatioShowcase() {
               <div className="space-y-2">
                 <h4 className="text-sm font-medium">Album Cover (1:1)</h4>
                 <AspectRatio ratio={1} className="bg-muted rounded-md overflow-hidden">
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-purple-500/20 to-pink-500/20">
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/20 to-primary/20">
                     <div className="text-center">
-                      <Music className="h-12 w-12 mx-auto mb-2 text-purple-600" />
+                      <Music className="h-12 w-12 mx-auto mb-2 text-accent" />
                       <p className="text-sm font-medium">Album Art</p>
                       <p className="text-xs text-muted-foreground">Perfect square</p>
                     </div>
@@ -221,9 +222,9 @@ export default function AspectRatioShowcase() {
               <div className="space-y-2">
                 <h4 className="text-sm font-medium">Document (3:4)</h4>
                 <AspectRatio ratio={3/4} className="bg-muted rounded-md overflow-hidden">
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-500/20 to-red-500/20">
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-warning/20 to-destructive/20">
                     <div className="text-center">
-                      <FileText className="h-12 w-12 mx-auto mb-2 text-orange-600" />
+                      <FileText className="h-12 w-12 mx-auto mb-2 text-warning" />
                       <p className="text-sm font-medium">Document</p>
                       <p className="text-xs text-muted-foreground">Portrait format</p>
                     </div>
@@ -264,9 +265,9 @@ export default function AspectRatioShowcase() {
             <div className="grid grid-cols-3 gap-3">
               {Array.from({ length: 6 }, (_, i) => (
                 <AspectRatio key={i} ratio={1} className="bg-muted rounded-md overflow-hidden">
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
                     <div className="text-center">
-                      <div className="w-8 h-8 bg-blue-500 rounded mx-auto mb-1"></div>
+                      <div className="w-8 h-8 bg-primary rounded mx-auto mb-1"></div>
                       <p className="text-xs font-medium">Item {i + 1}</p>
                     </div>
                   </div>
