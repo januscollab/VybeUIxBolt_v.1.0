@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { InfoIcon, AlertTriangleIcon, CheckCircleIcon, AlertCircleIcon, LightbulbIcon, BookOpenIcon } from 'lucide-react';
@@ -11,40 +12,40 @@ interface CalloutProps {
 function Callout({ variant, title, children }: CalloutProps) {
   const variants = {
     info: {
-      bg: 'bg-blue-50 border-l-blue-500 dark:bg-blue-950/50',
-      text: 'text-blue-900 dark:text-blue-100',
+      bg: 'bg-primary/10 border-l-primary dark:bg-primary/20',
+      text: 'text-primary-foreground dark:text-primary',
       icon: InfoIcon,
-      iconColor: 'text-blue-500'
+      iconColor: 'text-primary'
     },
     warning: {
-      bg: 'bg-yellow-50 border-l-yellow-500 dark:bg-yellow-950/50',
-      text: 'text-yellow-900 dark:text-yellow-100',
+      bg: 'bg-warning/10 border-l-warning dark:bg-warning/20',
+      text: 'text-warning-foreground dark:text-warning',
       icon: AlertTriangleIcon,
-      iconColor: 'text-yellow-500'
+      iconColor: 'text-warning'
     },
     success: {
-      bg: 'bg-green-50 border-l-green-500 dark:bg-green-950/50',
-      text: 'text-green-900 dark:text-green-100',
+      bg: 'bg-success/10 border-l-success dark:bg-success/20',
+      text: 'text-success-foreground dark:text-success',
       icon: CheckCircleIcon,
-      iconColor: 'text-green-500'
+      iconColor: 'text-success'
     },
     error: {
-      bg: 'bg-red-50 border-l-red-500 dark:bg-red-950/50',
-      text: 'text-red-900 dark:text-red-100',
+      bg: 'bg-destructive/10 border-l-destructive dark:bg-destructive/20',
+      text: 'text-destructive-foreground dark:text-destructive',
       icon: AlertCircleIcon,
-      iconColor: 'text-red-500'
+      iconColor: 'text-destructive'
     },
     tip: {
-      bg: 'bg-purple-50 border-l-purple-500 dark:bg-purple-950/50',
-      text: 'text-purple-900 dark:text-purple-100',
+      bg: 'bg-accent/10 border-l-accent dark:bg-accent/20',
+      text: 'text-accent-foreground dark:text-accent',
       icon: LightbulbIcon,
-      iconColor: 'text-purple-500'
+      iconColor: 'text-accent'
     },
     note: {
-      bg: 'bg-gray-50 border-l-gray-500 dark:bg-gray-950/50',
-      text: 'text-gray-900 dark:text-gray-100',
+      bg: 'bg-muted border-l-muted-foreground dark:bg-muted/50',
+      text: 'text-muted-foreground dark:text-foreground',
       icon: BookOpenIcon,
-      iconColor: 'text-gray-500'
+      iconColor: 'text-muted-foreground'
     }
   };
 
