@@ -165,26 +165,19 @@ export function AppSidebar() {
                           <SidebarMenuButton 
                             asChild 
                             isActive={isActive} 
-                            className="w-full justify-between py-3 min-h-[60px]"
+                            className="w-full justify-between py-2 min-h-[40px]"
                             onClick={(e) => {
                               e.preventDefault();
                               toggleCategory(category.id);
                             }}
                           >
-                            <div className="flex items-start justify-between w-full cursor-pointer">
-                              <div className="flex items-start gap-3 min-w-0 flex-1">
-                                <Icon className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                                <div className="min-w-0 flex-1 text-left">
-                                  <div className="text-sm font-medium mb-1">{category.name}</div>
-                                  {category.description && (
-                                    <div className="text-xs text-muted-foreground leading-relaxed whitespace-normal break-words">
-                                      {category.description}
-                                    </div>
-                                  )}
-                                </div>
+                            <div className="flex items-center justify-between w-full cursor-pointer">
+                              <div className="flex items-center gap-3 min-w-0 flex-1">
+                                <Icon className="h-4 w-4 flex-shrink-0" />
+                                <div className="text-sm font-medium">{category.name}</div>
                               </div>
                               {getFilteredComponents(category.id).length > 0 && (
-                                <div className="ml-2 flex-shrink-0 mt-0.5">
+                                <div className="ml-2 flex-shrink-0">
                                   {isExpanded ? (
                                     <ChevronUp className="h-3 w-3" />
                                   ) : (

@@ -128,9 +128,6 @@ const Index = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="mb-4">
-                      {category.description}
-                    </CardDescription>
                     <Button asChild variant="outline" className="w-full">
                       <Link to={`/category/${category.slug}`}>
                         Explore Category
