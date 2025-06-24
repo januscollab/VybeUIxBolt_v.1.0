@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Settings, Palette, Type, Image, Building2 } from 'lucide-react';
-import { LocalColorPaletteAdmin } from '@/components/admin/LocalColorPaletteAdmin';
-import { LocalTypographyAdmin } from '@/components/admin/LocalTypographyAdmin';
-import { LocalBrandingAdmin } from '@/components/admin/LocalBrandingAdmin';
+import { FrontendColorPaletteAdmin } from '@/components/admin/FrontendColorPaletteAdmin';
+import { FrontendTypographyAdmin } from '@/components/admin/FrontendTypographyAdmin';
+import { FrontendBrandingAdmin } from '@/components/admin/FrontendBrandingAdmin';
 
 export function AdminControls() {
   // Since we removed authentication, admin controls are always available
@@ -25,7 +25,7 @@ export function ColorPaletteControls() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <LocalColorPaletteAdmin />
+        <FrontendColorPaletteAdmin />
       </CardContent>
     </Card>
   );
@@ -44,7 +44,7 @@ export function TypographyControls() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <LocalTypographyAdmin />
+        <FrontendTypographyAdmin />
       </CardContent>
     </Card>
   );
@@ -63,7 +63,7 @@ export function BrandingControls() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <LocalBrandingAdmin />
+        <FrontendBrandingAdmin />
       </CardContent>
     </Card>
   );
