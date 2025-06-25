@@ -34,6 +34,7 @@ import TooltipShowcase from "@/components/showcase/TooltipShowcase";
 import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
+import NavigationMenuShowcase from "@/components/showcase/NavigationMenuShowcase";
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
 import TypographyScaleComponent from '@/components/design-system/TypographyScaleComponent';
@@ -77,6 +78,7 @@ export default function ComponentPage() {
     'tooltip': TooltipShowcase,
     'aspect-ratio': AspectRatioShowcase,
     'code-block': CodeBlockShowcase,
+    'navigation-menu': NavigationMenuShowcase,
         
     // Add foundation components
     'color-palette': ColorPaletteComponent,

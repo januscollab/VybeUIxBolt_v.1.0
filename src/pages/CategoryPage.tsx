@@ -43,6 +43,7 @@ import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
 import BannerShowcase from "@/components/showcase/BannerShowcase";
+import NavigationMenuShowcase from '@/components/showcase/NavigationMenuShowcase';
 
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
@@ -87,6 +88,7 @@ const componentMap: Record<string, React.ComponentType> = {
   'code-block': CodeBlockShowcase,
   'callout': CalloutShowcase,
   'banner': BannerShowcase,
+  'navigation-menu': NavigationMenuShowcase,
   
   // Foundation components
   'color-palette': ColorPaletteComponent,
