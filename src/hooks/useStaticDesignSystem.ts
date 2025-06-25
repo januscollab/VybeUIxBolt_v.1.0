@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { categories, components, type Category, type Component } from '@/data/staticData';
+import { STATIC_CATEGORIES, STATIC_COMPONENTS, type Category, type Component } from '@/data/staticData';
 
 // Hook for categories
 export function useCategories() {
@@ -10,7 +10,7 @@ export function useCategories() {
   useEffect(() => {
     // Simulate loading delay for realistic behavior
     const timer = setTimeout(() => {
-      setData(categories.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
+      setData(STATIC_CATEGORIES.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
       setIsLoading(false);
     }, 100);
 
@@ -27,12 +27,12 @@ export function useComponents(categorySlug?: string) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      let filteredComponents = components;
+      let filteredComponents = STATIC_COMPONENTS;
       
       if (categorySlug) {
-        const category = categories.find(c => c.slug === categorySlug);
+        const category = STATIC_CATEGORIES.find(c => c.slug === categorySlug);
         if (category) {
-          filteredComponents = components.filter(c => c.category_id === category.id);
+          filteredComponents = STATIC_COMPONENTS.filter(c => c.category_id === category.id);
         }
       }
       
@@ -53,7 +53,7 @@ export function useComponent(slug: string) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const component = components.find(c => c.slug === slug);
+      const component = STATIC_COMPONENTS.find(c => c.slug === slug);
       setData(component || null);
       setIsLoading(false);
     }, 100);

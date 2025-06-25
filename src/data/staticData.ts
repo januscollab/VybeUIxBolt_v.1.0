@@ -1,4 +1,3 @@
-import { StaticImageData } from "next/image";
 
 export interface Category {
   id: string;
@@ -7,6 +6,7 @@ export interface Category {
   description: string;
   component_count: number;
   is_experimental: boolean;
+  sort_order?: number;
 }
 
 export interface Component {
@@ -17,7 +17,9 @@ export interface Component {
   category_id: string;
   status: 'stable' | 'review' | 'deprecated' | 'backlog';
   is_experimental: boolean;
-  image?: StaticImageData;
+  sort_order?: number;
+  figma_url?: string;
+  storybook_url?: string;
   variants?: Variant[];
   documentation?: Documentation[];
 }
@@ -43,15 +45,17 @@ export const STATIC_CATEGORIES: Category[] = [
     slug: 'foundations',
     description: 'Core design system foundations including colors, typography, spacing, and visual hierarchy.',
     component_count: 6,
-    is_experimental: false
+    is_experimental: false,
+    sort_order: 1
   },
   {
     id: '2', 
     name: 'Core UI',
     slug: 'core-ui',
     description: 'Essential interface components for building consistent user experiences.',
-    component_count: 24,
-    is_experimental: false
+    component_count: 28,
+    is_experimental: false,
+    sort_order: 2
   },
   {
     id: '3',
@@ -59,7 +63,8 @@ export const STATIC_CATEGORIES: Category[] = [
     slug: 'navigation', 
     description: 'Navigation patterns and wayfinding components for intuitive user journeys.',
     component_count: 6,
-    is_experimental: false
+    is_experimental: false,
+    sort_order: 3
   },
   {
     id: '4',
@@ -67,7 +72,8 @@ export const STATIC_CATEGORIES: Category[] = [
     slug: 'content-layout',
     description: 'Layout components and content organization patterns for structured interfaces.',
     component_count: 8,
-    is_experimental: false
+    is_experimental: false,
+    sort_order: 4
   },
   {
     id: '5',
@@ -75,7 +81,8 @@ export const STATIC_CATEGORIES: Category[] = [
     slug: 'forms',
     description: 'Form components and input patterns for data collection and user interaction.',
     component_count: 12,
-    is_experimental: false
+    is_experimental: false,
+    sort_order: 5
   },
   {
     id: '6',
@@ -83,7 +90,8 @@ export const STATIC_CATEGORIES: Category[] = [
     slug: 'experimental',
     description: 'Cutting-edge components and experimental patterns pushing the boundaries of design.',
     component_count: 2,
-    is_experimental: true
+    is_experimental: true,
+    sort_order: 6
   }
 ];
 
@@ -703,3 +711,7 @@ export const searchComponents = (query: string) => {
     return nameMatch || descriptionMatch;
   });
 };
+
+// Export aliases for backward compatibility
+export const categories = STATIC_CATEGORIES;
+export const components = STATIC_COMPONENTS;
