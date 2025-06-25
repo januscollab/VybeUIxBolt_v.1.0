@@ -35,7 +35,10 @@ import TooltipShowcase from "@/components/showcase/TooltipShowcase";
 import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
-import BannerShowcase from "@/components/showcase/BannerShowcase";
+import BannerShowcase from "@/components/showcase/BannerShowcase"; 
+import AccordionShowcase from "@/components/showcase/AccordionShowcase";
+import ProgressBarShowcase from "@/components/showcase/ProgressBarShowcase";
+import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
 
 // Import new experimental components
 import AdvancedColorPickerShowcase from '@/components/showcase/experimental/AdvancedColorPickerShowcase';
@@ -86,7 +89,10 @@ export default function ComponentPage() {
     'aspect-ratio': AspectRatioShowcase,
     'code-block': CodeBlockShowcase,
     'callout': CalloutShowcase,
-    'banner': BannerShowcase,
+    'banner': BannerShowcase, 
+    'accordion': AccordionShowcase,
+    'progress-bar': ProgressBarShowcase,
+    'loading-spinner': LoadingSpinnerShowcase,
     
     // Add new experimental components
     'advanced-color-picker': AdvancedColorPickerShowcase,
