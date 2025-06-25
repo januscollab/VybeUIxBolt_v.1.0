@@ -10,13 +10,11 @@ import { Label } from "@/components/ui/label";
 import { CalendarIcon, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { DateRange } from "react-day-picker";
 
 export default function DatePickerShowcase() {
   const [date, setDate] = useState<Date>();
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
-    from: undefined,
-    to: undefined,
-  });
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [birthDate, setBirthDate] = useState<Date>();
 
   return (
@@ -134,7 +132,7 @@ export default function DatePickerShowcase() {
         </CardContent>
       </Card>
 
-      {/* Date Input with Validation */}
+      {/* Date of Birth Picker */}
       <Card>
         <CardHeader>
           <CardTitle>Date of Birth Picker</CardTitle>
