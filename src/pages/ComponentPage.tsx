@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useComponents, useCategories } from "@/hooks/useStaticDesignSystem";
 import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
@@ -13,6 +12,8 @@ import SpacingSystemComponent from "@/components/design-system/SpacingSystemComp
 import ElevationShadowsComponent from "@/components/design-system/ElevationShadowsComponent";
 import IconSystemComponent from "@/components/design-system/IconSystemComponent";
 import InteractionStatesComponent from "@/components/design-system/InteractionStatesComponent";
+import InteractiveColorPalette from "@/components/design-system/InteractiveColorPalette";
+import EnhancedTypographyComponent from "@/components/design-system/EnhancedTypographyComponent";
 
 // Import experimental components
 import WorkflowBuilderComponent from "@/components/experimental/WorkflowBuilderComponent";
@@ -61,6 +62,7 @@ import MultiSelectShowcase from "@/components/showcase/MultiSelectShowcase";
 import TimelineShowcase from "@/components/showcase/TimelineShowcase";
 import GridSystemShowcase from "@/components/showcase/GridSystemShowcase";
 import FlexboxShowcase from "@/components/showcase/FlexboxShowcase";
+import ColorPickerShowcase from "@/components/showcase/ColorPickerShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -139,9 +141,12 @@ export default function ComponentPage() {
       'timeline': TimelineShowcase,
       'grid-system': GridSystemShowcase,
       'flexbox': FlexboxShowcase,
+      'color-picker': ColorPickerShowcase,
       // Design system components
       'color-palette': ColorPaletteComponent,
+      'interactive-color-palette': InteractiveColorPalette,
       'typography-scale': TypographyScaleComponent,
+      'enhanced-typography': EnhancedTypographyComponent,
       'spacing-system': SpacingSystemComponent,
       'elevation-shadows': ElevationShadowsComponent,
       'icon-system': IconSystemComponent,

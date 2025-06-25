@@ -1,5 +1,11 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
+
+interface FontProvider {
+  id: string;
+  name: string;
+  type: 'google' | 'bunny' | 'local' | 'system';
+  baseUrl?: string;
+}
 
 interface DesignSystemContextType {
   colorPalette: Record<string, string>;
@@ -8,9 +14,14 @@ interface DesignSystemContextType {
   logoUrl: string;
   activeVersion: any;
   versions: any[];
+  backgrounds: Record<string, string>;
+  fontProvider: FontProvider;
+  availableFontProviders: FontProvider[];
   updateColorPalette: (colors: Record<string, string>) => void;
   updateTypography: (typography: Record<string, any>) => void;
   updateBranding: (branding: { brandName: string; logoUrl: string }) => void;
+  updateBackgrounds: (backgrounds: Record<string, string>) => void;
+  updateFontProvider: (provider: FontProvider) => void;
   saveVersion: (name: string) => Promise<void>;
   loadVersion: (versionId: string) => Promise<void>;
   refreshVersions: () => Promise<void>;
@@ -37,14 +48,47 @@ const DEFAULT_TYPOGRAPHY = {
   primary: { 
     family: "Poppins", 
     weights: ["400", "500", "600", "700"],
-    googleFontUrl: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    googleFontUrl: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
+    bunnyFontUrl: "https://fonts.bunny.net/css?family=poppins:400,500,600,700"
   },
   secondary: { 
     family: "Inter", 
     weights: ["400", "500"],
-    googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+    googleFontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap",
+    bunnyFontUrl: "https://fonts.bunny.net/css?family=inter:400,500"
   }
 };
+
+const DEFAULT_BACKGROUNDS = {
+  light: "#FFFFFF",
+  neutral: "#F8F9FA", 
+  cool: "#F8FAFC"
+};
+
+const FONT_PROVIDERS: FontProvider[] = [
+  {
+    id: 'google',
+    name: 'Google Fonts',
+    type: 'google',
+    baseUrl: 'https://fonts.googleapis.com/css2'
+  },
+  {
+    id: 'bunny',
+    name: 'Bunny Fonts (Privacy-focused)',
+    type: 'bunny',
+    baseUrl: 'https://fonts.bunny.net/css'
+  },
+  {
+    id: 'local',
+    name: 'Local Fonts',
+    type: 'local'
+  },
+  {
+    id: 'system',
+    name: 'System Fonts',
+    type: 'system'
+  }
+];
 
 export function LocalDesignSystemProvider({ children }: { children: React.ReactNode }) {
   const [colorPalette, setColorPalette] = useState<Record<string, string>>(DEFAULT_COLOR_PALETTE);
@@ -52,6 +96,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
   const [brandName, setBrandName] = useState('VybeUI');
   const [logoUrl, setLogoUrl] = useState('');
   const [versions, setVersions] = useState<any[]>([]);
+  const [backgrounds, setBackgrounds] = useState<Record<string, string>>(DEFAULT_BACKGROUNDS);
+  const [fontProvider, setFontProvider] = useState<FontProvider>(FONT_PROVIDERS[0]);
 
   // Create a mock active version
   const activeVersion = {
@@ -73,6 +119,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
         setBrandName(settings.brandName || 'VybeUI');
         setLogoUrl(settings.logoUrl || '');
         setVersions(settings.versions || []);
+        setBackgrounds(settings.backgrounds || DEFAULT_BACKGROUNDS);
+        setFontProvider(settings.fontProvider || FONT_PROVIDERS[0]);
       } catch (error) {
         console.error('Error loading design system settings:', error);
       }
@@ -82,7 +130,7 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
   // Apply design system changes to CSS variables
   useEffect(() => {
     applyDesignSystemToCSS();
-  }, [colorPalette, typography]);
+  }, [colorPalette, typography, fontProvider]);
 
   const saveSettings = (updates: any) => {
     const settings = {
@@ -91,6 +139,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       brandName,
       logoUrl,
       versions,
+      backgrounds,
+      fontProvider,
       ...updates
     };
     localStorage.setItem('designSystemSettings', JSON.stringify(settings));
@@ -123,8 +173,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       root.style.setProperty('--font-secondary', typography.secondary.family);
     }
 
-    // Load Google Fonts if needed
-    loadGoogleFonts();
+    // Load fonts based on provider
+    loadFonts();
   };
 
   const hexToHSL = (hex: string): string | null => {
@@ -157,25 +207,49 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
     return `${h} ${s}% ${l}%`;
   };
 
-  const loadGoogleFonts = () => {
+  const loadFonts = () => {
+    // Remove existing font links
     const existingLinks = document.querySelectorAll('link[data-font-loader]');
     existingLinks.forEach(link => link.remove());
 
     const fontsToLoad = [];
     
-    if (typography.primary?.googleFontUrl) {
-      fontsToLoad.push(typography.primary.googleFontUrl);
-    }
-    
-    if (typography.secondary?.googleFontUrl) {
-      fontsToLoad.push(typography.secondary.googleFontUrl);
+    // Choose font URLs based on provider
+    if (fontProvider.type === 'google') {
+      if (typography.primary?.googleFontUrl) {
+        fontsToLoad.push(typography.primary.googleFontUrl);
+      }
+      if (typography.secondary?.googleFontUrl) {
+        fontsToLoad.push(typography.secondary.googleFontUrl);
+      }
+    } else if (fontProvider.type === 'bunny') {
+      if (typography.primary?.bunnyFontUrl) {
+        fontsToLoad.push(typography.primary.bunnyFontUrl);
+      }
+      if (typography.secondary?.bunnyFontUrl) {
+        fontsToLoad.push(typography.secondary.bunnyFontUrl);
+      }
+    } else if (fontProvider.type === 'system') {
+      // Use system fonts - no loading needed
+      return;
     }
 
+    // Load fonts with error handling
     fontsToLoad.forEach(fontUrl => {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = fontUrl;
       link.setAttribute('data-font-loader', 'true');
+      
+      // Add error handling
+      link.onerror = () => {
+        console.warn(`Failed to load font from ${fontUrl}`);
+        // Fallback to system fonts
+        if (fontProvider.type !== 'system') {
+          console.log('Falling back to system fonts');
+        }
+      };
+      
       document.head.appendChild(link);
     });
   };
@@ -196,6 +270,18 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
     saveSettings({ brandName: branding.brandName, logoUrl: branding.logoUrl });
   };
 
+  const updateBackgrounds = (bgs: Record<string, string>) => {
+    setBackgrounds(bgs);
+    saveSettings({ backgrounds: bgs });
+  };
+
+  const updateFontProvider = (provider: FontProvider) => {
+    setFontProvider(provider);
+    saveSettings({ fontProvider: provider });
+    // Reload fonts immediately
+    setTimeout(() => applyDesignSystemToCSS(), 100);
+  };
+
   const saveVersion = async (name: string) => {
     const newVersion = {
       id: Date.now().toString(),
@@ -204,7 +290,9 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       colorPalette,
       typography,
       brandName,
-      logoUrl
+      logoUrl,
+      backgrounds,
+      fontProvider
     };
     
     const updatedVersions = [...versions, newVersion];
@@ -219,17 +307,20 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       setTypography(version.typography || DEFAULT_TYPOGRAPHY);
       setBrandName(version.brandName || 'VybeUI');
       setLogoUrl(version.logoUrl || '');
+      setBackgrounds(version.backgrounds || DEFAULT_BACKGROUNDS);
+      setFontProvider(version.fontProvider || FONT_PROVIDERS[0]);
       saveSettings({
         colorPalette: version.colorPalette,
         typography: version.typography,
         brandName: version.brandName,
-        logoUrl: version.logoUrl
+        logoUrl: version.logoUrl,
+        backgrounds: version.backgrounds,
+        fontProvider: version.fontProvider
       });
     }
   };
 
   const refreshVersions = async () => {
-    // In frontend-only mode, just reload from localStorage
     const savedSettings = localStorage.getItem('designSystemSettings');
     if (savedSettings) {
       try {
@@ -248,6 +339,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       brandName,
       logoUrl,
       versions,
+      backgrounds,
+      fontProvider,
       exportedAt: new Date().toISOString(),
       version: '1.0'
     };
@@ -263,6 +356,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       if (settings.brandName) setBrandName(settings.brandName);
       if (settings.logoUrl) setLogoUrl(settings.logoUrl);
       if (settings.versions) setVersions(settings.versions);
+      if (settings.backgrounds) setBackgrounds(settings.backgrounds);
+      if (settings.fontProvider) setFontProvider(settings.fontProvider);
       
       saveSettings(settings);
       return true;
@@ -280,9 +375,14 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       logoUrl,
       activeVersion,
       versions,
+      backgrounds,
+      fontProvider,
+      availableFontProviders: FONT_PROVIDERS,
       updateColorPalette,
       updateTypography,
       updateBranding,
+      updateBackgrounds,
+      updateFontProvider,
       saveVersion,
       loadVersion,
       refreshVersions,

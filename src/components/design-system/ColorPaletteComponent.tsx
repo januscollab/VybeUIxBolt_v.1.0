@@ -5,14 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Copy, Palette, Undo, Edit } from "lucide-react";
+import { Copy, Palette, Undo, Edit, Monitor } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
 
 export default function ColorPaletteComponent() {
-  const { colorPalette, updateColorPalette } = useLocalDesignSystem();
+  const { colorPalette, updateColorPalette, backgrounds, updateBackgrounds } = useLocalDesignSystem();
   const [isLiveEditEnabled, setIsLiveEditEnabled] = useState(false);
-  const [selectedColor, setSelectedColor] = useState<{name: string, value: string} | null>(null);
+  const [selectedColor, setSelectedColor] = useState<{name: string, value: string, key: string} | null>(null);
   const [colorValue, setColorValue] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -24,10 +24,10 @@ export default function ColorPaletteComponent() {
     });
   };
 
-  const handleColorClick = (name: string, value: string) => {
+  const handleColorClick = (name: string, value: string, key: string) => {
     if (!isLiveEditEnabled) return;
     
-    setSelectedColor({ name, value });
+    setSelectedColor({ name, value, key });
     setColorValue(value);
     setIsDialogOpen(true);
   };
@@ -36,9 +36,17 @@ export default function ColorPaletteComponent() {
     if (selectedColor) {
       const updatedPalette = {
         ...colorPalette,
-        [selectedColor.name.toLowerCase()]: colorValue
+        [selectedColor.key]: colorValue
       };
       updateColorPalette(updatedPalette);
+      
+      // Update CSS variables immediately
+      const root = document.documentElement;
+      const hslValue = hexToHSL(colorValue);
+      if (hslValue) {
+        root.style.setProperty(`--${selectedColor.key}`, hslValue);
+      }
+      
       toast({
         title: "Color updated",
         description: `${selectedColor.name} has been updated to ${colorValue}. Changes are now live!`,
@@ -46,6 +54,36 @@ export default function ColorPaletteComponent() {
       setIsDialogOpen(false);
       setSelectedColor(null);
     }
+  };
+
+  const hexToHSL = (hex: string): string | null => {
+    hex = hex.replace('#', '');
+    
+    const r = parseInt(hex.substr(0, 2), 16) / 255;
+    const g = parseInt(hex.substr(2, 2), 16) / 255;
+    const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0, s = 0, l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    h = Math.round(h * 360);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
+
+    return `${h} ${s}% ${l}%`;
   };
 
   const resetToDefault = () => {
@@ -68,54 +106,52 @@ export default function ColorPaletteComponent() {
     });
   };
 
+  const backgroundOptions = [
+    { name: "Clean White", value: "#FFFFFF", description: "Pure white background for maximum clarity" },
+    { name: "Warm Gray", value: "#F8F9FA", description: "Subtle warm gray for reduced eye strain" },
+    { name: "Cool Blue", value: "#F8FAFC", description: "Cool blue-tinted background for focus" }
+  ];
+
+  const applyBackground = (bgColor: string) => {
+    document.body.style.backgroundColor = bgColor;
+    toast({
+      title: "Background applied",
+      description: `Background color has been changed to ${bgColor}`,
+    });
+  };
+
   const colorGroups = [
     {
       name: "Primary Colors",
       colors: [
-        { name: "Primary", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", description: "Main brand color - VybeUI signature orange" },
-        { name: "Primary Foreground", value: "hsl(0, 0%, 100%)", hex: "#FFFFFF", css: "bg-primary-foreground", description: "Text on primary background" },
-        { name: "Earth", value: "hsl(225, 25%, 15%)", hex: "#2A3441", css: "bg-earth", description: "Deep earth tone for contrast and depth" },
-        { name: "Cream", value: "hsl(45, 25%, 95%)", hex: "#F8F6F3", css: "bg-cream", description: "Warm neutral background tone" },
-        { name: "Almost White", value: "hsl(210, 20%, 98%)", hex: "#FBFCFC", css: "bg-almost-white", description: "Subtle off-white tone for clean backgrounds" },
-      ]
-    },
-    {
-      name: "Secondary Colors", 
-      colors: [
-        { name: "Secondary", value: "hsl(210, 20%, 96%)", hex: colorPalette.secondary || "#F1F3F4", css: "bg-secondary", description: "Secondary brand color" },
-        { name: "Secondary Foreground", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "bg-secondary-foreground", description: "Text on secondary background" },
+        { name: "Primary", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", key: "primary", description: "Main brand color" },
+        { name: "Earth", value: "hsl(225, 25%, 15%)", hex: "#2A3441", css: "bg-earth", key: "earth", description: "Deep earth tone" },
+        { name: "Cream", value: "hsl(45, 25%, 95%)", hex: "#F8F6F3", css: "bg-cream", key: "cream", description: "Warm neutral" },
+        { name: "Almost White", value: "hsl(210, 20%, 98%)", hex: "#FBFCFC", css: "bg-almost-white", key: "almost-white", description: "Clean background" },
       ]
     },
     {
       name: "Text Colors",
       colors: [
-        { name: "Foreground", value: "hsl(225, 15%, 20%)", hex: colorPalette.text || "#2B3544", css: "text-foreground", description: "Primary text color" },
-        { name: "Muted Foreground", value: "hsl(225, 8%, 60%)", hex: "#8B9299", css: "text-muted-foreground", description: "Subtle text for secondary information" },
-        { name: "Primary Text", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "text-primary", description: "Primary brand text" },
-        { name: "Secondary Text", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "text-secondary", description: "Secondary text color" },
-        { name: "Accent Text", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "text-accent", description: "Accent text for highlights" },
+        { name: "Foreground", value: "hsl(225, 15%, 20%)", hex: colorPalette.text || "#2B3544", css: "text-foreground", key: "text", description: "Primary text" },
+        { name: "Muted", value: "hsl(225, 8%, 60%)", hex: "#8B9299", css: "text-muted-foreground", key: "muted", description: "Secondary text" },
+        { name: "Primary Text", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "text-primary", key: "primary", description: "Brand text" },
       ]
     },
     {
       name: "Semantic Colors",
       colors: [
-        { name: "Success", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "bg-success", description: "Success states and positive actions" },
-        { name: "Success Text", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "text-success", description: "Success text color" },
-        { name: "Warning", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", description: "Warning states and caution" },
-        { name: "Warning Text", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "text-warning", description: "Warning text color" },
-        { name: "Destructive", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "bg-destructive", description: "Error states and destructive actions" },
-        { name: "Destructive Text", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "text-destructive", description: "Error text color" },
-        { name: "Info", value: "hsl(200, 95%, 40%)", hex: "#0EA5E9", css: "bg-info", description: "Information states and notifications" },
+        { name: "Success", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "bg-success", key: "success", description: "Success states" },
+        { name: "Warning", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", key: "warning", description: "Warning states" },
+        { name: "Error", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "bg-destructive", key: "error", description: "Error states" },
       ]
     },
     {
       name: "Neutral Colors",
       colors: [
-        { name: "Background", value: "hsl(0, 0%, 100%)", hex: colorPalette.background || "#FFFFFF", css: "bg-background", description: "Page and card backgrounds" },
-        { name: "Muted", value: "hsl(210, 20%, 96%)", hex: "#F1F3F4", css: "bg-muted", description: "Subtle backgrounds and inactive states" },
-        { name: "Border", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "bg-border", description: "Default borders and dividers" },
-        { name: "Input", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "border-input", description: "Input field borders" },
-        { name: "Ring", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "ring-ring", description: "Focus rings and outlines" },
+        { name: "Background", value: "hsl(0, 0%, 100%)", hex: colorPalette.background || "#FFFFFF", css: "bg-background", key: "background", description: "Page backgrounds" },
+        { name: "Secondary", value: "hsl(210, 20%, 96%)", hex: colorPalette.secondary || "#F1F3F4", css: "bg-secondary", key: "secondary", description: "Secondary elements" },
+        { name: "Border", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "bg-border", key: "border", description: "Borders and dividers" },
       ]
     }
   ];
@@ -144,117 +180,107 @@ export default function ColorPaletteComponent() {
             </div>
             <Button variant="outline" onClick={resetToDefault} className="gap-2">
               <Undo className="h-4 w-4" />
-              Reset to Default
+              Reset
             </Button>
           </div>
         </div>
         <p className="text-lg text-muted-foreground">
-          Complete color system with organized primary, text, semantic, and neutral colors designed for accessibility and consistency.
-          {isLiveEditEnabled && " Click any color to edit it and see live changes across the entire design system."}
+          Compact color system with live editing capabilities.
+          {isLiveEditEnabled && " Click any color to edit it and see instant changes."}
         </p>
       </div>
 
-      {/* Color Groups */}
-      <div className="space-y-8">
+      {/* Backgrounds Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Monitor className="h-5 w-5" />
+            Background Options
+          </CardTitle>
+          <CardDescription>Choose from predefined background colors for your interface</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {backgroundOptions.map((bg) => (
+              <div 
+                key={bg.name}
+                className="group cursor-pointer border rounded-lg p-4 hover:shadow-md transition-all"
+                onClick={() => applyBackground(bg.value)}
+              >
+                <div className="space-y-3">
+                  <div 
+                    className="h-16 w-full rounded border shadow-inner"
+                    style={{ backgroundColor: bg.value }}
+                  />
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-sm">{bg.name}</h4>
+                    <p className="text-xs text-muted-foreground">{bg.description}</p>
+                    <div className="flex items-center justify-between">
+                      <code className="text-xs bg-muted px-2 py-1 rounded">{bg.value}</code>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyToClipboard(bg.value);
+                        }}
+                      >
+                        <Copy className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Compact Color Groups */}
+      <div className="space-y-6">
         {colorGroups.map((group) => (
-          <div key={group.name} className="space-y-4">
-            <h2 className="text-xl font-semibold">{group.name}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div key={group.name} className="space-y-3">
+            <h2 className="text-lg font-semibold">{group.name}</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
               {group.colors.map((color) => (
                 <Card 
                   key={color.name} 
-                  className={`group transition-all duration-200 ${
+                  className={`group transition-all duration-200 hover:shadow-md ${
                     isLiveEditEnabled 
-                      ? 'hover:shadow-md cursor-pointer hover:border-primary' 
-                      : 'hover:shadow-md'
+                      ? 'cursor-pointer hover:border-primary' 
+                      : ''
                   }`}
-                  onClick={() => handleColorClick(color.name, color.hex)}
+                  onClick={() => handleColorClick(color.name, color.hex, color.key)}
                 >
-                  <CardHeader className="pb-3">
+                  <CardContent className="p-3 space-y-2">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base flex items-center gap-2">
-                        {color.name}
-                        {isLiveEditEnabled && (
-                          <Edit className="h-3 w-3 text-muted-foreground group-hover:text-primary" />
-                        )}
-                      </CardTitle>
-                      <div 
-                        className="h-6 w-6 rounded border border-border shadow-sm"
-                        style={{ backgroundColor: color.hex }}
-                        title={isLiveEditEnabled ? `Click to edit ${color.name}` : color.value}
-                      />
+                      <h4 className="text-sm font-medium truncate flex-1">{color.name}</h4>
+                      {isLiveEditEnabled && (
+                        <Edit className="h-3 w-3 text-muted-foreground group-hover:text-primary flex-shrink-0" />
+                      )}
                     </div>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <CardDescription>{color.description}</CardDescription>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">HEX:</span>
-                        <div className="flex items-center gap-2">
-                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.hex}</code>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-6 w-6 p-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              copyToClipboard(color.hex);
-                            }}
-                          >
-                            <Copy className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">HSL:</span>
-                        <div className="flex items-center gap-2">
-                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.value}</code>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-6 w-6 p-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              copyToClipboard(color.value);
-                            }}
-                          >
-                            <Copy className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">CSS:</span>
-                        <div className="flex items-center gap-2">
-                          <code className="bg-muted px-2 py-1 rounded text-xs font-mono">{color.css}</code>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-6 w-6 p-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              copyToClipboard(color.css);
-                            }}
-                          >
-                            <Copy className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Enhanced Color swatch with interaction hint */}
                     <div 
-                      className={`h-16 w-full rounded border border-border transition-all duration-200 ${
-                        isLiveEditEnabled 
-                          ? 'shadow-inner group-hover:shadow-md cursor-pointer' 
-                          : ''
-                      }`}
+                      className="h-12 w-full rounded border border-border transition-all duration-200 group-hover:shadow-sm"
                       style={{ backgroundColor: color.hex }}
                     />
-                    {isLiveEditEnabled && (
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Palette className="h-3 w-3" />
-                        Click to edit and see live changes
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between text-xs">
+                        <code className="bg-muted px-1.5 py-0.5 rounded font-mono">{color.hex}</code>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            copyToClipboard(color.hex);
+                          }}
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
                       </div>
-                    )}
+                      <p className="text-xs text-muted-foreground truncate">{color.description}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -298,7 +324,7 @@ export default function ColorPaletteComponent() {
                 type="text"
                 value={colorValue}
                 onChange={(e) => setColorValue(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-mono"
                 placeholder="#FF4A00"
               />
             </div>
@@ -319,31 +345,30 @@ export default function ColorPaletteComponent() {
       <Card>
         <CardHeader>
           <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for using our color system</CardDescription>
+          <CardDescription>Best practices for using our compact color system</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <h4 className="font-medium text-success">Do</h4>
+              <h4 className="font-medium text-success">Enhanced Features</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use semantic colors for their intended purpose</li>
-                <li>• Maintain sufficient contrast ratios (4.5:1 minimum)</li>
-                <li>• Use text-* classes for text colors</li>
-                <li>• Use bg-* classes for background colors</li>
-                <li>• Test colors in both light and dark modes</li>
-                <li>• Copy CSS classes for consistent implementation</li>
-                {isLiveEditEnabled && <li>• Use Live Edit to experiment safely with revert option</li>}
+                <li>• Compact tiles for efficient browsing</li>
+                <li>• Live hex code editing with instant preview</li>
+                <li>• Background options for quick theming</li>
+                <li>• Copy-to-clipboard for all color values</li>
+                <li>• Real-time CSS variable updates</li>
+                <li>• Mobile-responsive grid layout</li>
               </ul>
             </div>
             <div className="space-y-2">
-              <h4 className="font-medium text-destructive">Don't</h4>
+              <h4 className="font-medium text-primary">Best Practices</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use hardcoded color values or hex codes</li>
-                <li>• Mix semantic meanings (e.g., red for success)</li>
-                <li>• Rely solely on color to convey information</li>
-                <li>• Use too many colors in a single interface</li>
-                <li>• Override the VybeUI primary orange without approval</li>
-                <li>• Use non-design system color classes</li>
+                <li>• Use Live Edit to experiment safely</li>
+                <li>• Test background options for readability</li>
+                <li>• Maintain contrast ratios (4.5:1 minimum)</li>
+                <li>• Copy CSS classes for consistency</li>
+                <li>• Use semantic colors appropriately</li>
+                <li>• Reset to defaults when needed</li>
               </ul>
             </div>
           </div>
