@@ -1,129 +1,115 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* VybeUI-inspired color palette and design system */
-
 @layer base {
   :root {
-    /* Dynamic font variables that can be updated by the design system */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 210 40% 98%;
+    --info: 199 89% 48%;
+    --info-foreground: 210 40% 98%;
+    --earth: 25 83% 53%;
+    --earth-foreground: 210 40% 98%;
+    --orange: 20 90% 48%;
+    --orange-foreground: 210 40% 98%;
+    --cream: 45 86% 83%;
+    --cream-foreground: 222.2 84% 4.9%;
+    --almost-white: 60 9% 98%;
+    --almost-white-foreground: 222.2 84% 4.9%;
+    --bass: 222 10% 36%;
+    --bass-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 10.6% 64.9%;
+    
+    /* Font variables */
     --font-primary: "Poppins", system-ui, sans-serif;
     --font-secondary: "Inter", monospace;
-    
-    /* VybeUI color palette with correct orange */
-    --background: 0 0% 100%;
-    --foreground: 225 15% 20%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 225 15% 20%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 225 15% 20%;
-
-    /* VybeUI Orange as primary (#FF4A00) */
-    --primary: 16 100% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 225 15% 20%;
-
-    --muted: 210 20% 96%;
-    --muted-foreground: 225 8% 60%;
-
-    /* Bass color (promoted from muted) */
-    --bass: 225 15% 85%;
-    --bass-foreground: 225 15% 20%;
-
-    --accent: 16 100% 50%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 50%;
-    --warning-foreground: 225 15% 20%;
-
-    --info: 200 95% 40%;
-    --info-foreground: 0 0% 100%;
-
-    /* VybeUI dark navy */
-    --earth: 225 25% 15%;
-    --earth-foreground: 0 0% 100%;
-
-    /* VybeUI Orange (#FF4A00) */
-    --orange: 16 100% 50%;
-    --orange-foreground: 0 0% 100%;
-
-    /* Light cream */
-    --cream: 45 25% 95%;
-    --cream-foreground: 225 15% 20%;
-
-    /* Almost white */
-    --almost-white: 210 20% 98%;
-    --almost-white-foreground: 225 15% 20%;
-
-    --border: 214 20% 88%;
-    --input: 214 20% 88%;
-    --ring: 16 100% 50%;
-
-    --radius: 0.5rem;
-
-    /* Light sidebar theme */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 225 15% 20%;
-    --sidebar-primary: 16 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 96%;
-    --sidebar-accent-foreground: 225 15% 20%;
-    --sidebar-border: 214 20% 88%;
-    --sidebar-ring: 16 100% 50%;
   }
 
   .dark {
-    --background: 225 25% 15%;
-    --foreground: 210 20% 96%;
-
-    --card: 225 25% 15%;
-    --card-foreground: 210 20% 96%;
-
-    --popover: 225 25% 15%;
-    --popover-foreground: 210 20% 96%;
-
-    --primary: 16 100% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 225 20% 20%;
-    --secondary-foreground: 210 20% 96%;
-
-    --muted: 225 20% 20%;
-    --muted-foreground: 225 8% 65%;
-
-    --bass: 225 15% 25%;
-    --bass-foreground: 210 20% 96%;
-
-    --accent: 225 20% 20%;
-    --accent-foreground: 210 20% 96%;
-
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 210 20% 96%;
-
-    --border: 225 20% 25%;
-    --input: 225 20% 25%;
-    --ring: 16 100% 50%;
-
-    /* Dark sidebar theme */
-    --sidebar-background: 225 30% 10%;
-    --sidebar-foreground: 210 20% 96%;
-    --sidebar-primary: 16 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 25% 15%;
-    --sidebar-accent-foreground: 210 20% 96%;
-    --sidebar-border: 225 20% 20%;
-    --sidebar-ring: 16 100% 50%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 222.2 84% 4.9%;
+    --info: 199 89% 48%;
+    --info-foreground: 210 40% 98%;
+    --earth: 25 83% 53%;
+    --earth-foreground: 210 40% 98%;
+    --orange: 20 90% 48%;
+    --orange-foreground: 210 40% 98%;
+    --cream: 45 86% 83%;
+    --cream-foreground: 222.2 84% 4.9%;
+    --almost-white: 60 9% 98%;
+    --almost-white-foreground: 222.2 84% 4.9%;
+    --bass: 222 10% 36%;
+    --bass-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 94.1%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 10.6% 64.9%;
   }
 }
 
@@ -131,240 +117,8 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-primary);
-  }
-
-  /* Comprehensive Orange Focus States - Phase 4 Implementation */
-  /* All form inputs show orange borders ONLY on focus/active state */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="search"],
-  input[type="date"],
-  input[type="time"],
-  input[type="datetime-local"],
-  input[type="month"],
-  input[type="week"],
-  input[type="color"],
-  textarea,
-  select {
-    border-color: hsl(var(--border));
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  /* Orange focus states for all form elements */
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  input[type="number"]:focus,
-  input[type="tel"]:focus,
-  input[type="url"]:focus,
-  input[type="search"]:focus,
-  input[type="date"]:focus,
-  input[type="time"]:focus,
-  input[type="datetime-local"]:focus,
-  input[type="month"]:focus,
-  input[type="week"]:focus,
-  input[type="color"]:focus,
-  textarea:focus,
-  select:focus {
-    border-color: hsl(var(--primary)) !important;
-    outline: none;
-    box-shadow: 0 0 0 1px hsl(var(--primary)) !important;
-  }
-
-  /* Ensure buttons use orange hover states consistently */
-  button:not(.btn-secondary):not(.btn-outline):hover {
-    background-color: hsl(var(--primary));
-  }
-
-  /* Orange focus states for interactive elements */
-  button:focus-visible,
-  [role="button"]:focus-visible,
-  a:focus-visible {
-    outline: 2px solid hsl(var(--primary));
-    outline-offset: 2px;
-  }
-
-  /* Standardize checkbox and radio button focus states */
-  input[type="checkbox"]:focus,
-  input[type="radio"]:focus {
-    box-shadow: 0 0 0 2px hsl(var(--primary)) !important;
-  }
-
-  /* Accessibility improvements */
-  /* High contrast focus indicators using orange */
-  *:focus-visible {
-    outline: 2px solid hsl(var(--primary));
-    outline-offset: 2px;
-  }
-
-  /* Reduced motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-
-  /* Ensure text remains readable */
-  .prose {
-    color: hsl(var(--foreground));
-  }
-
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    color: hsl(var(--foreground));
-  }
-
-  /* Code block styling for better readability */
-  .bg-code-block {
-    background-color: hsl(var(--muted));
-    border: 1px solid hsl(var(--border));
-  }
-
-  .text-code-foreground {
-    color: hsl(var(--foreground));
-  }
-
-  /* Enhanced form field styling consistency */
-  .form-field-focus {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 0 0 1px hsl(var(--primary));
-  }
-
-  /* Remove default browser focus rings in favor of our orange ones */
-  input, textarea, select, button {
-    outline: none;
-  }
-
-  input:focus, textarea:focus, select:focus {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 0 0 1px hsl(var(--primary));
-  }
-
-  /* Design system consistency helpers */
-  .callout-info {
-    @apply bg-primary/10 border-l-primary text-primary;
-  }
-
-  .callout-warning {
-    @apply bg-warning/10 border-l-warning text-warning;
-  }
-
-  .callout-success {
-    @apply bg-success/10 border-l-success text-success;
-  }
-
-  .callout-error {
-    @apply bg-destructive/10 border-l-destructive text-destructive;
-  }
-
-  /* Comprehensive Design System Compliance */
-  /* Override all remaining hardcoded blue colors */
-  .text-blue-600,
-  .text-blue-500,
-  .text-blue-400 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .bg-blue-50,
-  .bg-blue-100,
-  .bg-blue-500 {
-    background-color: hsl(var(--primary) / 0.1) !important;
-  }
-
-  .border-blue-500,
-  .border-blue-400,
-  .border-blue-200 {
-    border-color: hsl(var(--primary)) !important;
-  }
-
-  /* Override hardcoded green colors */
-  .text-green-600,
-  .text-green-500 {
-    color: hsl(var(--success)) !important;
-  }
-
-  .bg-green-50,
-  .bg-green-100,
-  .bg-green-500 {
-    background-color: hsl(var(--success) / 0.1) !important;
-  }
-
-  .border-green-500,
-  .border-green-200 {
-    border-color: hsl(var(--success)) !important;
-  }
-
-  /* Override hardcoded red colors */
-  .text-red-600,
-  .text-red-500 {
-    color: hsl(var(--destructive)) !important;
-  }
-
-  .bg-red-50,
-  .bg-red-100 {
-    background-color: hsl(var(--destructive) / 0.1) !important;
-  }
-
-  .border-red-500,
-  .border-red-200 {
-    border-color: hsl(var(--destructive)) !important;
-  }
-
-  /* Override hardcoded yellow colors */
-  .text-yellow-600,
-  .text-yellow-500 {
-    color: hsl(var(--warning)) !important;
-  }
-
-  .bg-yellow-50,
-  .bg-yellow-100 {
-    background-color: hsl(var(--warning) / 0.1) !important;
-  }
-
-  .border-yellow-500,
-  .border-yellow-200 {
-    border-color: hsl(var(--warning)) !important;
-  }
-
-  /* Override hardcoded orange colors that don't use design tokens */
-  .text-orange-600,
-  .text-orange-500 {
-    color: hsl(var(--orange)) !important;
-  }
-
-  .bg-orange-50,
-  .bg-orange-100 {
-    background-color: hsl(var(--orange) / 0.1) !important;
-  }
-
-  .border-orange-500,
-  .border-orange-200 {
-    border-color: hsl(var(--orange)) !important;
-  }
-
-  /* Ensure all showcase components use design system colors */
-  .showcase-component .text-blue-600,
-  .showcase-component .text-blue-500,
-  .showcase-component .text-blue-400 {
-    color: hsl(var(--primary)) !important;
-  }
-
-  .showcase-component .bg-blue-50,
-  .showcase-component .bg-blue-100 {
-    background-color: hsl(var(--primary) / 0.1) !important;
-  }
-
-  .showcase-component .border-blue-500,
-  .showcase-component .border-blue-400 {
-    border-color: hsl(var(--primary)) !important;
   }
 }
