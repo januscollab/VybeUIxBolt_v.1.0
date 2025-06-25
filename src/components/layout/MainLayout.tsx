@@ -1,14 +1,13 @@
+
 import React, { useState } from 'react';
 import { Menu, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LocalDesignSystemProvider } from '@/hooks/useLocalDesignSystem';
-import SettingsPanel from '../design-system/SettingsPanel';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'react-router-dom';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [showSettings, setShowSettings] = useState(false);
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const viewMode = searchParams.get('view') === '80' ? 80 : 100;
 
   return (
@@ -41,7 +40,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                 <div className="flex-1" />
 
                 <div className="flex items-center gap-2">
-                  {/* View Toggle - No hover/interactive states */}
+                  {/* View Toggle */}
                   <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-md">
                     <span className={`text-xs font-medium px-2 py-1 rounded transition-colors ${
                       viewMode === 80 
@@ -58,15 +57,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                       100%
                     </span>
                   </div>
-
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setShowSettings(!showSettings)}
-                    className="hover:bg-accent hover:text-accent-foreground"
-                  >
-                    <Settings className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             </header>
@@ -84,13 +74,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
           </main>
-
-          {/* Settings Panel */}
-          {showSettings && (
-            <aside className="w-80 border-l border-border bg-card overflow-y-auto">
-              <SettingsPanel onClose={() => setShowSettings(false)} />
-            </aside>
-          )}
         </div>
       </LocalDesignSystemProvider>
     </div>
