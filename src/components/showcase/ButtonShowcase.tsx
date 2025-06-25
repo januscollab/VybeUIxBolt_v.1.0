@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge"; 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeModal } from "@/components/ui/code-modal";
 import { cn } from "@/lib/utils";
@@ -212,78 +212,209 @@ export function ExperimentalButtons() {
         <TabsContent value="preview" className="space-y-6">
           {/* Basic Variants */}
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardTitle>Variants</CardTitle>
               <CardDescription>Different button styles for various contexts</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                <Button variant="default">Default</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="outline">Outline</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="destructive">Destructive</Button>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="default">Default</Button>
+                    <span className="text-sm font-medium">Primary Button</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Main call-to-action button. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--primary</code> token for background.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="secondary">Secondary</Button>
+                    <span className="text-sm font-medium">Secondary Button</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Alternative action button. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--secondary</code> token for background.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline">Outline</Button>
+                    <span className="text-sm font-medium">Outline Button</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Subtle action button. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--border</code> token for border.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost">Ghost</Button>
+                    <span className="text-sm font-medium">Ghost Button</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Low-emphasis button. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--accent</code> token on hover.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="destructive">Destructive</Button>
+                    <span className="text-sm font-medium">Destructive Button</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Indicates a destructive action. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--destructive</code> token.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Sizes */}
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardTitle>Sizes</CardTitle>
               <CardDescription>Different button sizes for various use cases</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-4">
-                <Button size="sm">Small</Button>
-                <Button size="default">Default</Button>
-                <Button size="lg">Large</Button>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button size="sm">Small</Button>
+                    <span className="text-sm font-medium">Small Size</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Compact size (h-9). Ideal for tight spaces and secondary actions.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button size="default">Default</Button>
+                    <span className="text-sm font-medium">Default Size</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Standard size (h-10). Recommended for most use cases.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button size="lg">Large</Button>
+                    <span className="text-sm font-medium">Large Size</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Larger size (h-11). Use for primary or prominent actions.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
 
           {/* With Icons */}
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardTitle>With Icons</CardTitle>
               <CardDescription>Buttons enhanced with icons for better visual communication</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                <Button>
-                  <Download className="mr-2 h-4 w-4" />
-                  Download
-                </Button>
-                <Button variant="outline">
-                  <Share className="mr-2 h-4 w-4" />
-                  Share
-                </Button>
-                <Button variant="secondary">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Item
-                </Button>
-                <Button variant="ghost">
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  Cart
-                </Button>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button>
+                      <Download className="mr-2 h-4 w-4" />
+                      Download
+                    </Button>
+                    <span className="text-sm font-medium">Primary with Icon</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Primary action with leading icon. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--primary</code> token.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline">
+                      <Share className="mr-2 h-4 w-4" />
+                      Share
+                    </Button>
+                    <span className="text-sm font-medium">Outline with Icon</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Subtle action with leading icon. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--border</code> token.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="secondary">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Item
+                    </Button>
+                    <span className="text-sm font-medium">Secondary with Icon</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Alternative action with leading icon. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--secondary</code> token.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost">
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Cart
+                    </Button>
+                    <span className="text-sm font-medium">Ghost with Icon</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Low-emphasis action with leading icon. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--accent</code> token on hover.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
 
           {/* States */}
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardTitle>States</CardTitle>
               <CardDescription>Different interaction states</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4">
-                <Button>Normal</Button>
-                <Button disabled>Disabled</Button>
-                <Button className="opacity-75 cursor-wait">
-                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
-                  Loading
-                </Button>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button>Normal</Button>
+                    <span className="text-sm font-medium">Default State</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Standard interactive state. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">--primary</code> token.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button disabled>Disabled</Button>
+                    <span className="text-sm font-medium">Disabled State</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Non-interactive state. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">opacity-50</code> utility.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button className="opacity-75 cursor-wait">
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
+                      Loading
+                    </Button>
+                    <span className="text-sm font-medium">Loading State</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Processing state. Uses <code className="text-xs bg-muted px-1 py-0.5 rounded">opacity-75</code> and custom spinner.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -336,7 +467,7 @@ export function ExperimentalButtons() {
         <TabsContent value="experimental" className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Badge variant="secondary">Experimental</Badge>
+              <Badge variant="secondary">Experimental Components</Badge>
               <span className="text-sm text-muted-foreground">
                 These components are in active development and may change
               </span>
@@ -496,6 +627,73 @@ export function ExperimentalButtons() {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {/* Token Reference */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Design Token Reference</CardTitle>
+          <CardDescription>CSS variables used by Button component</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h4 className="font-medium">Color Tokens</h4>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded-full bg-primary"></div>
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--primary</code>
+                  </div>
+                  <span className="text-sm text-muted-foreground">Default button background</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded-full bg-primary-foreground"></div>
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--primary-foreground</code>
+                  </div>
+                  <span className="text-sm text-muted-foreground">Default button text</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded-full bg-secondary"></div>
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--secondary</code>
+                  </div>
+                  <span className="text-sm text-muted-foreground">Secondary button background</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded-full bg-destructive"></div>
+                    <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--destructive</code>
+                  </div>
+                  <span className="text-sm text-muted-foreground">Destructive button background</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="font-medium">Size & Style Tokens</h4>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--radius</code>
+                  <span className="text-sm text-muted-foreground">Button border radius</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--ring</code>
+                  <span className="text-sm text-muted-foreground">Focus ring color</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--border</code>
+                  <span className="text-sm text-muted-foreground">Outline button border</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <code className="text-xs bg-muted px-1.5 py-0.5 rounded">--background</code>
+                  <span className="text-sm text-muted-foreground">Ghost button hover</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
