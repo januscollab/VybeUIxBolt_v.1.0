@@ -34,11 +34,6 @@ import TooltipShowcase from "@/components/showcase/TooltipShowcase";
 import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
-import BannerShowcase from "@/components/showcase/BannerShowcase"; 
-import AccordionShowcase from "@/components/showcase/AccordionShowcase";
-import ProgressBarShowcase from "@/components/showcase/ProgressBarShowcase";
-import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
-
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
 import TypographyScaleComponent from '@/components/design-system/TypographyScaleComponent';
@@ -82,12 +77,7 @@ export default function ComponentPage() {
     'tooltip': TooltipShowcase,
     'aspect-ratio': AspectRatioShowcase,
     'code-block': CodeBlockShowcase,
-    'callout': CalloutShowcase,
-    'banner': BannerShowcase, 
-    'accordion': AccordionShowcase,
-    'progress-bar': ProgressBarShowcase,
-    'loading-spinner': LoadingSpinnerShowcase,
-    
+        
     // Add foundation components
     'color-palette': ColorPaletteComponent,
     'typography-scale': TypographyScaleComponent,

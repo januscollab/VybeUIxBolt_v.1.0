@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useComponents, useCategories, useComponent } from "@/hooks/useStaticDesignSystem";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Link, useLocation } from "react-router-dom";
-import { ExperimentalComponentCard } from "@/components/ExperimentalComponentCard";
 import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 import { useEffect, useRef } from "react";
 
@@ -171,7 +169,7 @@ export default function CategoryPage() {
     <div className="space-y-6">
       <BreadcrumbNavigation />
       
-      <div className="space-y-2">
+      <div className="space-y-2"> 
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (
           <p className="text-lg text-muted-foreground">{category.description}</p>
@@ -179,7 +177,7 @@ export default function CategoryPage() {
         <div className="flex items-center gap-2">
           <Badge variant="secondary">{components?.length || 0} components</Badge>
           {category.slug === 'experimental' && (
-            <Badge variant="outline" className="border-accent text-accent">
+            <Badge variant="outline" className="border-accent text-accent"> 
               Experimental
             </Badge>
           )}
@@ -280,25 +278,6 @@ export default function CategoryPage() {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          )}
-
-          {/* Experimental Components Section * /}
-          {components.filter(c => c.is_experimental).length > 0 && (
-            <div className="space-y-4">
-              <div className="border-t pt-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <h3 className="text-xl font-semibold">Experimental Components</h3>
-                  <Badge variant="outline" className="border-accent text-accent">
-                    {components.filter(c => c.is_experimental).length} components
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {components.filter(c => c.is_experimental).map((component) => (
-                    <ExperimentalComponentCard key={component.id} component={component} />
-                  ))}
-                </div>
-              </div>
             </div>
           )}
         </div>
