@@ -50,7 +50,7 @@ export function AppSidebar() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]); 
-  const [activeComponentSlug, setActiveComponentSlug] = useState<string | null>(null);
+  const [activeComponentId, setActiveComponentId] = useState<string | null>(null);
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
 
@@ -66,42 +66,31 @@ export function AppSidebar() {
     }
   }, [location.pathname, categories, expandedCategories]);
 
-  // Enhanced navigation handling for direct component links and hash changes
+  // Handle component navigation and category expansion
   useEffect(() => {
-    // Check for direct component navigation
-    const pathMatch = location.pathname.match(/^\/component\/(.+)$/);
-    if (pathMatch) {
-      const componentSlug = pathMatch[1];
-      const component = allComponents?.find(comp => comp.slug === componentSlug);
+    // Direct component navigation
+    const componentPathMatch = location.pathname.match(/^\/component\/(.+)$/);
+    const componentSlug = componentPathMatch ? componentPathMatch[1] : null;
+    
+    // Hash navigation within category pages
+    const hashComponentSlug = location.hash ? location.hash.replace('#', '') : null;
+    
+    // Find the active component
+    const activeSlug = componentSlug || hashComponentSlug;
+    const component = activeSlug ? allComponents?.find(comp => comp.slug === activeSlug) : null;
+    
+    if (component) {
+      setActiveComponentId(component.id);
       
-      if (component) {
-        setActiveComponentSlug(component.slug);
-        
-        // Expand the category containing this component
-        const category = categories?.find(cat => cat.id === component.category_id);
-        if (category && !expandedCategories.includes(category.id)) {
-          setExpandedCategories(prev => [...prev, category.id]);
-        }
+      // Expand the category containing this component
+      const category = categories?.find(cat => cat.id === component.category_id);
+      if (category && !expandedCategories.includes(category.id)) {
+        setExpandedCategories(prev => [...prev, category.id]);
       }
     } else {
-      // Handle hash navigation within category pages
-      const hash = location.hash.replace('#', '');
-      if (hash) {
-        const component = allComponents?.find(comp => comp.slug === hash);
-        if (component) {
-          setActiveComponentSlug(component.slug);
-          
-          // Expand the category containing this component
-          const category = categories?.find(cat => cat.id === component.category_id);
-          if (category && !expandedCategories.includes(category.id)) {
-            setExpandedCategories(prev => [...prev, category.id]);
-          }
-        }
-      } else {
-        setActiveComponentSlug(null);
-      }
+      setActiveComponentId(null);
     }
-  }, [location.pathname, location.hash, allComponents, categories, expandedCategories]);
+  }, [location.pathname, location.hash, allComponents, categories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -250,7 +239,7 @@ export function AppSidebar() {
                                 <SidebarMenuSubItem key={component.id}>
                                   <SidebarMenuSubButton 
                                     asChild 
-                                    isActive={isComponentActive || activeComponentSlug === component.slug}
+                                    isActive={isComponentActive || activeComponentId === component.id}
                                   >
                                     <Link 
                                       to={

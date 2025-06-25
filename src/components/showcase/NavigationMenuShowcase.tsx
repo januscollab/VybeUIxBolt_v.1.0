@@ -178,7 +178,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+                    <ul className="grid gap-3 p-4 w-full max-w-[500px] lg:grid-cols-2">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
@@ -209,7 +209,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-full max-w-[600px] gap-3 p-4 md:grid-cols-2">
                       <ListItem href="/docs/primitives/alert-dialog" title="Alert Dialog">
                         A modal dialog that interrupts the user with important content.
                       </ListItem>
@@ -317,7 +317,7 @@ export default function NavigationMenuShowcase() {
                     Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[800px] p-6">
+                    <div className="w-full max-w-[800px] p-6">
                       <div className="grid grid-cols-3 gap-6">
                         <div>
                           <h3 className="text-lg font-medium mb-2">Software</h3>
@@ -370,7 +370,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-full max-w-[600px] gap-3 p-4 md:grid-cols-2">
                       {solutions.map((solution) => (
                         <ListItem
                           key={solution.title}
@@ -386,7 +386,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-full max-w-[600px] gap-3 p-4 md:grid-cols-2">
                       {resources.map((resource) => (
                         <ListItem
                           key={resource.title}
@@ -442,7 +442,7 @@ export default function NavigationMenuShowcase() {
                     Products
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 bg-primary/5 border-primary/20">
+                    <ul className="grid w-full max-w-[400px] gap-3 p-4 bg-primary/5 border-primary/20">
                       <ListItem 
                         href="/products/design-system" 
                         title="Design System"
