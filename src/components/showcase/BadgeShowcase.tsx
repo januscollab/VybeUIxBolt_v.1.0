@@ -90,7 +90,7 @@ export default function BadgeShowcase() {
               <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
                 <span className="text-sm">🔔</span>
               </div>
-              <Badge variant="default" className="absolute -top-2 -right-2 min-w-[20px] h-5 rounded-full p-0 text-xs flex items-center justify-center">
+              <Badge variant="primary" className="absolute -top-2 -right-2 min-w-[20px] h-5 rounded-full p-0 text-xs flex items-center justify-center">
                 12
               </Badge>
             </div>
