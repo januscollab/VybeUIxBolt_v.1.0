@@ -1,15 +1,15 @@
-
 import React, { useState } from 'react';
 import { Menu, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LocalDesignSystemProvider } from '@/hooks/useLocalDesignSystem';
 import SettingsPanel from '../design-system/SettingsPanel';
-import { useLayoutView } from '@/hooks/useLayoutView';
+import { useSearchParams } from 'next/navigation';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const { viewMode, isDesignSystemView } = useLayoutView();
+  const searchParams = useSearchParams();
+  const viewMode = searchParams.get('view') === '80' ? 80 : 100;
 
   return (
     <div className="min-h-screen bg-background">
@@ -44,14 +44,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                   {/* View Toggle - No hover/interactive states */}
                   <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-md">
                     <span className={`text-xs font-medium px-2 py-1 rounded transition-colors ${
-                      !isDesignSystemView 
+                      viewMode === 80 
                         ? 'bg-primary text-primary-foreground' 
                         : 'text-muted-foreground'
                     }`}>
                       80%
                     </span>
                     <span className={`text-xs font-medium px-2 py-1 rounded transition-colors ${
-                      isDesignSystemView 
+                      viewMode === 100 
                         ? 'bg-primary text-primary-foreground' 
                         : 'text-muted-foreground'
                     }`}>
@@ -74,7 +74,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             {/* Content Area */}
             <div className="flex-1 overflow-hidden">
               <div className={`h-full transition-all duration-300 ${
-                !isDesignSystemView ? 'max-w-[80%] mx-auto' : 'w-full'
+                viewMode === 80 ? 'max-w-[80%] mx-auto' : 'w-full'
               }`}>
                 <div className="h-full overflow-y-auto">
                   <div className="p-6">
