@@ -155,6 +155,8 @@ export default function CategoryPage() {
     return acc;
   }, {} as Record<string, typeof components>);
 
+  return (
+    <div className="space-y-8">
       <div className="space-y-2"> 
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (
