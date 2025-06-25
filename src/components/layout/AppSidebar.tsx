@@ -9,8 +9,7 @@ import {
   Beaker, 
   Search,
   Home,
-  ChevronDown,
-  ChevronUp,
+  ChevronRight,
   Edit,
   X,
   Book
@@ -49,7 +48,7 @@ const categoryIcons = {
 export function AppSidebar() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([]); 
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [activeComponentId, setActiveComponentId] = useState<string | null>(null);
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
@@ -61,7 +60,7 @@ export function AppSidebar() {
       const categorySlug = pathMatch[1];
       const category = categories?.find(cat => cat.slug === categorySlug);
       if (category && !expandedCategories.includes(category.id)) {
-        setExpandedCategories(prev => [...prev, category.id]);
+        setExpandedCategories(prev => Array.from(new Set([...prev, category.id])));
       }
     }
   }, [location.pathname, categories, expandedCategories]);
@@ -69,21 +68,26 @@ export function AppSidebar() {
   // Handle hash changes for component navigation
   useEffect(() => {
     const hash = location.hash.replace('#', '');
-    if (hash) {
-      const component = allComponents?.find(comp => comp.slug === hash);
+    const pathComponent = location.pathname.match(/^\/component\/(.+)$/);
+    
+    // Check for component in hash or in path
+    const componentSlug = hash || (pathComponent && pathComponent[1]);
+    
+    if (componentSlug) {
+      const component = allComponents?.find(comp => comp.slug === componentSlug);
       if (component) {
         setActiveComponentId(component.id);
         
         // Expand the category containing this component
         const category = categories?.find(cat => cat.id === component.category_id);
         if (category && !expandedCategories.includes(category.id)) {
-          setExpandedCategories(prev => [...prev, category.id]);
+          setExpandedCategories(prev => Array.from(new Set([...prev, category.id])));
         }
       }
     } else {
       setActiveComponentId(null);
     }
-  }, [location.hash, allComponents, categories, expandedCategories]);
+  }, [location.hash, location.pathname, allComponents, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -215,11 +219,11 @@ export function AppSidebar() {
                                   e.stopPropagation();
                                 }}
                               >
-                                {isExpanded ? (
-                                  <ChevronUp className="h-3 w-3" />
-                                ) : (
-                                  <ChevronDown className="h-3 w-3" />
-                                )}
+                                <ChevronRight 
+                                  className={`h-3 w-3 transition-transform duration-200 ${
+                                    isExpanded ? 'rotate-90' : ''
+                                  }`} 
+                                />
                               </Button>
                             </CollapsibleTrigger>
                           )}

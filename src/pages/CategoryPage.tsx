@@ -4,8 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Link, useLocation } from "react-router-dom";
-import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 import { useEffect, useRef } from "react";
 
 // Import all showcase components
@@ -43,6 +41,7 @@ import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
 import BannerShowcase from "@/components/showcase/BannerShowcase";
+import NavigationMenuShowcase from "@/components/showcase/NavigationMenuShowcase";
 
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
@@ -87,6 +86,7 @@ const componentMap: Record<string, React.ComponentType> = {
   'code-block': CodeBlockShowcase,
   'callout': CalloutShowcase,
   'banner': BannerShowcase,
+  'navigation-menu': NavigationMenuShowcase,
   
   // Foundation components
   'color-palette': ColorPaletteComponent,
@@ -155,10 +155,6 @@ export default function CategoryPage() {
     return acc;
   }, {} as Record<string, typeof components>);
 
-  return (
-    <div className="space-y-6">
-      <BreadcrumbNavigation />
-      
       <div className="space-y-2"> 
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (

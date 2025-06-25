@@ -4,6 +4,7 @@ import { LocalDesignSystemProvider } from '@/hooks/useLocalDesignSystem';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/AppSidebar';
+import { BreadcrumbNavigation } from '@/components/navigation/BreadcrumbNavigation';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,12 +26,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <AppSidebar />
             
             <SidebarInset className="flex-1">
-              {/* Header */}
-              <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="flex h-14 items-center px-4 lg:px-6 gap-4">
+              {/* Fixed Header */}
+              <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="flex h-14 items-center px-4 lg:px-6 gap-4 justify-between">
                   <SidebarTrigger />
-
-                  <div className="flex-1" />
+                  
+                  <div className="flex-1">
+                    <BreadcrumbNavigation />
+                  </div>
 
                   <div className="flex items-center gap-2">
                     {/* View Width Toggle */}

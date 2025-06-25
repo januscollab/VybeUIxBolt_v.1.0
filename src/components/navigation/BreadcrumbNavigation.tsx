@@ -30,7 +30,12 @@ export function BreadcrumbNavigation() {
     const pathSegments = location.pathname.split('/').filter(Boolean);
     
     if (pathSegments.length === 0) {
-      setBreadcrumbItems([]);
+      setBreadcrumbItems([{
+        label: "Home",
+        href: "/",
+        icon: Home,
+        current: true
+      }]);
       return;
     }
 
@@ -94,10 +99,11 @@ export function BreadcrumbNavigation() {
     setBreadcrumbItems(items);
   }, [location.pathname, location.hash, categories, allComponents]);
 
-  if (breadcrumbItems.length <= 1) return null;
+  // Always show breadcrumbs, even if just Home
+  if (breadcrumbItems.length === 0) return null;
 
   return (
-    <div className="mb-6">
+    <div>
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumbItems.map((item, index) => (

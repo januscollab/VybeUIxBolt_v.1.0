@@ -1,1 +1,23 @@
 When we build a plan for change, always identify the files required to support the change and always give me a prompt or script to set these files as 'target'
+
+When asked for a plan to implement a change always keep the language technical but non-code. 
+
+DO NOT GIVE ME A VERBOSE RESPONSE - STICK TO THE FACTS
+
+Always perform a risk assessment of the change and quantify it and the impact to existing code especially if it's a breaking change.
+
+Always alert risk of breaking change
+
+Design System Enforcement
+
+🧠 Always enforce design system compliance.
+When building or editing code, do not use any components, styles, or design tokens that are not defined in the approved Design System (VybeUI).
+
+If a requested element or function cannot be implemented using compliant components or tokens, you must:
+	1.	Pause the task, and
+	2.	Alert the user with a clear message explaining what’s non-compliant and why.
+	3.	Ask for direction or an approved override before continuing.
+
+This rule applies to all UI elements, inputs, animations, layout primitives, and tokens (e.g. spacing, colors, typography).
+
+⚠️ Never introduce hardcoded or ad hoc solutions without explicit user instruction.
