@@ -39,22 +39,22 @@ export function MainLayout({ children }: MainLayoutProps) {
             </div>
             
             <div className="flex items-center gap-2">
-              {/* Width Toggle */}
+              {/* Width Toggle - Fixed to show pressed state correctly */}
               <Toggle
-                pressed={isDesignSystemView}
+                pressed={!isDesignSystemView}
                 onPressedChange={toggleViewMode}
                 className="flex items-center gap-2 px-3"
-                title={isDesignSystemView ? "Switch to Full Width View" : "Switch to Design System View (80%)"}
+                title={!isDesignSystemView ? "Switch to Design System View (80%)" : "Switch to Full Width View"}
               >
-                {isDesignSystemView ? (
-                  <>
-                    <Smartphone className="h-4 w-4" />
-                    <span className="hidden sm:inline">80%</span>
-                  </>
-                ) : (
+                {!isDesignSystemView ? (
                   <>
                     <Monitor className="h-4 w-4" />
                     <span className="hidden sm:inline">100%</span>
+                  </>
+                ) : (
+                  <>
+                    <Smartphone className="h-4 w-4" />
+                    <span className="hidden sm:inline">80%</span>
                   </>
                 )}
               </Toggle>

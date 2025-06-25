@@ -1,184 +1,276 @@
-
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useCategories, useComponents, useDesignSystem } from "@/hooks/useStaticDesignSystem";
-import { CategoryCardSkeleton } from "@/components/ui/loading-skeleton";
-import { Palette, Layers, Navigation, Layout, FileText, MessageSquare, Beaker, ExternalLink, Github, BookOpen, Edit } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
+import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
+import { Search, ExternalLink, Github, Palette, Code, Zap, Users } from "lucide-react";
 
-const categoryIcons = {
-  'foundations': Palette,
-  'core-ui': Layers,
-  'navigation': Navigation,
-  'content-layout': Layout,
-  'forms': FileText,
-  'feedback': MessageSquare,
-  'rich-text-editor': Edit,
-  'experimental': Beaker,
-};
-
-const Index = () => {
+export default function Index() {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const { data: categories, isLoading: categoriesLoading } = useCategories();
-  const { data: allComponents } = useComponents();
-  const { brandName, logoUrl } = useDesignSystem();
+  const { data: allComponents, isLoading: componentsLoading } = useComponents();
+  const { brandName } = useLocalDesignSystem();
 
-  const totalComponents = allComponents?.length || 0;
-  const stableComponents = allComponents?.filter(c => c.status === 'stable').length || 0;
-  const experimentalComponents = allComponents?.filter(c => c.is_experimental).length || 0;
+  const filteredCategories = categories.filter(category =>
+    category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    category.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  const displayName = brandName || 'Design Language System';
+  const filteredComponents = allComponents.filter(component =>
+    component.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    component.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Calculate stats
+  const totalComponents = allComponents.length;
+  const stableComponents = allComponents.filter(c => c.status === 'stable').length;
+  const experimentalComponents = allComponents.filter(c => c.is_experimental).length;
+
+  if (categoriesLoading || componentsLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="text-center space-y-4 py-12">
-        <div className="flex justify-center mb-6">
-          {logoUrl ? (
-            <img 
-              src={logoUrl} 
-              alt={`${displayName} Logo`}
-              className="h-16 w-auto max-w-[200px] object-contain"
+      <div className="text-center space-y-6 py-12">
+        <div className="space-y-4">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {brandName} Design System
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            A comprehensive collection of reusable components, design tokens, and guidelines 
+            to build consistent, accessible, and beautiful user interfaces.
+          </p>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button size="lg" onClick={() => navigate('/components')}>
+            <Palette className="mr-2 h-5 w-5" />
+            Explore Components
+          </Button>
+          <Button variant="outline" size="lg" onClick={() => navigate('/documentation')}>
+            <Code className="mr-2 h-5 w-5" />
+            Integration Guide
+          </Button>
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => window.open('https://github.com/januscollab/janus-design-system', '_blank')}
+          >
+            <Github className="mr-2 h-5 w-5" />
+            <ExternalLink className="ml-1 h-3 w-3" />
+            GitHub
+          </Button>
+        </div>
+      </div>
+
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center space-y-2">
+              <div className="text-3xl font-bold text-primary">{totalComponents}</div>
+              <p className="text-sm text-muted-foreground">Total Components</p>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center space-y-2">
+              <div className="text-3xl font-bold text-success">{stableComponents}</div>
+              <p className="text-sm text-muted-foreground">Production Ready</p>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center space-y-2">
+              <div className="text-3xl font-bold text-warning">{experimentalComponents}</div>
+              <p className="text-sm text-muted-foreground">Experimental</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Search Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="h-5 w-5" />
+            Discover Components
+          </CardTitle>
+          <CardDescription>
+            Search through our comprehensive component library
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder="Search components, categories, or descriptions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
             />
-          ) : (
-            <div className="h-16 w-16 rounded-2xl bg-primary flex items-center justify-center">
-              <Palette className="h-8 w-8 text-primary-foreground" />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Categories Grid */}
+      {searchQuery === "" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold">Categories</h2>
+            <Button variant="outline" onClick={() => navigate('/components')}>
+              View All
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+              <Card 
+                key={category.id} 
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => navigate(`/category/${category.slug}`)}
+              >
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">{category.name}</CardTitle>
+                    {category.is_experimental && (
+                      <Badge variant="secondary">Experimental</Badge>
+                    )}
+                  </div>
+                  <CardDescription>{category.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
+                      {category.component_count} components
+                    </span>
+                    <Button variant="ghost" size="sm">
+                      Explore →
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Search Results */}
+      {searchQuery && (
+        <div className="space-y-6">
+          {filteredCategories.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold">Categories</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredCategories.map((category) => (
+                  <Card 
+                    key={category.id}
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate(`/category/${category.slug}`)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-base">{category.name}</CardTitle>
+                        {category.is_experimental && (
+                          <Badge variant="secondary" className="text-xs">Experimental</Badge>
+                        )}
+                      </div>
+                      <CardDescription className="text-sm">{category.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {filteredComponents.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold">Components</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredComponents.map((component) => (
+                  <Card 
+                    key={component.id}
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate(`/component/${component.slug}`)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-base">{component.name}</CardTitle>
+                        <Badge 
+                          variant={component.status === 'stable' ? 'default' : 'secondary'}
+                          className="text-xs"
+                        >
+                          {component.status}
+                        </Badge>
+                      </div>
+                      <CardDescription className="text-sm">{component.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {filteredCategories.length === 0 && filteredComponents.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No results found for "{searchQuery}"</p>
             </div>
           )}
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">{displayName}</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          A comprehensive design system built for rapid product development. 
-          Explore our components, tokens, and patterns based on modern design principles.
-        </p>
-        <div className="flex items-center justify-center gap-4 pt-4">
-          <Button asChild size="sm">
-            <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4 mr-2" />
-              GitHub
-              <ExternalLink className="h-3 w-3 ml-1" />
-            </a>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="/category/foundations">
-              <BookOpen className="h-4 w-4 mr-2" />
-              Get Started
-            </Link>
-          </Button>
-        </div>
-      </div>
+      )}
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-2xl font-bold">{totalComponents}</CardTitle>
-            <CardDescription>Total Components</CardDescription>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-2xl font-bold">{stableComponents}</CardTitle>
-            <CardDescription>Stable Components</CardDescription>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-2xl font-bold">{experimentalComponents}</CardTitle>
-            <CardDescription>Experimental Components</CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
-
-      {/* Categories */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Component Categories</h2>
-        {categoriesLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <CategoryCardSkeleton key={i} />
-            ))}
+      {/* Features Section */}
+      {searchQuery === "" && (
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold text-center">Why Choose {brandName}?</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <Zap className="h-10 w-10 text-primary mb-2" />
+                <CardTitle>Lightning Fast</CardTitle>
+                <CardDescription>
+                  Optimized components built with performance in mind
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <Code className="h-10 w-10 text-primary mb-2" />
+                <CardTitle>Developer Friendly</CardTitle>
+                <CardDescription>
+                  TypeScript support, excellent DX, and comprehensive docs
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <Users className="h-10 w-10 text-primary mb-2" />
+                <CardTitle>Accessible</CardTitle>
+                <CardDescription>
+                  WCAG compliant components that work for everyone
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories?.map((category) => {
-              const Icon = categoryIcons[category.slug as keyof typeof categoryIcons] || Layers;
-              const categoryComponents = allComponents?.filter(c => c.category_id === category.id) || [];
-              
-              return (
-                <Card key={category.id} className="group hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div className="space-y-1">
-                        <CardTitle className="text-lg">{category.name}</CardTitle>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {categoryComponents.length} components
-                          </Badge>
-                          {category.slug === 'experimental' && (
-                            <Badge variant="outline" className="text-xs border-accent text-accent">
-                              Experimental
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <Button asChild variant="outline" className="w-full">
-                      <Link to={`/category/${category.slug}`}>
-                        Explore Category
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Getting Started */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold">Getting Started</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>For Designers</CardTitle>
-              <CardDescription>
-                Access our complete design tokens and foundational elements for consistent design.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="w-full">
-                <Link to="/category/foundations">
-                  View Design Tokens
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>For Developers</CardTitle>
-              <CardDescription>
-                Explore our component library with interactive examples and code snippets.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="w-full">
-                <Link to="/category/core-ui">
-                  Browse Components
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
         </div>
-      </div>
+      )}
     </div>
   );
-};
-
-export default Index;
+}
