@@ -1,274 +1,233 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { 
-  Search, Calculator, Calendar, CreditCard, Settings, User, 
-  Smile, Plus, File, FolderOpen, Hash, BookOpen, Zap, 
-  ChevronRight, Command as CommandIcon, Sparkles
-} from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Sparkles, Search, Zap, Brain, Code, Palette, Settings, FileText, User, Calendar } from "lucide-react";
 
 export default function AICommandPaletteShowcase() {
   const [open, setOpen] = useState(false);
-  const [aiOpen, setAiOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const commands = [
-    { id: "calendar", label: "Calendar", icon: Calendar, shortcut: "⌘C" },
-    { id: "search", label: "Search Emoji", icon: Smile, shortcut: "⌘E" },
-    { id: "calculator", label: "Calculator", icon: Calculator, shortcut: "⌘K" },
-    { id: "settings", label: "Settings", icon: Settings, shortcut: "⌘," },
-    { id: "profile", label: "Profile", icon: User, shortcut: "⌘P" },
-    { id: "billing", label: "Billing", icon: CreditCard, shortcut: "⌘B" },
-  ];
+  const [searchValue, setSearchValue] = useState("");
 
   const aiSuggestions = [
-    "Create a new project dashboard",
-    "Generate component documentation",
-    "Optimize performance metrics", 
-    "Design a user onboarding flow",
-    "Implement dark mode toggle",
-    "Add accessibility features"
+    { icon: Zap, label: "Quick Actions", description: "AI-suggested actions based on context", category: "Smart" },
+    { icon: Brain, label: "Generate Content", description: "Create content using AI assistance", category: "AI" },
+    { icon: Code, label: "Code Assistant", description: "Get help with code and development", category: "AI" },
+    { icon: Palette, label: "Design Helper", description: "AI-powered design suggestions", category: "AI" },
+    { icon: FileText, label: "Document Analysis", description: "Analyze and summarize documents", category: "AI" },
+    { icon: Search, label: "Smart Search", description: "Enhanced search with AI understanding", category: "Smart" },
+    { icon: Settings, label: "Auto Configure", description: "Intelligent system configuration", category: "Smart" },
+    { icon: User, label: "User Insights", description: "AI-driven user behavior analysis", category: "Analytics" },
+    { icon: Calendar, label: "Schedule Optimization", description: "AI-powered scheduling suggestions", category: "Smart" },
   ];
 
   return (
-    <div className="space-y-8 showcase-component">
+    <div className="space-y-6">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-3xl font-bold">AI Command Palette</h1>
-          <Badge variant="default">AI Enhanced</Badge>
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">AI Palette</h1>
+          <Badge variant="default">Stable</Badge>
         </div>
         <p className="text-lg text-muted-foreground">
-          Smart command interface with AI-powered suggestions and quick actions for enhanced productivity.
+          AI-powered command palette with intelligent suggestions and contextual actions.
         </p>
       </div>
 
-      {/* Basic Command Palette */}
+      {/* Basic AI Palette */}
       <Card>
         <CardHeader>
-          <CardTitle>Standard Command Palette</CardTitle>
-          <CardDescription>
-            Quick access to application features with keyboard shortcuts
-          </CardDescription>
+          <CardTitle>AI-Enhanced Command Palette</CardTitle>
+          <CardDescription>Intelligent command interface with AI-powered suggestions</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent>
           <div className="space-y-4">
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-start text-muted-foreground">
-                  <Search className="mr-2 h-4 w-4" />
-                  Search commands...
-                  <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start text-left font-normal"
+                >
+                  <Sparkles className="mr-2 h-4 w-4 text-primary" />
+                  <span className="text-muted-foreground">Search with AI assistance...</span>
+                  <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     <span className="text-xs">⌘</span>K
                   </kbd>
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="p-0">
-                <Command className="rounded-lg border shadow-md">
-                  <CommandInput placeholder="Type a command or search..." />
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup heading="Suggestions">
-                      {commands.map((command) => (
-                        <CommandItem key={command.id}>
-                          <command.icon className="mr-2 h-4 w-4" />
-                          <span>{command.label}</span>
-                          <CommandShortcut>{command.shortcut}</CommandShortcut>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                    <CommandSeparator />
-                    <CommandGroup heading="Tools">
-                      <CommandItem>
-                        <Plus className="mr-2 h-4 w-4" />
-                        <span>Create New</span>
-                      </CommandItem>
-                      <CommandItem>
-                        <File className="mr-2 h-4 w-4" />
-                        <span>New File</span>
-                      </CommandItem>
-                      <CommandItem>
-                        <FolderOpen className="mr-2 h-4 w-4" />
-                        <span>Open Folder</span>
-                      </CommandItem>
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* AI-Enhanced Command Palette */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            AI-Enhanced Command Palette
-          </CardTitle>
-          <CardDescription>
-            Intelligent suggestions and context-aware commands powered by AI
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
-            <Dialog open={aiOpen} onOpenChange={setAiOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-start text-muted-foreground bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
-                  <Sparkles className="mr-2 h-4 w-4 text-primary" />
-                  Ask AI or search commands...
-                  <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-primary/10 px-1.5 font-mono text-[10px] font-medium text-primary">
-                    <span className="text-xs">⌘</span>⇧K
-                  </kbd>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="p-0">
-                <Command className="rounded-lg border shadow-md">
+              </PopoverTrigger>
+              <PopoverContent className="w-[400px] p-0" align="start">
+                <Command>
                   <CommandInput 
-                    placeholder="Ask AI to help or search commands..." 
-                    value={searchQuery}
-                    onValueChange={setSearchQuery}
+                    placeholder="Ask AI or search commands..." 
+                    value={searchValue}
+                    onValueChange={setSearchValue}
                   />
                   <CommandList>
                     <CommandEmpty>
-                      <div className="text-center py-6">
-                        <Sparkles className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
-                        <p className="text-sm text-muted-foreground">No results found. Try asking AI for help!</p>
+                      <div className="flex flex-col items-center gap-2 py-6">
+                        <Brain className="h-8 w-8 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">
+                          AI is thinking... Try describing what you want to do
+                        </p>
                       </div>
                     </CommandEmpty>
                     
-                    {searchQuery && (
-                      <CommandGroup heading="AI Suggestions">
-                        <CommandItem className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <Zap className="mr-2 h-4 w-4 text-accent" />
-                            <span>Generate: "{searchQuery}"</span>
-                          </div>
-                          <Badge variant="outline" className="border-accent text-accent">AI</Badge>
-                        </CommandItem>
-                        <CommandItem>
-                          <BookOpen className="mr-2 h-4 w-4 text-primary" />
-                          <span>Explain: "{searchQuery}"</span>
-                        </CommandItem>
-                      </CommandGroup>
-                    )}
-
-                    <CommandGroup heading="Quick Actions">
-                      {aiSuggestions.slice(0, 3).map((suggestion, index) => (
-                        <CommandItem key={index} className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <Sparkles className="mr-2 h-4 w-4 text-accent" />
-                            <span>{suggestion}</span>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-
-                    <CommandSeparator />
-                    
-                    <CommandGroup heading="Commands">
-                      {commands.map((command) => (
-                        <CommandItem key={command.id}>
-                          <command.icon className="mr-2 h-4 w-4" />
-                          <span>{command.label}</span>
-                          <CommandShortcut>{command.shortcut}</CommandShortcut>
-                        </CommandItem>
-                      ))}
+                    <CommandGroup heading="AI Suggestions">
+                      {aiSuggestions
+                        .filter(item => 
+                          searchValue === "" || 
+                          item.label.toLowerCase().includes(searchValue.toLowerCase()) ||
+                          item.description.toLowerCase().includes(searchValue.toLowerCase())
+                        )
+                        .map((item, index) => (
+                          <CommandItem key={index} className="flex items-center gap-3 p-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                              <item.icon className="h-4 w-4 text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-medium">{item.label}</div>
+                              <div className="text-xs text-muted-foreground">{item.description}</div>
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {item.category}
+                            </Badge>
+                          </CommandItem>
+                        ))}
                     </CommandGroup>
                   </CommandList>
                 </Command>
-              </DialogContent>
-            </Dialog>
-
-            {/* AI Context Panel */}
-            <div className="rounded-lg border bg-gradient-to-br from-primary/5 to-accent/5 p-4">
-              <div className="flex items-start gap-3">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-medium">AI Assistant Ready</h4>
-                  <p className="text-sm text-muted-foreground">
-                    The AI can help you create components, generate code, explain concepts, or guide you through complex tasks.
-                  </p>
-                  <div className="flex gap-2 mt-3">
-                    <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                      <Zap className="mr-1 h-3 w-3" />
-                      Quick Start
-                    </Button>
-                    <Button size="sm" variant="ghost">
-                      Learn More
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </CardContent>
       </Card>
 
-      {/* Recent AI Interactions */}
+      {/* AI Features */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent AI Interactions</CardTitle>
-          <CardDescription>
-            Your latest AI-powered commands and suggestions
-          </CardDescription>
+          <CardTitle>AI-Powered Features</CardTitle>
+          <CardDescription>Intelligent capabilities that enhance user productivity</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {aiSuggestions.map((suggestion, index) => (
-              <div key={index} className="flex items-center justify-between p-3 rounded-lg border bg-muted/50 hover:bg-muted transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-accent/10 p-1.5">
-                    <CommandIcon className="h-3 w-3 text-accent" />
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              {
+                icon: Brain,
+                title: "Natural Language Processing",
+                description: "Understand commands in plain English",
+                example: '"Create a new project with React and TypeScript"'
+              },
+              {
+                icon: Zap,
+                title: "Contextual Suggestions",
+                description: "Smart suggestions based on current context",
+                example: "Suggests relevant actions for current page"
+              },
+              {
+                icon: Search,
+                title: "Semantic Search",
+                description: "Find items by meaning, not just keywords",
+                example: "Search 'dark theme' finds appearance settings"
+              },
+              {
+                icon: Sparkles,
+                title: "Predictive Actions",
+                description: "Anticipate user needs and suggest actions",
+                example: "Suggests common next steps in workflows"
+              }
+            ].map((feature, index) => (
+              <div key={index} className="p-4 border rounded-lg hover:bg-muted/30 transition-colors">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                    <feature.icon className="h-5 w-5 text-primary" />
                   </div>
-                  <span className="text-sm">{suggestion}</span>
+                  <div className="flex-1">
+                    <h4 className="font-semibold mb-1">{feature.title}</h4>
+                    <p className="text-sm text-muted-foreground mb-2">{feature.description}</p>
+                    <code className="text-xs bg-muted px-2 py-1 rounded">{feature.example}</code>
+                  </div>
                 </div>
-                <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground">
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Implementation Guide */}
+      {/* Implementation Examples */}
       <Card>
         <CardHeader>
-          <CardTitle>Implementation Guide</CardTitle>
-          <CardDescription>
-            How to integrate AI-enhanced command palettes in your applications
-          </CardDescription>
+          <CardTitle>Implementation Patterns</CardTitle>
+          <CardDescription>Different ways to integrate AI palette functionality</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-4">
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2">Global Shortcut</h4>
+              <p className="text-sm text-muted-foreground mb-3">
+                Accessible from anywhere in the application with keyboard shortcut
+              </p>
+              <div className="flex items-center gap-2">
+                <Input placeholder="Press Cmd+K to open AI Palette" className="flex-1" readOnly />
+                <Badge variant="outline">⌘K</Badge>
+              </div>
+            </div>
+
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2">Contextual Integration</h4>
+              <p className="text-sm text-muted-foreground mb-3">
+                Embedded within specific workflows and interfaces
+              </p>
+              <Button variant="outline" className="w-full justify-start">
+                <Sparkles className="mr-2 h-4 w-4" />
+                Ask AI for help with this task
+              </Button>
+            </div>
+
+            <div className="p-4 border rounded-lg">
+              <h4 className="font-medium mb-2">Smart Autocomplete</h4>
+              <p className="text-sm text-muted-foreground mb-3">
+                AI-enhanced input fields with intelligent suggestions
+              </p>
+              <div className="relative">
+                <Input placeholder="Type your request..." />
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <Brain className="h-4 w-4 text-primary animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Guidelines */}
+      <Card>
+        <CardHeader>
+          <CardTitle>AI Palette Guidelines</CardTitle>
+          <CardDescription>Best practices for AI-enhanced command interfaces</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium mb-2">Key Features</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Intelligent command suggestions</li>
-                <li>• Context-aware AI responses</li>
-                <li>• Natural language processing</li>
-                <li>• Quick action shortcuts</li>
-                <li>• Learning user preferences</li>
+            <div className="space-y-3">
+              <h4 className="font-medium text-success">Best Practices</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Provide clear visual indicators for AI features</li>
+                <li>• Make AI suggestions contextually relevant</li>
+                <li>• Offer both AI and traditional search options</li>
+                <li>• Ensure graceful fallbacks when AI is unavailable</li>
+                <li>• Use progressive disclosure for complex AI features</li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-medium mb-2">Use Cases</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Code generation assistance</li>
-                <li>• Documentation creation</li>
-                <li>• Project setup automation</li>
-                <li>• Design system guidance</li>
-                <li>• Performance optimization</li>
+            <div className="space-y-3">
+              <h4 className="font-medium text-info">User Experience</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Keep response times under 200ms for suggestions</li>
+                <li>• Provide feedback during AI processing</li>
+                <li>• Allow users to correct AI interpretations</li>
+                <li>• Learn from user interactions and preferences</li>
+                <li>• Maintain user privacy and data security</li>
               </ul>
             </div>
           </div>

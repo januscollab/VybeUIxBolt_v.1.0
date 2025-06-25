@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFontManager } from "@/hooks/useFontManager";
 
 export default function TypographyScaleComponent() {
@@ -36,6 +37,8 @@ export default function TypographyScaleComponent() {
     return { fontFamily: `var(--font-secondary)` };
   };
 
+  const fontCategories = ['sans-serif', 'serif', 'monospace', 'display', 'handwriting'];
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -58,50 +61,153 @@ export default function TypographyScaleComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Primary Font (Headings)</label>
-              <Select value={primaryFont} onValueChange={updatePrimaryFont}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableFonts.map((font) => (
-                    <SelectItem key={font.value} value={font.value}>
-                      <span style={{ fontFamily: font.value }}>{font.name}</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">Used for headings and emphasis</p>
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Secondary Font (Body Text)</label>
-              <Select value={secondaryFont} onValueChange={updateSecondaryFont}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableFonts.map((font) => (
-                    <SelectItem key={font.value} value={font.value}>
-                      <span style={{ fontFamily: font.value }}>{font.name}</span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">Used for body text and interface elements</p>
-            </div>
-          </div>
-          
-          <div className="flex justify-between items-center pt-4 border-t">
-            <div className="text-sm text-muted-foreground">
-              Current: <span className="font-medium">{primaryFont}</span> + <span className="font-medium">{secondaryFont}</span>
-            </div>
-            <Button variant="outline" onClick={resetToDefaults}>
-              Reset to Defaults
-            </Button>
-          </div>
+          <Tabs defaultValue="selection" className="w-full">
+            <TabsList className="mb-4">
+              <TabsTrigger value="selection">Font Selection</TabsTrigger>
+              <TabsTrigger value="preview">Font Preview</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="selection" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Primary Font (Headings)</label>
+                  <Select value={primaryFont} onValueChange={updatePrimaryFont}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontCategories.map((category) => (
+                        <div key={category}>
+                          <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase">
+                            {category.replace('-', ' ')}
+                          </div>
+                          {availableFonts
+                            .filter(font => font.category === category)
+                            .map((font) => (
+                              <SelectItem key={font.value} value={font.value}>
+                                <span style={{ fontFamily: font.value }}>{font.name}</span>
+                              </SelectItem>
+                            ))}
+                        </div>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">Used for headings and emphasis</p>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Secondary Font (Body Text)</label>
+                  <Select value={secondaryFont} onValueChange={updateSecondaryFont}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontCategories.map((category) => (
+                        <div key={category}>
+                          <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase">
+                            {category.replace('-', ' ')}
+                          </div>
+                          {availableFonts
+                            .filter(font => font.category === category)
+                            .map((font) => (
+                              <SelectItem key={font.value} value={font.value}>
+                                <span style={{ fontFamily: font.value }}>{font.name}</span>
+                              </SelectItem>
+                            ))}
+                        </div>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground">Used for body text and interface elements</p>
+                </div>
+              </div>
+              
+              <div className="flex justify-between items-center pt-4 border-t">
+                <div className="text-sm text-muted-foreground">
+                  Current: <span className="font-medium">{primaryFont}</span> + <span className="font-medium">{secondaryFont}</span>
+                </div>
+                <Button variant="outline" onClick={resetToDefaults}>
+                  Reset to Defaults
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="preview" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Primary Font Preview */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle style={{ fontFamily: `var(--font-primary)` }}>
+                      {primaryFont} Preview
+                    </CardTitle>
+                    <CardDescription>Primary font samples in various weights and styles</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {[300, 400, 500, 600, 700].map((weight) => (
+                      <div key={weight} className="space-y-2">
+                        <div className="text-xs text-muted-foreground">Weight {weight}</div>
+                        <div 
+                          className="text-lg"
+                          style={{ 
+                            fontFamily: `var(--font-primary)`, 
+                            fontWeight: weight 
+                          }}
+                        >
+                          The quick brown fox jumps over the lazy dog
+                        </div>
+                        <div 
+                          className="text-lg italic"
+                          style={{ 
+                            fontFamily: `var(--font-primary)`, 
+                            fontWeight: weight,
+                            fontStyle: 'italic'
+                          }}
+                        >
+                          The quick brown fox jumps over the lazy dog
+                        </div>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+
+                {/* Secondary Font Preview */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle style={{ fontFamily: `var(--font-secondary)` }}>
+                      {secondaryFont} Preview
+                    </CardTitle>
+                    <CardDescription>Secondary font samples in various weights and styles</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {[300, 400, 500, 600, 700].map((weight) => (
+                      <div key={weight} className="space-y-2">
+                        <div className="text-xs text-muted-foreground">Weight {weight}</div>
+                        <div 
+                          className="text-lg"
+                          style={{ 
+                            fontFamily: `var(--font-secondary)`, 
+                            fontWeight: weight 
+                          }}
+                        >
+                          The quick brown fox jumps over the lazy dog
+                        </div>
+                        <div 
+                          className="text-lg italic"
+                          style={{ 
+                            fontFamily: `var(--font-secondary)`, 
+                            fontWeight: weight,
+                            fontStyle: 'italic'
+                          }}
+                        >
+                          The quick brown fox jumps over the lazy dog
+                        </div>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 
