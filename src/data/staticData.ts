@@ -1,4 +1,3 @@
-
 export interface Category {
   id: string;
   name: string;
@@ -18,8 +17,6 @@ export interface Component {
   status: 'stable' | 'review' | 'deprecated' | 'backlog';
   is_experimental: boolean;
   sort_order?: number;
-  figma_url?: string;
-  storybook_url?: string;
   variants?: Variant[];
   documentation?: Documentation[];
 }
@@ -98,7 +95,7 @@ export const STATIC_CATEGORIES: Category[] = [
     name: 'Experimental',
     slug: 'experimental',
     description: 'Cutting-edge components and experimental patterns pushing the boundaries of design.',
-    component_count: 2,
+    component_count: 0,
     is_experimental: true,
     sort_order: 7
   }
@@ -687,31 +684,7 @@ export const STATIC_COMPONENTS: Component[] = [
     is_experimental: false,
     variants: [],
     documentation: []
-  },
-
-  // Experimental Components (2 components)
-  {
-    id: '53',
-    name: 'Workflow Builder',
-    slug: 'workflow-builder',
-    description: 'Visual interface for creating and managing automated workflows.',
-    category_id: '7',
-    status: 'review',
-    is_experimental: true,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '54',
-    name: 'Collaboration Panel',
-    slug: 'collaboration-panel',
-    description: 'Real-time collaboration interface with user presence and activity tracking.',
-    category_id: '7',
-    status: 'backlog',
-    is_experimental: true,
-    variants: [],
-    documentation: []
-  },
+  }
 ];
 
 export const searchComponents = (query: string) => {

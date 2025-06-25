@@ -12,8 +12,6 @@ interface DesignSystemContextType {
   typography: Record<string, any>;
   brandName: string;
   logoUrl: string;
-  activeVersion: any;
-  versions: any[];
   backgrounds: Record<string, string>;
   fontProvider: FontProvider;
   availableFontProviders: FontProvider[];
@@ -22,9 +20,6 @@ interface DesignSystemContextType {
   updateBranding: (branding: { brandName: string; logoUrl: string }) => void;
   updateBackgrounds: (backgrounds: Record<string, string>) => void;
   updateFontProvider: (provider: FontProvider) => void;
-  saveVersion: (name: string) => Promise<void>;
-  loadVersion: (versionId: string) => Promise<void>;
-  refreshVersions: () => Promise<void>;
   exportSettings: () => string;
   importSettings: (jsonString: string) => boolean;
 }
@@ -95,18 +90,8 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
   const [typography, setTypography] = useState<Record<string, any>>(DEFAULT_TYPOGRAPHY);
   const [brandName, setBrandName] = useState('VybeUI');
   const [logoUrl, setLogoUrl] = useState('');
-  const [versions, setVersions] = useState<any[]>([]);
   const [backgrounds, setBackgrounds] = useState<Record<string, string>>(DEFAULT_BACKGROUNDS);
   const [fontProvider, setFontProvider] = useState<FontProvider>(FONT_PROVIDERS[0]);
-
-  // Create a mock active version
-  const activeVersion = {
-    id: '1',
-    version_name: 'Current Version',
-    brand_name: brandName,
-    logo_url: logoUrl,
-    created_at: new Date().toISOString()
-  };
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -118,7 +103,6 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
         setTypography(settings.typography || DEFAULT_TYPOGRAPHY);
         setBrandName(settings.brandName || 'VybeUI');
         setLogoUrl(settings.logoUrl || '');
-        setVersions(settings.versions || []);
         setBackgrounds(settings.backgrounds || DEFAULT_BACKGROUNDS);
         setFontProvider(settings.fontProvider || FONT_PROVIDERS[0]);
       } catch (error) {
@@ -138,7 +122,6 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       typography,
       brandName,
       logoUrl,
-      versions,
       backgrounds,
       fontProvider,
       ...updates
@@ -282,63 +265,12 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
     setTimeout(() => applyDesignSystemToCSS(), 100);
   };
 
-  const saveVersion = async (name: string) => {
-    const newVersion = {
-      id: Date.now().toString(),
-      version_name: name,
-      created_at: new Date().toISOString(),
-      colorPalette,
-      typography,
-      brandName,
-      logoUrl,
-      backgrounds,
-      fontProvider
-    };
-    
-    const updatedVersions = [...versions, newVersion];
-    setVersions(updatedVersions);
-    saveSettings({ versions: updatedVersions });
-  };
-
-  const loadVersion = async (versionId: string) => {
-    const version = versions.find(v => v.id === versionId);
-    if (version) {
-      setColorPalette(version.colorPalette || DEFAULT_COLOR_PALETTE);
-      setTypography(version.typography || DEFAULT_TYPOGRAPHY);
-      setBrandName(version.brandName || 'VybeUI');
-      setLogoUrl(version.logoUrl || '');
-      setBackgrounds(version.backgrounds || DEFAULT_BACKGROUNDS);
-      setFontProvider(version.fontProvider || FONT_PROVIDERS[0]);
-      saveSettings({
-        colorPalette: version.colorPalette,
-        typography: version.typography,
-        brandName: version.brandName,
-        logoUrl: version.logoUrl,
-        backgrounds: version.backgrounds,
-        fontProvider: version.fontProvider
-      });
-    }
-  };
-
-  const refreshVersions = async () => {
-    const savedSettings = localStorage.getItem('designSystemSettings');
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings);
-        setVersions(settings.versions || []);
-      } catch (error) {
-        console.error('Error refreshing versions:', error);
-      }
-    }
-  };
-
   const exportSettings = () => {
     const settings = {
       colorPalette,
       typography,
       brandName,
       logoUrl,
-      versions,
       backgrounds,
       fontProvider,
       exportedAt: new Date().toISOString(),
@@ -355,7 +287,6 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       if (settings.typography) setTypography(settings.typography);
       if (settings.brandName) setBrandName(settings.brandName);
       if (settings.logoUrl) setLogoUrl(settings.logoUrl);
-      if (settings.versions) setVersions(settings.versions);
       if (settings.backgrounds) setBackgrounds(settings.backgrounds);
       if (settings.fontProvider) setFontProvider(settings.fontProvider);
       
@@ -373,8 +304,6 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       typography,
       brandName,
       logoUrl,
-      activeVersion,
-      versions,
       backgrounds,
       fontProvider,
       availableFontProviders: FONT_PROVIDERS,
@@ -383,9 +312,6 @@ export function LocalDesignSystemProvider({ children }: { children: React.ReactN
       updateBranding,
       updateBackgrounds,
       updateFontProvider,
-      saveVersion,
-      loadVersion,
-      refreshVersions,
       exportSettings,
       importSettings
     }}>

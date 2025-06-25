@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +6,7 @@ import { CodeModal } from "@/components/ui/code-modal";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
-import { Download, Copy, Package, Terminal, FileText, ExternalLink, Palette, Code2 } from "lucide-react";
+import { Download, Copy, Package, Terminal, FileText, Palette, Code2 } from "lucide-react";
 
 export default function DocumentationPage() {
   const { colorPalette, typography, brandName, exportSettings } = useLocalDesignSystem();
@@ -72,46 +71,6 @@ export function MyComponent() {
   );
 }`;
 
-  const vueUsage = `<template>
-  <div>
-    <vybe-card class="p-6">
-      <vybe-input placeholder="Enter your email..." />
-      <vybe-button variant="default" class="mt-4">
-        Subscribe
-      </vybe-button>
-    </vybe-card>
-  </div>
-</template>
-
-<script>
-import { VybeCard, VybeInput, VybeButton } from '@vybeui/design-system/vue';
-
-export default {
-  components: {
-    VybeCard,
-    VybeInput,
-    VybeButton
-  }
-}
-</script>`;
-
-  const htmlUsage = `<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="https://unpkg.com/@vybeui/design-system/dist/styles.css">
-</head>
-<body>
-  <div class="vybe-card p-6">
-    <input class="vybe-input" placeholder="Enter your email..." />
-    <button class="vybe-button vybe-button--default mt-4">
-      Subscribe
-    </button>
-  </div>
-
-  <script src="https://unpkg.com/@vybeui/design-system/dist/vybe.min.js"></script>
-</body>
-</html>`;
-
   const tailwindConfig = `// tailwind.config.js
 module.exports = {
   content: [
@@ -175,42 +134,6 @@ module.exports = {
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 }`;
-
-  const nextjsSetup = `// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ['@vybeui/design-system'],
-  experimental: {
-    optimizePackageImports: ['@vybeui/design-system']
-  }
-}
-
-module.exports = nextConfig
-
-// pages/_app.js or app/layout.js
-import '@vybeui/design-system/styles.css'
-
-export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}`;
-
-  const viteSetup = `// vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    include: ['@vybeui/design-system'],
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: \`@import "@vybeui/design-system/tokens";\`
-      }
-    }
-  }
-})`;
 
   const componentExample = `import { useState } from 'react';
 import { 
@@ -285,7 +208,6 @@ export function UserProfile() {
         <div className="flex items-center gap-2">
           <Badge variant="default">v1.0.0</Badge>
           <Badge variant="outline">React</Badge>
-          <Badge variant="outline">Vue</Badge>
           <Badge variant="outline">TypeScript</Badge>
           <Badge variant="outline">Tailwind CSS</Badge>
         </div>
@@ -301,21 +223,12 @@ export function UserProfile() {
           <Copy className="h-4 w-4 mr-2" />
           {copySuccess ? "Copied!" : "Copy Tokens"}
         </Button>
-        <Button 
-          variant="outline"
-          onClick={() => window.open('https://github.com/vybeui/design-system', '_blank')}
-        >
-          <ExternalLink className="h-4 w-4 mr-2" />
-          View on GitHub
-        </Button>
       </div>
 
       {/* Installation & Usage */}
       <Tabs defaultValue="react" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-1">
           <TabsTrigger value="react">React / Next.js</TabsTrigger>
-          <TabsTrigger value="vue">Vue.js</TabsTrigger>
-          <TabsTrigger value="html">HTML / CDN</TabsTrigger>
         </TabsList>
         
         <TabsContent value="react" className="space-y-6">
@@ -367,74 +280,7 @@ export function UserProfile() {
             </CardContent>
           </Card>
         </TabsContent>
-
-        <TabsContent value="vue" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Vue.js Integration</CardTitle>
-              <CardDescription>Use our components in Vue.js applications</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <CodeModal title="Vue Usage Example" code={vueUsage}>
-                <Button variant="outline">
-                  <Code2 className="h-4 w-4 mr-2" />
-                  View Vue Example
-                </Button>
-              </CodeModal>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="html" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>HTML / CDN Integration</CardTitle>
-              <CardDescription>Use our design system with plain HTML via CDN</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <CodeModal title="HTML CDN Usage" code={htmlUsage}>
-                <Button variant="outline">
-                  <Code2 className="h-4 w-4 mr-2" />
-                  View HTML Example
-                </Button>
-              </CodeModal>
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
-
-      {/* Framework Configuration */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Next.js Configuration</CardTitle>
-            <CardDescription>Setup for Next.js projects with SSR support</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CodeModal title="Next.js Setup" code={nextjsSetup}>
-              <Button variant="outline" className="w-full">
-                <FileText className="h-4 w-4 mr-2" />
-                View Next.js Config
-              </Button>
-            </CodeModal>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Vite Configuration</CardTitle>
-            <CardDescription>Optimize Vite build for our design system</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CodeModal title="Vite Setup" code={viteSetup}>
-              <Button variant="outline" className="w-full">
-                <FileText className="h-4 w-4 mr-2" />
-                View Vite Config
-              </Button>
-            </CodeModal>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Design Tokens */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

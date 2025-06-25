@@ -9,8 +9,6 @@ import {
   Beaker, 
   Search,
   Home,
-  Github,
-  ExternalLink,
   ChevronDown,
   ChevronUp,
   Edit,
@@ -266,13 +264,6 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-border p-4 bg-background">
         <div className="flex gap-2">
-          <Button variant="ghost" size="sm" className="flex-1 justify-start h-8" asChild>
-            <a href="https://github.com/januscollab/janus-design-system" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-              <Github className="h-4 w-4" />
-              <span>GitHub</span>
-              <ExternalLink className="h-3 w-3 ml-auto" />
-            </a>
-          </Button>
           <Button variant="ghost" size="sm" className="flex-1 justify-start h-8" asChild>
             <Link to="/documentation" className="flex items-center gap-2">
               <Book className="h-4 w-4" />

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { STATIC_CATEGORIES, STATIC_COMPONENTS, type Category, type Component } from '@/data/staticData';
 
@@ -62,43 +61,6 @@ export function useComponent(slug: string) {
   }, [slug]);
 
   return { data, isLoading };
-}
-
-// Hook for design system settings (using local storage)
-export function useDesignSystem() {
-  const { 
-    colorPalette, 
-    typography, 
-    brandName, 
-    logoUrl,
-    activeVersion,
-    versions,
-    updateColorPalette,
-    updateTypography,
-    updateBranding,
-    saveVersion,
-    loadVersion,
-    refreshVersions,
-    exportSettings,
-    importSettings
-  } = useLocalDesignSystem();
-
-  return {
-    colorPalette,
-    typography,
-    brandName,
-    logoUrl,
-    activeVersion,
-    versions,
-    updateColorPalette,
-    updateTypography,
-    updateBranding,
-    saveVersion,
-    loadVersion,
-    refreshVersions,
-    exportSettings,
-    importSettings
-  };
 }
 
 // Re-export the local design system hook

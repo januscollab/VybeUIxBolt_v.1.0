@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -39,11 +38,6 @@ import BannerShowcase from "@/components/showcase/BannerShowcase";
 import AccordionShowcase from "@/components/showcase/AccordionShowcase";
 import ProgressBarShowcase from "@/components/showcase/ProgressBarShowcase";
 import LoadingSpinnerShowcase from "@/components/showcase/LoadingSpinnerShowcase";
-
-// Import new experimental components
-import AdvancedColorPickerShowcase from '@/components/showcase/experimental/AdvancedColorPickerShowcase';
-import TypographyAnimatorShowcase from '@/components/showcase/experimental/TypographyAnimatorShowcase';
-import MegaMenuShowcase from '@/components/showcase/experimental/MegaMenuShowcase';
 
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
@@ -93,11 +87,6 @@ export default function ComponentPage() {
     'accordion': AccordionShowcase,
     'progress-bar': ProgressBarShowcase,
     'loading-spinner': LoadingSpinnerShowcase,
-    
-    // Add new experimental components
-    'advanced-color-picker': AdvancedColorPickerShowcase,
-    'typography-animator': TypographyAnimatorShowcase,
-    'mega-menu': MegaMenuShowcase,
     
     // Add foundation components
     'color-palette': ColorPaletteComponent,

@@ -1,9 +1,8 @@
-
 import { Component } from "@/data/staticData";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, FileCode, Figma, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -99,23 +98,6 @@ export function ExperimentalComponentCard({ component }: ExperimentalComponentCa
               View Details
             </Link>
           </Button>
-          
-          <div className="flex gap-1">
-            {component.figma_url && (
-              <Button variant="outline" size="sm" asChild>
-                <a href={component.figma_url} target="_blank" rel="noopener noreferrer">
-                  <Figma className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-            {component.storybook_url && (
-              <Button variant="outline" size="sm" asChild>
-                <a href={component.storybook_url} target="_blank" rel="noopener noreferrer">
-                  <FileCode className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-          </div>
         </div>
       </CardContent>
     </Card>
