@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { useParams } from 'next/navigation';
+import { useParams } from 'react-router-dom';
 
 import AlertShowcase from '@/components/showcase/AlertShowcase';
 import AvatarShowcase from '@/components/showcase/AvatarShowcase';
@@ -94,11 +95,7 @@ export default function ComponentPage() {
     'mega-menu': MegaMenuShowcase,
   };
 
-  const Component = componentMap[component] || (() => <div>Component not found</div>);
+  const Component = componentMap[component || ''] || (() => <div>Component not found</div>);
 
-  return (
-    
-      <Component />
-    
-  );
+  return <Component />;
 }
