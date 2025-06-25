@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, Palette, Eyedropper, Shuffle } from 'lucide-react';
+import { Copy, Palette, Shuffle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 export default function AdvancedColorPickerShowcase() {
