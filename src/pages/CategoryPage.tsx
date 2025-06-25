@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useRef } from "react";
+import BreadcrumbNavigation from "@/components/navigation/BreadcrumbNavigation";
 
 // Import all showcase components
 import AlertShowcase from '@/components/showcase/AlertShowcase';
