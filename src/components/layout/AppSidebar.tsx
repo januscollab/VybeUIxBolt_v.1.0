@@ -100,8 +100,6 @@ export function AppSidebar() {
       } else {
         setActiveComponentSlug(null);
       }
-    } else {
-      setActiveComponentId(null);
     }
   }, [location.pathname, location.hash, allComponents, categories, expandedCategories]);
 
@@ -233,7 +231,7 @@ export function AppSidebar() {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                isActive={isComponentActive || activeComponentSlug === component.slug}
+                                }}
                               >
                                 {isExpanded ? (
                                   <ChevronUp className="h-3 w-3" />
@@ -252,7 +250,7 @@ export function AppSidebar() {
                                 <SidebarMenuSubItem key={component.id}>
                                   <SidebarMenuSubButton 
                                     asChild 
-                                    isActive={isComponentActive || activeComponentId === component.id}
+                                    isActive={isComponentActive || activeComponentSlug === component.slug}
                                   >
                                     <Link 
                                       to={
