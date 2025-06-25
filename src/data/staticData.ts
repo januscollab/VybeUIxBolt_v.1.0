@@ -578,5 +578,53 @@ export const components: Component[] = [
     sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
+  },
+  {
+    id: 'ai-command-palette-experimental',
+    name: 'AI Command Palette',
+    slug: 'ai-command-palette-experimental',
+    description: 'Next-generation AI-powered command interface with advanced features',
+    category_id: '8',
+    status: 'draft',
+    is_experimental: true,
+    sort_order: 3,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'cv-inspired',
+    name: 'CV Inspired',
+    slug: 'cv-inspired',
+    description: 'Professional resume and portfolio components',
+    category_id: '8',
+    status: 'draft',
+    is_experimental: true,
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'component-analytics',
+    name: 'Component Analytics',
+    slug: 'component-analytics',
+    description: 'Usage tracking and performance analytics for design system components',
+    category_id: '8',
+    status: 'draft',
+    is_experimental: true,
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'component-usage-guidelines',
+    name: 'Component Usage Guidelines',
+    slug: 'component-usage-guidelines',
+    description: 'Interactive guidelines and best practices for component implementation',
+    category_id: '8',
+    status: 'draft',
+    is_experimental: true,
+    sort_order: 6,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   }
 ];
