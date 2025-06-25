@@ -1,37 +1,40 @@
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { useFontManager } from "@/hooks/useFontManager";
 
 export default function TypographyScaleComponent() {
+  const { 
+    primaryFont, 
+    secondaryFont, 
+    updatePrimaryFont, 
+    updateSecondaryFont, 
+    resetToDefaults, 
+    availableFonts 
+  } = useFontManager();
+
   const typographyScale = [
-    { name: "Display Large", class: "text-6xl", size: "3.75rem", lineHeight: "1", weight: "font-bold", font: "font-poppins", usage: "Hero headings for major impact", example: "Beautiful Design Systems Made Simple" },
-    { name: "Display Medium", class: "text-5xl", size: "3rem", lineHeight: "1.1", weight: "font-bold", font: "font-poppins", usage: "Large section headers", example: "Connect your entire tech stack" },
-    { name: "Display Small", class: "text-4xl", size: "2.25rem", lineHeight: "1.2", weight: "font-bold", font: "font-poppins", usage: "Page titles and major headings", example: "Streamlined component library" },
-    { name: "Heading 1", class: "text-3xl", size: "1.875rem", lineHeight: "1.25", weight: "font-bold", font: "font-poppins", usage: "Main section headings", example: "Get started with VybeUI" },
-    { name: "Heading 2", class: "text-2xl", size: "1.5rem", lineHeight: "1.3", weight: "font-semibold", font: "font-poppins", usage: "Sub-section headings", example: "Popular workflow templates" },
-    { name: "Heading 3", class: "text-xl", size: "1.25rem", lineHeight: "1.4", weight: "font-semibold", font: "font-poppins", usage: "Card titles and smaller headings", example: "Email to Slack notifications" },
-    { name: "Heading 4", class: "text-lg", size: "1.125rem", lineHeight: "1.5", weight: "font-medium", font: "font-poppins", usage: "Minor headings and labels", example: "Trigger: When someone subscribes" },
-    { name: "Body Large", class: "text-lg", size: "1.125rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Introductory text and highlights", example: "Beautiful, accessible components for modern web applications. VybeUI provides a comprehensive design system to accelerate your development workflow." },
-    { name: "Body", class: "text-base", size: "1rem", lineHeight: "1.6", weight: "font-normal", font: "font-inter", usage: "Default body text", example: "Build stunning interfaces with our complete component library. Trusted by developers worldwide to create consistent, accessible user experiences." },
-    { name: "Body Small", class: "text-sm", size: "0.875rem", lineHeight: "1.5", weight: "font-normal", font: "font-inter", usage: "Secondary text, captions, metadata", example: "Last updated: 2 hours ago • Created by John Smith" },
-    { name: "Caption", class: "text-xs", size: "0.75rem", lineHeight: "1.4", weight: "font-normal", font: "font-inter", usage: "Fine print, helper text, timestamps", example: "By connecting your account, you agree to our Terms of Service" },
+    { name: "Display Large", class: "text-6xl", size: "3.75rem", lineHeight: "1", weight: "font-bold", font: "font-primary", usage: "Hero headings for major impact", example: "Beautiful Design Systems Made Simple" },
+    { name: "Display Medium", class: "text-5xl", size: "3rem", lineHeight: "1.1", weight: "font-bold", font: "font-primary", usage: "Large section headers", example: "Connect your entire tech stack" },
+    { name: "Display Small", class: "text-4xl", size: "2.25rem", lineHeight: "1.2", weight: "font-bold", font: "font-primary", usage: "Page titles and major headings", example: "Streamlined component library" },
+    { name: "Heading 1", class: "text-3xl", size: "1.875rem", lineHeight: "1.25", weight: "font-bold", font: "font-primary", usage: "Main section headings", example: "Get started with VybeUI" },
+    { name: "Heading 2", class: "text-2xl", size: "1.5rem", lineHeight: "1.3", weight: "font-semibold", font: "font-primary", usage: "Sub-section headings", example: "Popular workflow templates" },
+    { name: "Heading 3", class: "text-xl", size: "1.25rem", lineHeight: "1.4", weight: "font-semibold", font: "font-primary", usage: "Card titles and smaller headings", example: "Email to Slack notifications" },
+    { name: "Heading 4", class: "text-lg", size: "1.125rem", lineHeight: "1.5", weight: "font-medium", font: "font-primary", usage: "Minor headings and labels", example: "Trigger: When someone subscribes" },
+    { name: "Body Large", class: "text-lg", size: "1.125rem", lineHeight: "1.6", weight: "font-normal", font: "font-secondary", usage: "Introductory text and highlights", example: "Beautiful, accessible components for modern web applications. VybeUI provides a comprehensive design system to accelerate your development workflow." },
+    { name: "Body", class: "text-base", size: "1rem", lineHeight: "1.6", weight: "font-normal", font: "font-secondary", usage: "Default body text", example: "Build stunning interfaces with our complete component library. Trusted by developers worldwide to create consistent, accessible user experiences." },
+    { name: "Body Small", class: "text-sm", size: "0.875rem", lineHeight: "1.5", weight: "font-normal", font: "font-secondary", usage: "Secondary text, captions, metadata", example: "Last updated: 2 hours ago • Created by John Smith" },
+    { name: "Caption", class: "text-xs", size: "0.75rem", lineHeight: "1.4", weight: "font-normal", font: "font-secondary", usage: "Fine print, helper text, timestamps", example: "By connecting your account, you agree to our Terms of Service" },
   ];
 
-  const fontFamilies = [
-    {
-      name: "Poppins (Primary Font)",
-      description: "Used for headings and emphasis",
-      class: "font-poppins",
-      weights: ["300 (Light)", "400 (Regular)", "500 (Medium)", "600 (Semibold)", "700 (Bold)"],
-      characteristics: "Geometric, friendly, modern - perfect for headings and UI elements"
-    },
-    {
-      name: "Inter (Secondary Font)", 
-      description: "Used for body text and interface elements",
-      class: "font-inter",
-      weights: ["300 (Light)", "400 (Regular)", "500 (Medium)", "600 (Semibold)", "700 (Bold)"],
-      characteristics: "Highly legible, optimized for screens - ideal for body text and data"
+  const getFontStyle = (fontType: string) => {
+    if (fontType === "font-primary") {
+      return { fontFamily: `var(--font-primary)` };
     }
-  ];
+    return { fontFamily: `var(--font-secondary)` };
+  };
 
   return (
     <div className="space-y-6">
@@ -46,38 +49,65 @@ export default function TypographyScaleComponent() {
         </p>
       </div>
 
-      {/* Font Families */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Font Families</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {fontFamilies.map((font) => (
-            <Card key={font.name}>
-              <CardHeader>
-                <CardTitle className="text-lg">{font.name}</CardTitle>
-                <CardDescription>{font.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className={`text-2xl ${font.class}`}>
-                  The quick brown fox jumps over the lazy dog
-                </div>
-                <div className="space-y-2">
-                  <div className="text-sm font-medium">Available weights:</div>
-                  <div className="text-sm text-muted-foreground">
-                    {font.weights.join(" • ")}
-                  </div>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {font.characteristics}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+      {/* Font Selection */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Font Selection</CardTitle>
+          <CardDescription>
+            Choose your primary and secondary fonts to customize the entire design system
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Primary Font (Headings)</label>
+              <Select value={primaryFont} onValueChange={updatePrimaryFont}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableFonts.map((font) => (
+                    <SelectItem key={font.value} value={font.value}>
+                      <span style={{ fontFamily: font.value }}>{font.name}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">Used for headings and emphasis</p>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Secondary Font (Body Text)</label>
+              <Select value={secondaryFont} onValueChange={updateSecondaryFont}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableFonts.map((font) => (
+                    <SelectItem key={font.value} value={font.value}>
+                      <span style={{ fontFamily: font.value }}>{font.name}</span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">Used for body text and interface elements</p>
+            </div>
+          </div>
+          
+          <div className="flex justify-between items-center pt-4 border-t">
+            <div className="text-sm text-muted-foreground">
+              Current: <span className="font-medium">{primaryFont}</span> + <span className="font-medium">{secondaryFont}</span>
+            </div>
+            <Button variant="outline" onClick={resetToDefaults}>
+              Reset to Defaults
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Typography Scale */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Type Scale</h2>
+        <h2 className="text-xl font-semibold">Live Type Scale Preview</h2>
         <div className="space-y-4">
           {typographyScale.map((type) => (
             <Card key={type.name} className="group hover:shadow-md transition-shadow">
@@ -85,10 +115,15 @@ export default function TypographyScaleComponent() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
                   {/* Example */}
                   <div className="lg:col-span-2">
-                    <div className={`${type.class} ${type.weight} ${type.font}`}>
+                    <div 
+                      className={`${type.class} ${type.weight}`}
+                      style={getFontStyle(type.font)}
+                    >
                       {type.example}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1 font-inter">{type.usage}</p>
+                    <p className="text-sm text-muted-foreground mt-1" style={getFontStyle("font-secondary")}>
+                      {type.usage}
+                    </p>
                   </div>
                   
                   {/* Specifications */}
@@ -106,8 +141,10 @@ export default function TypographyScaleComponent() {
                       <code className="bg-muted px-2 py-1 rounded">{type.weight}</code>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Line Height:</span>
-                      <code className="bg-muted px-2 py-1 rounded">{type.lineHeight}</code>
+                      <span className="text-muted-foreground">Font:</span>
+                      <code className="bg-muted px-2 py-1 rounded">
+                        {type.font === "font-primary" ? primaryFont : secondaryFont}
+                      </code>
                     </div>
                   </div>
                 </div>

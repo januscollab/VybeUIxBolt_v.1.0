@@ -1,155 +1,274 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Settings, Trash2, Edit, UserPlus, FileText, Image, Calendar } from "lucide-react";
-import { useState } from "react";
+import { Upload, Brain, Loader2, CheckCircle, AlertTriangle, Info } from "lucide-react";
 
 export default function ModalShowcase() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [aiProgress, setAiProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const simulateUpload = () => {
+    setIsUploading(true);
+    setUploadProgress(0);
+    const interval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsUploading(false);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 200);
+  };
+
+  const simulateAI = () => {
+    setIsAnalyzing(true);
+    setAiProgress(0);
+    const interval = setInterval(() => {
+      setAiProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsAnalyzing(false);
+          return 100;
+        }
+        return prev + 5;
+      });
+    }, 300);
+  };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-3xl font-bold">Modal & Dialog Components</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">Modal & Dialog Variations</h1>
           <Badge variant="default">Stable</Badge>
         </div>
         <p className="text-lg text-muted-foreground">
-          Modal dialogs, sheets, drawers, and overlays for focused interactions and content display.
+          Various modal patterns for different use cases including file uploads, AI processing, and user confirmations.
         </p>
       </div>
 
-      {/* Basic Dialogs */}
+      {/* File Upload Modal */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Dialogs</CardTitle>
-          <CardDescription>Standard modal dialogs for forms and content</CardDescription>
+          <CardTitle>File Upload Modal</CardTitle>
+          <CardDescription>Modal with progress tracking for file uploads</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex gap-4 flex-wrap">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create New
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Create New Project</DialogTitle>
-                  <DialogDescription>
-                    Add a new project to your workspace. Fill in the details below.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Name
-                    </Label>
-                    <Input id="name" placeholder="Project name" className="col-span-3" />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="description" className="text-right">
-                      Description
-                    </Label>
-                    <Textarea id="description" placeholder="Project description" className="col-span-3" />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="type" className="text-right">
-                      Type
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="web">Web Application</SelectItem>
-                        <SelectItem value="mobile">Mobile App</SelectItem>
-                        <SelectItem value="desktop">Desktop App</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+        <CardContent>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <Upload className="h-4 w-4 mr-2" />
+                Upload Files
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <Upload className="h-5 w-5" />
+                  Upload Files
+                </DialogTitle>
+                <DialogDescription>
+                  Select files to upload to your project. Supported formats: JPG, PNG, PDF, DOC
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
+                  <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                  <p className="text-sm text-muted-foreground">Drag files here or click to browse</p>
                 </div>
-                <DialogFooter>
-                  <Button type="submit">Create Project</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline">
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit Profile
+                {isUploading && (
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Uploading...</span>
+                      <span>{uploadProgress}%</span>
+                    </div>
+                    <Progress value={uploadProgress} />
+                  </div>
+                )}
+              </div>
+              <DialogFooter className="flex gap-2">
+                <Button variant="outline">Cancel</Button>
+                <Button onClick={simulateUpload} disabled={isUploading}>
+                  {isUploading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
+                  {isUploading ? 'Uploading...' : 'Choose Files'}
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                  <DialogTitle>Edit Profile</DialogTitle>
-                  <DialogDescription>
-                    Make changes to your profile here. Click save when you are done.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="username">Username</Label>
-                    <Input id="username" defaultValue="johndoe" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" defaultValue="john@example.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <Textarea id="bio" placeholder="Tell us about yourself" />
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button variant="outline">Cancel</Button>
-                  <Button type="submit">Save Changes</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </CardContent>
       </Card>
 
-      {/* Alert Dialogs */}
+      {/* AI Analysis Modal */}
       <Card>
         <CardHeader>
-          <CardTitle>Alert Dialogs</CardTitle>
-          <CardDescription>Confirmation dialogs for destructive or important actions</CardDescription>
+          <CardTitle>AI Analysis Modal</CardTitle>
+          <CardDescription>Modal for time-consuming AI operations with progress</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex gap-4 flex-wrap">
+        <CardContent>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <Brain className="h-4 w-4 mr-2" />
+                Analyze with AI
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-purple-600" />
+                  AI Analysis in Progress
+                </DialogTitle>
+                <DialogDescription>
+                  Our AI is analyzing your content. This may take a few minutes.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-6">
+                <div className="flex items-center justify-center">
+                  {isAnalyzing ? (
+                    <Loader2 className="h-12 w-12 animate-spin text-purple-600" />
+                  ) : aiProgress === 100 ? (
+                    <CheckCircle className="h-12 w-12 text-success" />
+                  ) : (
+                    <Brain className="h-12 w-12 text-purple-600" />
+                  )}
+                </div>
+                {isAnalyzing && (
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Processing...</span>
+                      <span>{aiProgress}%</span>
+                    </div>
+                    <Progress value={aiProgress} className="[&>div]:bg-purple-600" />
+                    <p className="text-xs text-center text-muted-foreground">
+                      Analyzing patterns and generating insights...
+                    </p>
+                  </div>
+                )}
+                {aiProgress === 100 && !isAnalyzing && (
+                  <p className="text-center text-success text-sm">Analysis complete!</p>
+                )}
+              </div>
+              <DialogFooter>
+                <Button variant="outline">Cancel</Button>
+                <Button onClick={simulateAI} disabled={isAnalyzing}>
+                  {isAnalyzing ? 'Analyzing...' : aiProgress === 100 ? 'View Results' : 'Start Analysis'}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+
+      {/* Quick Loading Modal */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Loading Modal</CardTitle>
+          <CardDescription>Simple loading modal for short operations</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="secondary">
+                <Loader2 className="h-4 w-4 mr-2" />
+                Quick Action
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-xs">
+              <div className="flex flex-col items-center justify-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin mb-4" />
+                <p className="text-sm text-muted-foreground text-center">
+                  Processing your request...
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+
+      {/* Form Modal */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Form Modal</CardTitle>
+          <CardDescription>Modal containing a form with validation</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Create New Project</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-lg">
+              <DialogHeader>
+                <DialogTitle>Create New Project</DialogTitle>
+                <DialogDescription>
+                  Fill in the details below to create a new project.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Project Name</Label>
+                  <Input id="name" placeholder="Enter project name" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea id="description" placeholder="Brief description of your project" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="template">Template</Label>
+                  <select className="w-full p-2 border rounded-md" id="template">
+                    <option>Blank Project</option>
+                    <option>React Starter</option>
+                    <option>Dashboard Template</option>
+                  </select>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline">Cancel</Button>
+                <Button>Create Project</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </CardContent>
+      </Card>
+
+      {/* Confirmation Modals */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Confirmation Modals</CardTitle>
+          <CardDescription>Alert dialogs for destructive or important actions</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-2 flex-wrap">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Account
-                </Button>
+                <Button variant="destructive">Delete Item</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle className="flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-destructive" />
+                    Delete Item
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    This action cannot be undone. This will permanently delete the item and remove it from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                    Delete Account
+                    Delete
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -157,22 +276,21 @@ export default function ModalShowcase() {
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline">
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Invite User
-                </Button>
+                <Button variant="outline">Save Changes</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Invite New User</AlertDialogTitle>
+                  <AlertDialogTitle className="flex items-center gap-2">
+                    <Info className="h-5 w-5 text-info" />
+                    Save Changes
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to invite this user to your workspace? 
-                    They will have access to all shared projects.
+                    You have unsaved changes. Would you like to save them before continuing?
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Send Invitation</AlertDialogAction>
+                  <AlertDialogCancel>Discard</AlertDialogCancel>
+                  <AlertDialogAction>Save Changes</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -180,250 +298,34 @@ export default function ModalShowcase() {
         </CardContent>
       </Card>
 
-      {/* Sheets (Side Panels) */}
+      {/* Usage Guidelines */}
       <Card>
         <CardHeader>
-          <CardTitle>Sheets (Side Panels)</CardTitle>
-          <CardDescription>Slide-out panels for secondary content and navigation</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex gap-4 flex-wrap">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings Panel
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Settings</SheetTitle>
-                  <SheetDescription>
-                    Manage your account settings and preferences.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="theme">Theme</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select theme" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="language">Language</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="es">Spanish</SelectItem>
-                        <SelectItem value="fr">French</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="notifications">Notification Preferences</Label>
-                    <Textarea id="notifications" placeholder="Configure your notification settings..." />
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline">
-                  <FileText className="h-4 w-4 mr-2" />
-                  Documentation
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="w-[600px] sm:w-[540px]">
-                <SheetHeader>
-                  <SheetTitle>Component Documentation</SheetTitle>
-                  <SheetDescription>
-                    Learn how to use this component effectively.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="space-y-4 py-4">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Usage</h3>
-                    <p className="text-sm text-muted-foreground">
-                      This component provides a slide-out panel that can be used for navigation,
-                      settings, or additional content without leaving the current page.
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Properties</h3>
-                    <div className="text-sm space-y-1">
-                      <p><code className="bg-muted px-1 rounded">side</code> - Panel position (left, right, top, bottom)</p>
-                      <p><code className="bg-muted px-1 rounded">size</code> - Panel width/height</p>
-                      <p><code className="bg-muted px-1 rounded">overlay</code> - Show background overlay</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">Best Practices</h3>
-                    <ul className="text-sm text-muted-foreground space-y-1 list-disc pl-4">
-                      <li>Use for secondary actions that don&apos;t require full page navigation</li>
-                      <li>Keep content focused and organized</li>
-                      <li>Provide clear close mechanisms</li>
-                      <li>Consider mobile responsiveness</li>
-                    </ul>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Mobile Drawers */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Mobile Drawers</CardTitle>
-          <CardDescription>Bottom-up panels optimized for mobile interactions</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex gap-4 flex-wrap">
-            <Drawer>
-              <DrawerTrigger asChild>
-                <Button variant="outline">
-                  <Image className="h-4 w-4 mr-2" />
-                  Upload Image
-                </Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <div className="mx-auto w-full max-w-sm">
-                  <DrawerHeader>
-                    <DrawerTitle>Upload Image</DrawerTitle>
-                    <DrawerDescription>
-                      Choose an image to upload to your gallery.
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <div className="p-4 pb-0 space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="image">Select Image</Label>
-                      <Input id="image" type="file" accept="image/*" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="caption">Caption</Label>
-                      <Input id="caption" placeholder="Add a caption..." />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="tags">Tags</Label>
-                      <Input id="tags" placeholder="Add tags separated by commas" />
-                    </div>
-                  </div>
-                  <DrawerFooter>
-                    <Button>Upload Image</Button>
-                    <Button variant="outline">Cancel</Button>
-                  </DrawerFooter>
-                </div>
-              </DrawerContent>
-            </Drawer>
-
-            <Drawer>
-              <DrawerTrigger asChild>
-                <Button variant="outline">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Schedule Meeting
-                </Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <div className="mx-auto w-full max-w-sm">
-                  <DrawerHeader>
-                    <DrawerTitle>Schedule Meeting</DrawerTitle>
-                    <DrawerDescription>
-                      Set up a new meeting with your team.
-                    </DrawerDescription>
-                  </DrawerHeader>
-                  <div className="p-4 pb-0 space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="title">Meeting Title</Label>
-                      <Input id="title" placeholder="Enter meeting title" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="date">Date</Label>
-                      <Input id="date" type="date" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="time">Time</Label>
-                      <Input id="time" type="time" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="attendees">Attendees</Label>
-                      <Input id="attendees" placeholder="Add email addresses" />
-                    </div>
-                  </div>
-                  <DrawerFooter>
-                    <Button>Schedule Meeting</Button>
-                    <Button variant="outline">Cancel</Button>
-                  </DrawerFooter>
-                </div>
-              </DrawerContent>
-            </Drawer>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Code Examples */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Code Examples</CardTitle>
-          <CardDescription>Implementation examples</CardDescription>
+          <CardTitle>Modal Guidelines</CardTitle>
+          <CardDescription>Best practices for modal design and usage</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <h4 className="font-medium">Basic Dialog</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`<Dialog>
-  <DialogTrigger asChild>
-    <Button>Open Dialog</Button>
-  </DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Dialog Title</DialogTitle>
-      <DialogDescription>
-        Dialog description goes here.
-      </DialogDescription>
-    </DialogHeader>
-    <div className="grid gap-4 py-4">
-      {/* Dialog content */}
-    </div>
-    <DialogFooter>
-      <Button type="submit">Save</Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>`}</code>
-            </pre>
-          </div>
-          <div className="space-y-2">
-            <h4 className="font-medium">Alert Dialog</h4>
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{`<AlertDialog>
-  <AlertDialogTrigger asChild>
-    <Button variant="destructive">Delete</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-      <AlertDialogDescription>
-        This action cannot be undone.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Delete</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>`}</code>
-            </pre>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="font-medium text-success">Best Practices</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Use modals sparingly for focused tasks</li>
+                <li>• Provide clear progress indicators</li>
+                <li>• Always include a way to cancel/close</li>
+                <li>• Keep content focused and concise</li>
+                <li>• Use appropriate modal sizes</li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-medium text-warning">Accessibility</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Trap focus within the modal</li>
+                <li>• Support ESC key to close</li>
+                <li>• Use proper ARIA labels</li>
+                <li>• Provide clear action buttons</li>
+                <li>• Test with screen readers</li>
+              </ul>
+            </div>
           </div>
         </CardContent>
       </Card>

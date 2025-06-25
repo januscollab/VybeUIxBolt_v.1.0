@@ -369,6 +369,39 @@ export const components: Component[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
+  {
+    id: 'context-menu',
+    name: 'Context Menu',
+    slug: 'context-menu',
+    description: 'Right-click activated contextual menu',
+    category_id: '2',
+    status: 'stable',
+    sort_order: 19,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'empty-state',
+    name: 'Empty State',
+    slug: 'empty-state',
+    description: 'Helpful placeholders when there\'s no content',
+    category_id: '2',
+    status: 'stable',
+    sort_order: 20,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'modal-dialog',
+    name: 'Modal & Dialog',
+    slug: 'modal-dialog',
+    description: 'Modal dialogs with various interaction patterns',
+    category_id: '2',
+    status: 'stable',
+    sort_order: 21,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
 
   // Navigation
   {
@@ -472,6 +505,17 @@ export const components: Component[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
+  {
+    id: 'timeline',
+    name: 'Timeline',
+    slug: 'timeline',
+    description: 'Chronological display of events and milestones',
+    category_id: '4',
+    status: 'stable',
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
 
   // Forms
   {
@@ -526,6 +570,39 @@ export const components: Component[] = [
     category_id: '5',
     status: 'stable',
     sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'file-upload',
+    name: 'File Upload',
+    slug: 'file-upload',
+    description: 'Drag and drop file upload component',
+    category_id: '5',
+    status: 'stable',
+    sort_order: 6,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'date-picker',
+    name: 'Date Picker',
+    slug: 'date-picker',
+    description: 'Calendar-based date selection component',
+    category_id: '5',
+    status: 'stable',
+    sort_order: 7,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'multi-select',
+    name: 'Multi Select',
+    slug: 'multi-select',
+    description: 'Multiple option selection component',
+    category_id: '5',
+    status: 'stable',
+    sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
