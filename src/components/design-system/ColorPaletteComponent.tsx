@@ -70,19 +70,13 @@ export default function ColorPaletteComponent() {
 
   const colorGroups = [
     {
-      name: "Brand Colors",
-      colors: [
-        { name: "Orange", value: "hsl(16, 100%, 50%)", hex: colorPalette.orange || "#FF4A00", css: "bg-orange", description: "VybeUI signature orange accent color" },
-        { name: "Earth", value: "hsl(225, 25%, 15%)", hex: "#2A3441", css: "bg-earth", description: "Deep earth tone for contrast" },
-        { name: "Cream", value: "hsl(45, 25%, 95%)", hex: "#F8F6F3", css: "bg-cream", description: "Warm neutral background" },
-        { name: "Almost White", value: "hsl(210, 20%, 98%)", hex: "#FBFCFC", css: "bg-almost-white", description: "Subtle off-white tone" },
-      ]
-    },
-    {
       name: "Primary Colors",
       colors: [
-        { name: "Primary", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", description: "Main brand color" },
+        { name: "Primary", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", description: "Main brand color - VybeUI signature orange" },
         { name: "Primary Foreground", value: "hsl(0, 0%, 100%)", hex: "#FFFFFF", css: "bg-primary-foreground", description: "Text on primary background" },
+        { name: "Earth", value: "hsl(225, 25%, 15%)", hex: "#2A3441", css: "bg-earth", description: "Deep earth tone for contrast and depth" },
+        { name: "Cream", value: "hsl(45, 25%, 95%)", hex: "#F8F6F3", css: "bg-cream", description: "Warm neutral background tone" },
+        { name: "Almost White", value: "hsl(210, 20%, 98%)", hex: "#FBFCFC", css: "bg-almost-white", description: "Subtle off-white tone for clean backgrounds" },
       ]
     },
     {
@@ -93,22 +87,35 @@ export default function ColorPaletteComponent() {
       ]
     },
     {
+      name: "Text Colors",
+      colors: [
+        { name: "Foreground", value: "hsl(225, 15%, 20%)", hex: colorPalette.text || "#2B3544", css: "text-foreground", description: "Primary text color" },
+        { name: "Muted Foreground", value: "hsl(225, 8%, 60%)", hex: "#8B9299", css: "text-muted-foreground", description: "Subtle text for secondary information" },
+        { name: "Primary Text", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "text-primary", description: "Primary brand text" },
+        { name: "Secondary Text", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "text-secondary", description: "Secondary text color" },
+        { name: "Accent Text", value: "hsl(16, 100%, 50%)", hex: colorPalette.primary || "#FF4A00", css: "text-accent", description: "Accent text for highlights" },
+      ]
+    },
+    {
       name: "Semantic Colors",
       colors: [
-        { name: "Success", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "bg-success", description: "Success states" },
-        { name: "Warning", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", description: "Warning states" },
-        { name: "Destructive", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "bg-destructive", description: "Error states" },
-        { name: "Info", value: "hsl(200, 95%, 40%)", hex: "#0EA5E9", css: "bg-info", description: "Information states" },
+        { name: "Success", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "bg-success", description: "Success states and positive actions" },
+        { name: "Success Text", value: "hsl(142, 71%, 45%)", hex: colorPalette.success || "#22C55E", css: "text-success", description: "Success text color" },
+        { name: "Warning", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", description: "Warning states and caution" },
+        { name: "Warning Text", value: "hsl(38, 92%, 50%)", hex: colorPalette.warning || "#F59E0B", css: "text-warning", description: "Warning text color" },
+        { name: "Destructive", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "bg-destructive", description: "Error states and destructive actions" },
+        { name: "Destructive Text", value: "hsl(0, 70%, 50%)", hex: colorPalette.error || "#EF4444", css: "text-destructive", description: "Error text color" },
+        { name: "Info", value: "hsl(200, 95%, 40%)", hex: "#0EA5E9", css: "bg-info", description: "Information states and notifications" },
       ]
     },
     {
       name: "Neutral Colors",
       colors: [
-        { name: "Background", value: "hsl(0, 0%, 100%)", hex: colorPalette.background || "#FFFFFF", css: "bg-background", description: "Page background" },
-        { name: "Foreground", value: "hsl(225, 15%, 20%)", hex: colorPalette.text || "#2B3544", css: "bg-foreground", description: "Primary text" },
-        { name: "Muted", value: "hsl(210, 20%, 96%)", hex: "#F1F3F4", css: "bg-muted", description: "Subtle background" },
-        { name: "Muted Foreground", value: "hsl(225, 8%, 60%)", hex: "#8B9299", css: "bg-muted-foreground", description: "Subtle text" },
-        { name: "Border", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "bg-border", description: "Default borders" },
+        { name: "Background", value: "hsl(0, 0%, 100%)", hex: colorPalette.background || "#FFFFFF", css: "bg-background", description: "Page and card backgrounds" },
+        { name: "Muted", value: "hsl(210, 20%, 96%)", hex: "#F1F3F4", css: "bg-muted", description: "Subtle backgrounds and inactive states" },
+        { name: "Border", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "bg-border", description: "Default borders and dividers" },
+        { name: "Input", value: "hsl(214, 20%, 88%)", hex: "#D1D9E0", css: "border-input", description: "Input field borders" },
+        { name: "Ring", value: "hsl(225, 15%, 20%)", hex: "#2B3544", css: "ring-ring", description: "Focus rings and outlines" },
       ]
     }
   ];
@@ -142,7 +149,7 @@ export default function ColorPaletteComponent() {
           </div>
         </div>
         <p className="text-lg text-muted-foreground">
-          Complete color system with brand, semantic, and neutral colors designed for accessibility and consistency.
+          Complete color system with organized primary, text, semantic, and neutral colors designed for accessibility and consistency.
           {isLiveEditEnabled && " Click any color to edit it and see live changes across the entire design system."}
         </p>
       </div>
@@ -321,20 +328,22 @@ export default function ColorPaletteComponent() {
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li>• Use semantic colors for their intended purpose</li>
                 <li>• Maintain sufficient contrast ratios (4.5:1 minimum)</li>
-                <li>• Use CSS custom properties for theming</li>
+                <li>• Use text-* classes for text colors</li>
+                <li>• Use bg-* classes for background colors</li>
                 <li>• Test colors in both light and dark modes</li>
-                <li>• Copy hex values for consistent implementation</li>
+                <li>• Copy CSS classes for consistent implementation</li>
                 {isLiveEditEnabled && <li>• Use Live Edit to experiment safely with revert option</li>}
               </ul>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium text-destructive">Don't</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use hardcoded color values</li>
+                <li>• Use hardcoded color values or hex codes</li>
                 <li>• Mix semantic meanings (e.g., red for success)</li>
                 <li>• Rely solely on color to convey information</li>
                 <li>• Use too many colors in a single interface</li>
-                <li>• Modify the VybeUI orange without approval</li>
+                <li>• Override the VybeUI primary orange without approval</li>
+                <li>• Use non-design system color classes</li>
               </ul>
             </div>
           </div>

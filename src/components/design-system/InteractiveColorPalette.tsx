@@ -66,33 +66,43 @@ export default function InteractiveColorPalette() {
 
   const colorGroups = [
     {
-      name: "Brand Colors",
+      name: "Primary Colors",
       colors: [
-        { name: "Orange", value: colorPalette.orange || "#FF4A00", hex: colorPalette.orange || "#FF4A00", css: "bg-orange", description: "VybeUI signature orange accent color" },
-        { name: "Primary", value: colorPalette.primary || "#FF4A00", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", description: "Main brand color" },
+        { name: "Primary", value: colorPalette.primary || "#FF4A00", hex: colorPalette.primary || "#FF4A00", css: "bg-primary", description: "Main brand color - VybeUI signature orange" },
+        { name: "Earth", value: "#2A3441", hex: "#2A3441", css: "bg-earth", description: "Deep earth tone for contrast and depth" },
+        { name: "Cream", value: "#F8F6F3", hex: "#F8F6F3", css: "bg-cream", description: "Warm neutral background tone" },
+        { name: "Almost White", value: "#FBFCFC", hex: "#FBFCFC", css: "bg-almost-white", description: "Subtle off-white tone for clean backgrounds" },
+      ]
+    },
+    {
+      name: "Text Colors",
+      colors: [
+        { name: "Text", value: colorPalette.text || "#2B3544", hex: colorPalette.text || "#2B3544", css: "text-foreground", description: "Primary text color" },
+        { name: "Primary Text", value: colorPalette.primary || "#FF4A00", hex: colorPalette.primary || "#FF4A00", css: "text-primary", description: "Primary brand text" },
+        { name: "Secondary Text", value: "#2B3544", hex: "#2B3544", css: "text-secondary", description: "Secondary text color" },
+        { name: "Muted Text", value: "#8B9299", hex: "#8B9299", css: "text-muted-foreground", description: "Subtle text for secondary information" },
       ]
     },
     {
       name: "Semantic Colors",
       colors: [
-        { name: "Success", value: colorPalette.success || "#22C55E", hex: colorPalette.success || "#22C55E", css: "bg-success", description: "Success states" },
-        { name: "Warning", value: colorPalette.warning || "#F59E0B", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", description: "Warning states" },
-        { name: "Error", value: colorPalette.error || "#EF4444", hex: colorPalette.error || "#EF4444", css: "bg-destructive", description: "Error states" },
+        { name: "Success", value: colorPalette.success || "#22C55E", hex: colorPalette.success || "#22C55E", css: "bg-success", description: "Success states and positive actions" },
+        { name: "Warning", value: colorPalette.warning || "#F59E0B", hex: colorPalette.warning || "#F59E0B", css: "bg-warning", description: "Warning states and caution" },
+        { name: "Error", value: colorPalette.error || "#EF4444", hex: colorPalette.error || "#EF4444", css: "bg-destructive", description: "Error states and destructive actions" },
       ]
     },
     {
       name: "Neutral Colors",
       colors: [
-        { name: "Background", value: colorPalette.background || "#FFFFFF", hex: colorPalette.background || "#FFFFFF", css: "bg-background", description: "Page background" },
-        { name: "Text", value: colorPalette.text || "#2B3544", hex: colorPalette.text || "#2B3544", css: "bg-foreground", description: "Primary text" },
-        { name: "Secondary", value: colorPalette.secondary || "#6b7280", hex: colorPalette.secondary || "#6b7280", css: "bg-secondary", description: "Secondary elements" },
+        { name: "Background", value: colorPalette.background || "#FFFFFF", hex: colorPalette.background || "#FFFFFF", css: "bg-background", description: "Page and card backgrounds" },
+        { name: "Secondary", value: colorPalette.secondary || "#6b7280", hex: colorPalette.secondary || "#6b7280", css: "bg-secondary", description: "Secondary elements and backgrounds" },
       ]
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header with Reset Button */}
+    <div className="space-y-8">
+      {/* Header */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -273,7 +283,7 @@ export default function InteractiveColorPalette() {
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li>• Maintain WCAG AA contrast ratios (4.5:1)</li>
                 <li>• Test colors in both light and dark modes</li>
-                <li>• Keep brand consistency with orange primary</li>
+                <li>• Keep brand consistency with primary orange</li>
                 <li>• Use semantic meanings appropriately</li>
                 <li>• Consider colorblind accessibility</li>
                 <li>• Preview on different screen types</li>
