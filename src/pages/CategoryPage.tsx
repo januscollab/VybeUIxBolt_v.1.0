@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useLocation } from "react-router-dom";
+import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 import { useEffect, useRef } from "react";
 
 // Import all showcase components
@@ -158,6 +159,8 @@ export default function CategoryPage() {
 
   return (
     <div className="space-y-6">
+      <BreadcrumbNavigation />
+      
       <div className="space-y-2"> 
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (
