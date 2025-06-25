@@ -4,6 +4,7 @@ import { useComponents, useCategories, useComponent } from "@/hooks/useStaticDes
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Link, useLocation } from "react-router-dom";
 import { ExperimentalComponentCard } from "@/components/ExperimentalComponentCard";
 import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
