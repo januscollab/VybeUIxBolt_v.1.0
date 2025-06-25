@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -52,14 +51,14 @@ export default function DocumentationPage() {
     }
   };
 
-  const installationCode = `npm install @januscollab/janus-design-system
+  const installationCode = `npm install @vybeui/vybeui-design-system
 # or
-yarn add @januscollab/janus-design-system
+yarn add @vybeui/vybeui-design-system
 # or
-pnpm add @januscollab/janus-design-system`;
+pnpm add @vybeui/vybeui-design-system`;
 
-  const reactUsage = `import { Button, Card, Input } from '@januscollab/janus-design-system';
-import '@januscollab/janus-design-system/styles.css';
+  const reactUsage = `import { Button, Card, Input } from '@vybeui/vybeui-design-system';
+import '@vybeui/vybeui-design-system/styles.css';
 
 export function MyComponent() {
   return (
@@ -74,23 +73,23 @@ export function MyComponent() {
 
   const vueUsage = `<template>
   <div>
-    <janus-card class="p-6">
-      <janus-input placeholder="Enter your email..." />
-      <janus-button variant="default" class="mt-4">
+    <vybe-card class="p-6">
+      <vybe-input placeholder="Enter your email..." />
+      <vybe-button variant="default" class="mt-4">
         Subscribe
-      </janus-button>
-    </janus-card>
+      </vybe-button>
+    </vybe-card>
   </div>
 </template>
 
 <script>
-import { JanusCard, JanusInput, JanusButton } from '@januscollab/janus-design-system/vue';
+import { VybeCard, VybeInput, VybeButton } from '@vybeui/vybeui-design-system/vue';
 
 export default {
   components: {
-    JanusCard,
-    JanusInput,
-    JanusButton
+    VybeCard,
+    VybeInput,
+    VybeButton
   }
 }
 </script>`;
@@ -98,17 +97,17 @@ export default {
   const htmlUsage = `<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/@januscollab/janus-design-system/dist/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/@vybeui/vybeui-design-system/dist/styles.css">
 </head>
 <body>
-  <div class="janus-card p-6">
-    <input class="janus-input" placeholder="Enter your email..." />
-    <button class="janus-button janus-button--default mt-4">
+  <div class="vybe-card p-6">
+    <input class="vybe-input" placeholder="Enter your email..." />
+    <button class="vybe-button vybe-button--default mt-4">
       Subscribe
     </button>
   </div>
 
-  <script src="https://unpkg.com/@januscollab/janus-design-system/dist/janus.min.js"></script>
+  <script src="https://unpkg.com/@vybeui/vybeui-design-system/dist/vybe.min.js"></script>
 </body>
 </html>`;
 
@@ -116,7 +115,7 @@ export default {
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@januscollab/janus-design-system/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@vybeui/vybeui-design-system/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -179,16 +178,16 @@ module.exports = {
   const nextjsSetup = `// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@januscollab/janus-design-system'],
+  transpilePackages: ['@vybeui/vybeui-design-system'],
   experimental: {
-    optimizePackageImports: ['@januscollab/janus-design-system']
+    optimizePackageImports: ['@vybeui/vybeui-design-system']
   }
 }
 
 module.exports = nextConfig
 
 // pages/_app.js or app/layout.js
-import '@januscollab/janus-design-system/styles.css'
+import '@vybeui/vybeui-design-system/styles.css'
 
 export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
@@ -201,12 +200,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['@januscollab/janus-design-system'],
+    include: ['@vybeui/vybeui-design-system'],
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: \`@import "@januscollab/janus-design-system/tokens";\`
+        additionalData: \`@import "@vybeui/vybeui-design-system/tokens";\`
       }
     }
   }
@@ -222,7 +221,7 @@ import {
   Input,
   Badge,
   Alert
-} from '@januscollab/janus-design-system';
+} from '@vybeui/vybeui-design-system';
 
 export function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -303,7 +302,7 @@ export function UserProfile() {
         </Button>
         <Button 
           variant="outline"
-          onClick={() => window.open('https://github.com/januscollab/janus-design-system', '_blank')}
+          onClick={() => window.open('https://github.com/vybeui/vybeui-design-system', '_blank')}
         >
           <ExternalLink className="h-4 w-4 mr-2" />
           View on GitHub
@@ -485,32 +484,32 @@ export function UserProfile() {
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Foundation</h4>
               <p className="text-sm text-muted-foreground mb-3">Design tokens, colors, typography</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Button }`} from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Button }`} from 'vybeui'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Core UI</h4>
               <p className="text-sm text-muted-foreground mb-3">Essential interface components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Card }`} from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Card }`} from 'vybeui'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Forms & Input</h4>
               <p className="text-sm text-muted-foreground mb-3">Form controls and inputs</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Input }`} from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Input }`} from 'vybeui'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Navigation</h4>
               <p className="text-sm text-muted-foreground mb-3">Navigation and menu components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Breadcrumb }`} from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Breadcrumb }`} from 'vybeui'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Layout & Structure</h4>
               <p className="text-sm text-muted-foreground mb-3">Layout and structural elements</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Separator }`} from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Separator }`} from 'vybeui'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Experimental</h4>
               <p className="text-sm text-muted-foreground mb-3">Cutting-edge experimental components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Badge }`} from 'janus/experimental'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Badge }`} from 'vybeui/experimental'</code>
             </div>
           </div>
         </CardContent>

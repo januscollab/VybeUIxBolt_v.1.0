@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,11 +65,11 @@ export default function Index() {
           <Button 
             variant="outline" 
             size="lg"
-            onClick={() => window.open('https://github.com/januscollab/janus-design-system', '_blank')}
+            onClick={() => window.open('https://github.com/vybeui/vybeui-design-system', '_blank')}
           >
             <Github className="mr-2 h-5 w-5" />
-            <ExternalLink className="ml-1 h-3 w-3" />
             GitHub
+            <ExternalLink className="ml-1 h-3 w-3" />
           </Button>
         </div>
       </div>

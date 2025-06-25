@@ -39,7 +39,6 @@ export function MainLayout({ children }: MainLayoutProps) {
             </div>
             
             <div className="flex items-center gap-2">
-              {/* Width Toggle - Fixed to show pressed state correctly */}
               <Toggle
                 pressed={!isDesignSystemView}
                 onPressedChange={toggleViewMode}
