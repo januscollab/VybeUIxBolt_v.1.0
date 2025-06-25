@@ -66,31 +66,24 @@ export function AppSidebar() {
     }
   }, [location.pathname, categories, expandedCategories]);
 
-  // Handle component navigation and category expansion
+  // Handle hash changes for component navigation
   useEffect(() => {
-    // Direct component navigation
-    const componentPathMatch = location.pathname.match(/^\/component\/(.+)$/);
-    const componentSlug = componentPathMatch ? componentPathMatch[1] : null;
-    
-    // Hash navigation within category pages
-    const hashComponentSlug = location.hash ? location.hash.replace('#', '') : null;
-    
-    // Find the active component
-    const activeSlug = componentSlug || hashComponentSlug;
-    const component = activeSlug ? allComponents?.find(comp => comp.slug === activeSlug) : null;
-    
-    if (component) {
-      setActiveComponentId(component.id);
-      
-      // Expand the category containing this component
-      const category = categories?.find(cat => cat.id === component.category_id);
-      if (category && !expandedCategories.includes(category.id)) {
-        setExpandedCategories(prev => [...prev, category.id]);
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const component = allComponents?.find(comp => comp.slug === hash);
+      if (component) {
+        setActiveComponentId(component.id);
+        
+        // Expand the category containing this component
+        const category = categories?.find(cat => cat.id === component.category_id);
+        if (category && !expandedCategories.includes(category.id)) {
+          setExpandedCategories(prev => [...prev, category.id]);
+        }
       }
     } else {
       setActiveComponentId(null);
     }
-  }, [location.pathname, location.hash, allComponents, categories]);
+  }, [location.hash, allComponents, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];

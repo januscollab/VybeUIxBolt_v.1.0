@@ -4,12 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Prevent horizontal overflow */
-html, body, #root {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -263,14 +263,13 @@ const SidebarTrigger = React.forwardRef<
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
 
-  // Enhanced click handler for better state management
   return (
     <Button
       ref={ref}
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      className={cn("h-8 w-8", className)}
+      className={cn("h-7 w-7", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
@@ -290,17 +289,13 @@ const SidebarRail = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
 
-  // Improved rail interaction for better expand/collapse behavior
   return (
     <button
       ref={ref}
       data-sidebar="rail"
       aria-label="Toggle Sidebar"
       tabIndex={-1}
-      onClick={(e) => {
-        e.stopPropagation();
-        toggleSidebar();
-      }}
+      onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(
         "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",

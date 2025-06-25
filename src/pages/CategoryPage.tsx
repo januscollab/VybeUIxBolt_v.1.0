@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 import { useEffect, useRef } from "react";
 
@@ -43,10 +43,6 @@ import AspectRatioShowcase from "@/components/showcase/AspectRatioShowcase";
 import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import CalloutShowcase from "@/components/showcase/CalloutShowcase";
 import BannerShowcase from "@/components/showcase/BannerShowcase";
-import NavigationMenuShowcase from '@/components/showcase/NavigationMenuShowcase';
-import AccordionShowcase from '@/components/showcase/AccordionShowcase';
-import ProgressBarShowcase from '@/components/showcase/ProgressBarShowcase';
-import LoadingSpinnerShowcase from '@/components/showcase/LoadingSpinnerShowcase';
 
 // Import foundation components
 import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
@@ -91,10 +87,6 @@ const componentMap: Record<string, React.ComponentType> = {
   'code-block': CodeBlockShowcase,
   'callout': CalloutShowcase,
   'banner': BannerShowcase,
-  'navigation-menu': NavigationMenuShowcase,
-  'accordion': AccordionShowcase,
-  'progress-bar': ProgressBarShowcase,
-  'loading-spinner': LoadingSpinnerShowcase,
   
   // Foundation components
   'color-palette': ColorPaletteComponent,
