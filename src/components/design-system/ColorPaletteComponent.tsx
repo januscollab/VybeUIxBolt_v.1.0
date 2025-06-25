@@ -13,6 +13,7 @@ export default function ColorPaletteComponent() {
   const [isLiveEditEnabled, setIsLiveEditEnabled] = useState(false);
   const [selectedColor, setSelectedColor] = useState<{name: string, value: string, key: string} | null>(null);
   const [colorValue, setColorValue] = useState("");
+  const [activeBackground, setActiveBackground] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const copyToClipboard = (text: string) => {
@@ -111,11 +112,12 @@ export default function ColorPaletteComponent() {
     { name: "Cool Blue", value: "#F8FAFC", description: "Cool blue-tinted background for focus" }
   ];
 
-  const applyBackground = (bgColor: string) => {
+  const applyBackground = (bgColor: string, bgName: string) => {
     document.body.style.backgroundColor = bgColor;
+    setActiveBackground(bgColor);
     toast({
       title: "Background applied",
-      description: `Background color has been changed to ${bgColor}`,
+      description: `Background color has been changed to ${bgName}`,
     });
   };
 
@@ -205,9 +207,9 @@ export default function ColorPaletteComponent() {
               <div 
                 key={bg.name}
                 className="group cursor-pointer border rounded-lg p-4 hover:shadow-md transition-all"
-                onClick={() => applyBackground(bg.value)}
+                onClick={() => applyBackground(bg.value, bg.name)}
               >
-                <div className="space-y-3">
+                <div className={`space-y-3 ${activeBackground === bg.value ? 'ring-2 ring-primary rounded-lg' : ''}`}>
                   <div 
                     className="h-16 w-full rounded border shadow-inner border-border"
                     style={{ backgroundColor: bg.value }}
