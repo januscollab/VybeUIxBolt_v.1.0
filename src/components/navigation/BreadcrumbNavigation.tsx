@@ -95,33 +95,31 @@ export function BreadcrumbNavigation() {
   }, [location.pathname, location.hash, categories, allComponents]);
 
   if (breadcrumbItems.length <= 1) return null;
-
+  
   return (
-    <div className="mb-6">
-      <Breadcrumb>
-        <BreadcrumbList>
-          {breadcrumbItems.map((item, index) => (
-            <React.Fragment key={item.href}>
-              <BreadcrumbItem>
-                {item.current ? (
-                  <BreadcrumbPage className="flex items-center gap-2">
+    <Breadcrumb>
+      <BreadcrumbList>
+        {breadcrumbItems.map((item, index) => (
+          <React.Fragment key={item.href}>
+            <BreadcrumbItem>
+              {item.current ? (
+                <BreadcrumbPage className="flex items-center gap-2">
+                  {item.icon && <item.icon className="h-4 w-4" />}
+                  {item.label}
+                </BreadcrumbPage>
+              ) : (
+                <BreadcrumbLink asChild>
+                  <Link to={item.href} className="flex items-center gap-2 hover:text-primary transition-colors">
                     {item.icon && <item.icon className="h-4 w-4" />}
                     {item.label}
-                  </BreadcrumbPage>
-                ) : (
-                  <BreadcrumbLink asChild>
-                    <Link to={item.href} className="flex items-center gap-2 hover:text-primary transition-colors">
-                      {item.icon && <item.icon className="h-4 w-4" />}
-                      {item.label}
-                    </Link>
-                  </BreadcrumbLink>
-                )}
-              </BreadcrumbItem>
-              {index < breadcrumbItems.length - 1 && <BreadcrumbSeparator />}
-            </React.Fragment>
-          ))}
-        </BreadcrumbList>
-      </Breadcrumb>
-    </div>
+                  </Link>
+                </BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+            {index < breadcrumbItems.length - 1 && <BreadcrumbSeparator />}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 }

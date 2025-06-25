@@ -50,7 +50,7 @@ export function AppSidebar() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]); 
-  const [activeComponentId, setActiveComponentId] = useState<string | null>(null);
+  const [activeComponentSlug, setActiveComponentSlug] = useState<string | null>(null);
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
 
@@ -66,13 +66,16 @@ export function AppSidebar() {
     }
   }, [location.pathname, categories, expandedCategories]);
 
-  // Handle hash changes for component navigation
+  // Enhanced navigation handling for direct component links and hash changes
   useEffect(() => {
-    const hash = location.hash.replace('#', '');
-    if (hash) {
-      const component = allComponents?.find(comp => comp.slug === hash);
+    // Check for direct component navigation
+    const pathMatch = location.pathname.match(/^\/component\/(.+)$/);
+    if (pathMatch) {
+      const componentSlug = pathMatch[1];
+      const component = allComponents?.find(comp => comp.slug === componentSlug);
+      
       if (component) {
-        setActiveComponentId(component.id);
+        setActiveComponentSlug(component.slug);
         
         // Expand the category containing this component
         const category = categories?.find(cat => cat.id === component.category_id);
@@ -81,9 +84,26 @@ export function AppSidebar() {
         }
       }
     } else {
+      // Handle hash navigation within category pages
+      const hash = location.hash.replace('#', '');
+      if (hash) {
+        const component = allComponents?.find(comp => comp.slug === hash);
+        if (component) {
+          setActiveComponentSlug(component.slug);
+          
+          // Expand the category containing this component
+          const category = categories?.find(cat => cat.id === component.category_id);
+          if (category && !expandedCategories.includes(category.id)) {
+            setExpandedCategories(prev => [...prev, category.id]);
+          }
+        }
+      } else {
+        setActiveComponentSlug(null);
+      }
+    } else {
       setActiveComponentId(null);
     }
-  }, [location.hash, allComponents, categories, expandedCategories]);
+  }, [location.pathname, location.hash, allComponents, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -213,7 +233,7 @@ export function AppSidebar() {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                }}
+                                isActive={isComponentActive || activeComponentSlug === component.slug}
                               >
                                 {isExpanded ? (
                                   <ChevronUp className="h-3 w-3" />

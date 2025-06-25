@@ -3,6 +3,7 @@ import React from 'react';
 import { LocalDesignSystemProvider } from '@/hooks/useLocalDesignSystem';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
+import { BreadcrumbNavigation } from '@/components/navigation/BreadcrumbNavigation';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -25,10 +26,13 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <AppSidebar />
             
             <SidebarInset className="flex-1">
-              {/* Header */}
-              <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="flex h-14 items-center px-4 lg:px-6 gap-4">
-                  <SidebarTrigger />
+              {/* Fixed Header */}
+              <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="flex h-14 items-center px-4 lg:px-6 gap-2">
+                  <div className="flex items-center gap-4">
+                    <SidebarTrigger />
+                    <BreadcrumbNavigation />
+                  </div>
 
                   <div className="flex-1" />
 
@@ -58,9 +62,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </header>
 
               {/* Content Area */}
-              <div className="flex-1 overflow-hidden">
-                <div className={`h-full transition-all duration-300 ${
-                  viewMode === 80 ? 'max-w-[80%] mx-auto' : 'w-full'
+              <div className="flex-1 overflow-x-hidden">
+                <div className={`h-full transition-all duration-300 overflow-x-hidden ${
+                  viewMode === 80 ? 'max-w-[80%] mx-auto' : 'max-w-full w-full'
                 }`} id="main-content-container">
                   <div className="h-full overflow-y-auto">
                     <div className="p-6">
