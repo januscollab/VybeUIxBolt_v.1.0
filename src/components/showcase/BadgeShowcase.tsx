@@ -1,388 +1,157 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Star, 
-  CheckCircle, 
-  AlertCircle, 
-  XCircle, 
-  Clock, 
-  Zap, 
-  Shield, 
-  Crown,
-  Copy,
-  Figma,
-  FileCode
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function BadgeShowcase() {
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
-
-  const codeExamples = {
-    basic: `<Badge variant="default">Default</Badge>
-<Badge variant="secondary">Secondary</Badge>
-<Badge variant="destructive">Destructive</Badge>
-<Badge variant="outline">Outline</Badge>`,
-    withIcons: `<Badge variant="default" className="gap-1">
-  <CheckCircle className="h-3 w-3" />
-  Verified
-</Badge>`,
-    status: `<Badge variant="outline" className="border-success text-success">
-  <div className="w-2 h-2 bg-success rounded-full mr-1"></div>
-  Active
-</Badge>`
-  };
-
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold">Badge</h1>
-            <p className="text-lg text-muted-foreground">
-              Compact elements for displaying status, categories, or short pieces of information.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" asChild>
-              <a href="https://www.figma.com/design" target="_blank" rel="noopener noreferrer">
-                <Figma className="h-4 w-4 mr-2" />
-                Figma
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="#storybook" target="_blank" rel="noopener noreferrer">
-                <FileCode className="h-4 w-4 mr-2" />
-                Storybook
-              </a>
-            </Button>
-          </div>
-        </div>
         <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold">Badge</h1>
           <Badge variant="default">Stable</Badge>
-          <Badge variant="outline">Core UI</Badge>
-          <Badge variant="outline">Accessible</Badge>
         </div>
+        <p className="text-lg text-muted-foreground">
+          Display badges and status indicators.
+        </p>
       </div>
 
-      {/* Basic Variants */}
+      {/* Basic Badges */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Variants</CardTitle>
+          <CardTitle>Badge Variants</CardTitle>
           <CardDescription>
-            Standard badge variants for different contexts and visual hierarchy.
+            Different badge styles for various use cases.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap gap-3">
             <Badge variant="default">Default</Badge>
             <Badge variant="secondary">Secondary</Badge>
             <Badge variant="destructive">Destructive</Badge>
+            <Badge variant="success">Success</Badge>
+            <Badge variant="warning">Warning</Badge>
+            <Badge variant="accent">Accent</Badge>
             <Badge variant="outline">Outline</Badge>
           </div>
-
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium">Code Example</h4>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(codeExamples.basic)}
-            >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
-            </Button>
-          </div>
-          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.basic}</code>
-          </pre>
         </CardContent>
       </Card>
 
       {/* Status Badges */}
       <Card>
         <CardHeader>
-          <CardTitle>Status Badges</CardTitle>
+          <CardTitle>Status Indicators</CardTitle>
           <CardDescription>
-            Badges with status indicators and contextual colors for system states.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Success States</p>
-              <div className="space-y-2">
-                <Badge variant="outline" className="border-success text-success w-fit">
-                  <div className="w-2 h-2 bg-success rounded-full mr-1"></div>
-                  Active
-                </Badge>
-                <Badge variant="outline" className="border-success text-success w-fit">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Verified
-                </Badge>
-                <Badge variant="outline" className="border-success text-success w-fit">
-                  <Shield className="h-3 w-3 mr-1" />
-                  Secure
-                </Badge>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Warning States</p>
-              <div className="space-y-2">
-                <Badge variant="outline" className="border-warning text-warning w-fit">
-                  <div className="w-2 h-2 bg-warning rounded-full mr-1"></div>
-                  Pending
-                </Badge>
-                <Badge variant="outline" className="border-warning text-warning w-fit">
-                  <AlertCircle className="h-3 w-3 mr-1" />
-                  Warning
-                </Badge>
-                <Badge variant="outline" className="border-warning text-warning w-fit">
-                  <Clock className="h-3 w-3 mr-1" />
-                  In Review
-                </Badge>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Error States</p>
-              <div className="space-y-2">
-                <Badge variant="outline" className="border-destructive text-destructive w-fit">
-                  <div className="w-2 h-2 bg-destructive rounded-full mr-1"></div>
-                  Offline
-                </Badge>
-                <Badge variant="outline" className="border-destructive text-destructive w-fit">
-                  <XCircle className="h-3 w-3 mr-1" />
-                  Failed
-                </Badge>
-                <Badge variant="destructive" className="w-fit">
-                  Critical
-                </Badge>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Info States</p>
-              <div className="space-y-2">
-                <Badge variant="outline" className="border-primary text-primary w-fit">
-                  <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
-                  Info
-                </Badge>
-                <Badge variant="secondary" className="w-fit">
-                  <Zap className="h-3 w-3 mr-1" />
-                  New
-                </Badge>
-                <Badge variant="outline" className="border-accent text-accent w-fit">
-                  <Crown className="h-3 w-3 mr-1" />
-                  Premium
-                </Badge>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium">Status Badge Code</h4>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(codeExamples.status)}
-            >
-              <Copy className="h-4 w-4 mr-1" />
-              Copy
-            </Button>
-          </div>
-          <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-            <code>{codeExamples.status}</code>
-          </pre>
-        </CardContent>
-      </Card>
-
-      {/* Content Badges */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Content & Categories</CardTitle>
-          <CardDescription>
-            Badges for content categorization, tags, and metadata display.
+            Common status badges for different states.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <div>
-              <p className="text-sm font-medium mb-2">Technology Tags</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">React</Badge>
-                <Badge variant="secondary">TypeScript</Badge>
-                <Badge variant="secondary">Tailwind CSS</Badge>
-                <Badge variant="secondary">Supabase</Badge>
-                <Badge variant="secondary">Next.js</Badge>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium min-w-[100px]">Project Status:</span>
+              <Badge variant="success">Active</Badge>
             </div>
-
-            <div>
-              <p className="text-sm font-medium mb-2">Priority Levels</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="destructive">High Priority</Badge>
-                <Badge variant="outline" className="border-warning text-warning">
-                  Medium Priority
-                </Badge>
-                <Badge variant="secondary">Low Priority</Badge>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium min-w-[100px]">Build Status:</span>
+              <Badge variant="warning">In Progress</Badge>
             </div>
-
-            <div>
-              <p className="text-sm font-medium mb-2">Content Types</p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">Blog Post</Badge>
-                <Badge variant="outline">Tutorial</Badge>
-                <Badge variant="outline">Documentation</Badge>
-                <Badge variant="outline">Video</Badge>
-                <Badge variant="outline">Podcast</Badge>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium min-w-[100px]">Deployment:</span>
+              <Badge variant="destructive">Failed</Badge>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium min-w-[100px]">Version:</span>
+              <Badge variant="outline">v1.2.3</Badge>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Interactive Badges */}
+      {/* Notification Badges */}
       <Card>
         <CardHeader>
-          <CardTitle>Interactive Badges</CardTitle>
+          <CardTitle>Notification Badges</CardTitle>
           <CardDescription>
-            Badges used in interactive contexts like user profiles and notifications.
+            Small badges for counts and notifications.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="space-y-4">
-            {/* User Profile Example */}
-            <div className="flex items-center gap-3 p-4 border rounded-lg">
-              <Avatar>
-                <AvatarImage src="/placeholder.svg" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h4 className="font-medium">John Doe</h4>
-                  <Badge variant="outline" className="border-success text-success">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Verified
-                  </Badge>
-                  <Badge variant="outline" className="border-accent text-accent">
-                    <Crown className="h-3 w-3 mr-1" />
-                    Pro
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">Software Engineer</p>
+          <div className="flex flex-wrap gap-6">
+            <div className="relative">
+              <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                <span className="text-sm">📧</span>
               </div>
+              <Badge variant="destructive" className="absolute -top-2 -right-2 min-w-[20px] h-5 rounded-full p-0 text-xs flex items-center justify-center">
+                3
+              </Badge>
             </div>
-
-            {/* Notification Example */}
-            <div className="p-4 border rounded-lg">
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-medium">System Update Available</h4>
-                    <Badge variant="outline" className="border-primary text-primary">
-                      <Zap className="h-3 w-3 mr-1" />
-                      New
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Version 2.1.0 is now available with new features and improvements.
-                  </p>
-                </div>
+            
+            <div className="relative">
+              <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                <span className="text-sm">🔔</span>
               </div>
+              <Badge variant="primary" className="absolute -top-2 -right-2 min-w-[20px] h-5 rounded-full p-0 text-xs flex items-center justify-center">
+                12
+              </Badge>
             </div>
-
-            {/* Rating Example */}
-            <div className="p-4 border rounded-lg">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h4 className="font-medium">Customer Review</h4>
-                  <Badge variant="outline" className="border-warning text-warning">
-                    <Star className="h-3 w-3 mr-1" />
-                    5.0
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  "Excellent product quality and fast delivery!"
-                </p>
+            
+            <div className="relative">
+              <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                <span className="text-sm">💬</span>
               </div>
+              <Badge variant="success" className="absolute -top-2 -right-2 min-w-[20px] h-5 rounded-full p-0 text-xs flex items-center justify-center">
+                •
+              </Badge>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Usage Guidelines */}
+      {/* Interactive Examples */}
       <Card>
         <CardHeader>
-          <CardTitle>Usage Guidelines</CardTitle>
+          <CardTitle>Interactive Examples</CardTitle>
           <CardDescription>
-            Best practices for implementing badges effectively in your applications.
+            Badges in real-world scenarios with proper semantic colors.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium mb-2">Do's</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Use consistent colors for similar meanings</li>
-                <li>• Keep badge text short and descriptive</li>
-                <li>• Group related badges logically</li>
-                <li>• Use semantic colors for status indicators</li>
-                <li>• Ensure sufficient color contrast</li>
-              </ul>
+            <div className="space-y-4">
+              <h4 className="font-medium">User Profile</h4>
+              <div className="p-4 border border-border rounded-lg space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">John Doe</span>
+                  <Badge variant="success">Online</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Account Type</span>
+                  <Badge variant="accent">Premium</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Verification</span>
+                  <Badge variant="success">Verified</Badge>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 className="font-medium mb-2">Don'ts</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Don't overuse badges in a single view</li>
-                <li>• Avoid using badges for long text content</li>
-                <li>• Don't mix different badge styles inconsistently</li>
-                <li>• Avoid unclear or ambiguous badge labels</li>
-                <li>• Don't use badges as primary call-to-action buttons</li>
-              </ul>
+            
+            <div className="space-y-4">
+              <h4 className="font-medium">Task Management</h4>
+              <div className="p-4 border border-border rounded-lg space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Design System Update</span>
+                  <Badge variant="warning">In Progress</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Bug Fix #123</span>
+                  <Badge variant="success">Completed</Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Security Audit</span>
+                  <Badge variant="destructive">Blocked</Badge>
+                </div>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Integration Notes */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Integration & Customization</CardTitle>
-          <CardDescription>
-            How badges integrate with Supabase, Tailwind, and Storybook.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-            <h4 className="font-medium text-primary mb-2">Supabase Integration</h4>
-            <ul className="text-sm text-primary/80 space-y-1">
-              <li>• Dynamic badge content from database fields</li>
-              <li>• Real-time status updates via Supabase subscriptions</li>
-              <li>• User role and permission badges</li>
-              <li>• Content categorization and tagging</li>
-            </ul>
-          </div>
-          
-          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
-            <h4 className="font-medium text-success mb-2">Tailwind Customization</h4>
-            <ul className="text-sm text-success/80 space-y-1">
-              <li>• Custom badge variants via Tailwind classes</li>
-              <li>• Responsive badge sizing and positioning</li>
-              <li>• Design token integration for consistent theming</li>
-              <li>• Dark mode support with semantic color tokens</li>
-            </ul>
           </div>
         </CardContent>
       </Card>

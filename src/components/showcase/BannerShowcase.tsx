@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { X, Info, AlertTriangle, CheckCircle, AlertCircle, Code } from "lucide-react";
+import { X, Info, AlertTriangle, CheckCircle, Code } from "lucide-react";
 import { CodeModal } from "@/components/ui/code-modal";
 
 export default function BannerShowcase() {
@@ -134,7 +134,7 @@ export default function BannerShowcase() {
         <CardContent>
           <Alert className="border-l-4 border-l-success bg-success/10">
             <CheckCircle className="h-4 w-4 text-success" />
-            <AlertDescription className="text-success">
+            <AlertDescription className="text-success-foreground">
               Success! Your action was completed successfully.
             </AlertDescription>
           </Alert>
@@ -167,7 +167,7 @@ export default function BannerShowcase() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowBanner(false)}
-                  className="ml-2 h-auto p-1"
+                  className="ml-2 h-auto p-1 hover:bg-accent hover:text-accent-foreground"
                 >
                   <X className="h-4 w-4" />
                 </Button>

@@ -1,8 +1,9 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Figma, FileCode } from "lucide-react";
+import { Copy, Figma } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 export default function DividerShowcase() {
@@ -55,7 +56,7 @@ export default function DividerShowcase() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
+          <div className="p-6 border border-border rounded-lg bg-muted/50">
             <div className="space-y-4">
               <p className="text-sm">Content section one</p>
               <Separator />
