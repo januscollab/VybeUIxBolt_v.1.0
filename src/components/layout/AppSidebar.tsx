@@ -36,7 +36,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
+import { useCategories, useComponents, useComponent } from "@/hooks/useStaticDesignSystem";
 
 const categoryIcons = {
   'foundations': Palette,
@@ -51,7 +51,8 @@ const categoryIcons = {
 export function AppSidebar() {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]); 
+  const [activeComponentId, setActiveComponentId] = useState<string | null>(null);
   const { data: categories, isLoading } = useCategories();
   const { data: allComponents } = useComponents();
 
@@ -66,6 +67,25 @@ export function AppSidebar() {
       }
     }
   }, [location.pathname, categories, expandedCategories]);
+
+  // Handle hash changes for component navigation
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const component = allComponents?.find(comp => comp.slug === hash);
+      if (component) {
+        setActiveComponentId(component.id);
+        
+        // Expand the category containing this component
+        const category = categories?.find(cat => cat.id === component.category_id);
+        if (category && !expandedCategories.includes(category.id)) {
+          setExpandedCategories(prev => [...prev, category.id]);
+        }
+      }
+    } else {
+      setActiveComponentId(null);
+    }
+  }, [location.hash, allComponents, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -212,8 +232,17 @@ export function AppSidebar() {
                               const isComponentActive = location.pathname === `/component/${component.slug}`;
                               return (
                                 <SidebarMenuSubItem key={component.id}>
-                                  <SidebarMenuSubButton asChild isActive={isComponentActive}>
-                                    <Link to={`/component/${component.slug}`}>
+                                  <SidebarMenuSubButton 
+                                    asChild 
+                                    isActive={isComponentActive || activeComponentId === component.id}
+                                  >
+                                    <Link 
+                                      to={
+                                        location.pathname.startsWith('/category/') 
+                                          ? `${location.pathname}#${component.slug}` 
+                                          : `/component/${component.slug}`
+                                      }
+                                    >
                                       <span>{component.name}</span>
                                       {component.is_experimental && (
                                         <span className="ml-auto text-xs bg-accent/10 text-accent px-1.5 py-0.5 rounded">EXP</span>

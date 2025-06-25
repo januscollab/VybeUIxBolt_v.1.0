@@ -12,67 +12,89 @@ import {
 } from "@/components/core/Breadcrumb";
 import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
 import { Home } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function BreadcrumbNavigation() {
   const location = useLocation();
   const { data: categories } = useCategories();
   const { data: allComponents } = useComponents();
+  const [breadcrumbItems, setBreadcrumbItems] = useState<Array<{
+    label: string;
+    href: string;
+    icon?: React.ComponentType<any>;
+    current?: boolean;
+  }>>([]);
 
-  // Parse the current route
-  const pathSegments = location.pathname.split('/').filter(Boolean);
-  
-  if (pathSegments.length === 0) {
-    return null; // Don't show breadcrumbs on home page
-  }
-
-  const breadcrumbItems = [];
-
-  // Always start with Home
-  breadcrumbItems.push({
-    label: "Home",
-    href: "/",
-    icon: Home
-  });
-
-  if (pathSegments[0] === 'category' && pathSegments[1]) {
-    const categorySlug = pathSegments[1];
-    const category = categories?.find(cat => cat.slug === categorySlug);
+  useEffect(() => {
+    const items = [];
+    const pathSegments = location.pathname.split('/').filter(Boolean);
     
-    if (category) {
-      breadcrumbItems.push({
-        label: category.name,
-        href: `/category/${categorySlug}`,
-        current: pathSegments.length === 2
-      });
+    if (pathSegments.length === 0) {
+      setBreadcrumbItems([]);
+      return;
     }
-  }
 
-  if (pathSegments[0] === 'component' && pathSegments[1]) {
-    const componentSlug = pathSegments[1];
-    const component = allComponents?.find(comp => comp.slug === componentSlug);
-    
-    if (component) {
-      // Find the category for this component
-      const category = categories?.find(cat => cat.id === component.category_id);
+    // Always start with Home
+    items.push({
+      label: "Home",
+      href: "/",
+      icon: Home
+    });
+
+    if (pathSegments[0] === 'category' && pathSegments[1]) {
+      const categorySlug = pathSegments[1];
+      const category = categories?.find(cat => cat.slug === categorySlug);
       
       if (category) {
-        breadcrumbItems.push({
+        items.push({
           label: category.name,
-          href: `/category/${category.slug}`
+          href: `/category/${categorySlug}`,
+          current: !location.hash // Only current if no hash
         });
       }
-      
-      breadcrumbItems.push({
-        label: component.name,
-        href: `/component/${componentSlug}`,
-        current: true
-      });
-    }
-  }
 
-  if (breadcrumbItems.length <= 1) {
-    return null; // Don't show if only home
-  }
+      // If there's a hash, it means we're viewing a specific component
+      if (location.hash) {
+        const componentSlug = location.hash.replace('#', '');
+        const component = allComponents?.find(comp => comp.slug === componentSlug);
+        
+        if (component) {
+          items.push({
+            label: component.name,
+            href: `${location.pathname}${location.hash}`,
+            current: true
+          });
+        }
+      }
+    }
+
+    if (pathSegments[0] === 'component' && pathSegments[1]) {
+      const componentSlug = pathSegments[1];
+      const component = allComponents?.find(comp => comp.slug === componentSlug);
+      
+      if (component) {
+        // Find the category for this component
+        const category = categories?.find(cat => cat.id === component.category_id);
+        
+        if (category) {
+          items.push({
+            label: category.name,
+            href: `/category/${category.slug}`
+          });
+        }
+        
+        items.push({
+          label: component.name,
+          href: `/component/${componentSlug}`,
+          current: true
+        });
+      }
+    }
+
+    setBreadcrumbItems(items);
+  }, [location.pathname, location.hash, categories, allComponents]);
+
+  if (breadcrumbItems.length <= 1) return null;
 
   return (
     <div className="mb-6">
