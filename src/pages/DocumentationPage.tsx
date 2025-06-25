@@ -485,32 +485,32 @@ export function UserProfile() {
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Foundation</h4>
               <p className="text-sm text-muted-foreground mb-3">Design tokens, colors, typography</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { Typography } from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Button }`} from 'janus'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Core UI</h4>
               <p className="text-sm text-muted-foreground mb-3">Essential interface components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { Button, Card } from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Card }`} from 'janus'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Forms & Input</h4>
               <p className="text-sm text-muted-foreground mb-3">Form controls and inputs</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { Input, Select } from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Input }`} from 'janus'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Navigation</h4>
               <p className="text-sm text-muted-foreground mb-3">Navigation and menu components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { Nav, Breadcrumb } from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Breadcrumb }`} from 'janus'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Layout & Structure</h4>
               <p className="text-sm text-muted-foreground mb-3">Layout and structural elements</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { Container, Grid } from 'janus'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Separator }`} from 'janus'</code>
             </div>
             <div className="p-4 border rounded-lg hover:bg-accent/5 transition-colors">
               <h4 className="font-medium mb-2">Experimental</h4>
               <p className="text-sm text-muted-foreground mb-3">Cutting-edge experimental components</p>
-              <code className="text-xs bg-muted px-2 py-1 rounded">import { AIAssistant } from 'janus/experimental'</code>
+              <code className="text-xs bg-muted px-2 py-1 rounded">import {`{ Badge }`} from 'janus/experimental'</code>
             </div>
           </div>
         </CardContent>
