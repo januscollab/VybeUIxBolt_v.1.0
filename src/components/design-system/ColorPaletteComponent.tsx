@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Copy, Palette, Undo, Edit, Monitor } from "lucide-react";
+import { Copy, Palette, RotateCcw, Edit, Monitor } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
 
@@ -176,10 +175,11 @@ export default function ColorPaletteComponent() {
               <Switch
                 checked={isLiveEditEnabled}
                 onCheckedChange={setIsLiveEditEnabled}
+                className="data-[state=checked]:bg-primary"
               />
             </div>
-            <Button variant="outline" onClick={resetToDefault} className="gap-2">
-              <Undo className="h-4 w-4" />
+            <Button variant="outline" onClick={resetToDefault} className="gap-2 border-border hover:bg-accent hover:text-accent-foreground">
+              <RotateCcw className="h-4 w-4" />
               Reset
             </Button>
           </div>
@@ -194,7 +194,7 @@ export default function ColorPaletteComponent() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Monitor className="h-5 w-5" />
+            <Monitor className="h-5 w-5 text-foreground" />
             Background Options
           </CardTitle>
           <CardDescription>Choose from predefined background colors for your interface</CardDescription>
@@ -209,7 +209,7 @@ export default function ColorPaletteComponent() {
               >
                 <div className="space-y-3">
                   <div 
-                    className="h-16 w-full rounded border shadow-inner"
+                    className="h-16 w-full rounded border shadow-inner border-border"
                     style={{ backgroundColor: bg.value }}
                   />
                   <div className="space-y-1">
@@ -220,7 +220,7 @@ export default function ColorPaletteComponent() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100"
+                        className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 hover:bg-accent hover:text-accent-foreground"
                         onClick={(e) => {
                           e.stopPropagation();
                           copyToClipboard(bg.value);
@@ -246,7 +246,7 @@ export default function ColorPaletteComponent() {
               {group.colors.map((color) => (
                 <Card 
                   key={color.name} 
-                  className={`group transition-all duration-200 hover:shadow-md ${
+                  className={`group transition-all duration-200 hover:shadow-md border-border ${
                     isLiveEditEnabled 
                       ? 'cursor-pointer hover:border-primary' 
                       : ''
@@ -257,11 +257,11 @@ export default function ColorPaletteComponent() {
                     <div className="flex items-center justify-between">
                       <h4 className="text-sm font-medium truncate flex-1">{color.name}</h4>
                       {isLiveEditEnabled && (
-                        <Edit className="h-3 w-3 text-muted-foreground group-hover:text-primary flex-shrink-0" />
+                        <Edit className="h-3 w-3 text-muted-foreground group-hover:text-primary flex-shrink-0 transition-colors" />
                       )}
                     </div>
                     <div 
-                      className="h-12 w-full rounded border border-border transition-all duration-200 group-hover:shadow-sm"
+                      className="h-12 w-full rounded border border-border transition-all duration-200 group-hover:shadow-sm bg-background"
                       style={{ backgroundColor: color.hex }}
                     />
                     <div className="space-y-1">
@@ -270,7 +270,7 @@ export default function ColorPaletteComponent() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-5 w-5 p-0"
+                          className="h-5 w-5 p-0 hover:bg-accent hover:text-accent-foreground"
                           onClick={(e) => {
                             e.stopPropagation();
                             copyToClipboard(color.hex);
@@ -293,7 +293,7 @@ export default function ColorPaletteComponent() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-foreground">
               <div 
                 className="h-5 w-5 rounded border border-border"
                 style={{ backgroundColor: colorValue }}
@@ -303,36 +303,36 @@ export default function ColorPaletteComponent() {
           </DialogHeader>
           <div className="space-y-6">
             <div className="space-y-3">
-              <label className="text-sm font-medium">Live Color Preview</label>
+              <label className="text-sm font-medium text-foreground">Live Color Preview</label>
               <div 
-                className="w-full h-24 rounded-lg border border-border shadow-inner"
+                className="w-full h-24 rounded-lg border border-border shadow-inner bg-background"
                 style={{ backgroundColor: colorValue }}
               />
             </div>
             <div className="space-y-3">
-              <label className="text-sm font-medium">Color Picker</label>
+              <label className="text-sm font-medium text-foreground">Color Picker</label>
               <input
                 type="color"
                 value={colorValue}
                 onChange={(e) => setColorValue(e.target.value)}
-                className="w-full h-12 rounded-lg border border-border cursor-pointer"
+                className="w-full h-12 rounded-lg border border-border cursor-pointer bg-background"
               />
             </div>
             <div className="space-y-3">
-              <label className="text-sm font-medium">Hex Value</label>
+              <label className="text-sm font-medium text-foreground">Hex Value</label>
               <input
                 type="text"
                 value={colorValue}
                 onChange={(e) => setColorValue(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-mono"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-mono bg-background text-foreground"
                 placeholder="#FF4A00"
               />
             </div>
             <div className="flex gap-2 justify-end pt-4">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="border-border hover:bg-accent hover:text-accent-foreground">
                 Cancel
               </Button>
-              <Button onClick={handleColorUpdate} className="gap-2">
+              <Button onClick={handleColorUpdate} className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
                 <Palette className="h-4 w-4" />
                 Apply Changes
               </Button>
@@ -345,12 +345,12 @@ export default function ColorPaletteComponent() {
       <Card>
         <CardHeader>
           <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for using our compact color system</CardDescription>
+          <CardDescription className="text-muted-foreground">Best practices for using our compact color system</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <h4 className="font-medium text-success">Enhanced Features</h4>
+              <h4 className="font-medium text-success-foreground">Enhanced Features</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li>• Compact tiles for efficient browsing</li>
                 <li>• Live hex code editing with instant preview</li>
@@ -361,7 +361,7 @@ export default function ColorPaletteComponent() {
               </ul>
             </div>
             <div className="space-y-2">
-              <h4 className="font-medium text-primary">Best Practices</h4>
+              <h4 className="font-medium text-primary-foreground">Best Practices</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li>• Use Live Edit to experiment safely</li>
                 <li>• Test background options for readability</li>
