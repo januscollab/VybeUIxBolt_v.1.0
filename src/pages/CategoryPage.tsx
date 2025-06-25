@@ -51,11 +51,6 @@ import SpacingSystemComponent from '@/components/design-system/SpacingSystemComp
 import ElevationShadowsComponent from '@/components/design-system/ElevationShadowsComponent';
 import InteractiveColorPalette from '@/components/design-system/InteractiveColorPalette';
 
-// Import experimental components
-import AdvancedColorPickerShowcase from '@/components/showcase/experimental/AdvancedColorPickerShowcase';
-import TypographyAnimatorShowcase from '@/components/showcase/experimental/TypographyAnimatorShowcase';
-import MegaMenuShowcase from '@/components/showcase/experimental/MegaMenuShowcase';
-
 // Component map for dynamic rendering
 const componentMap: Record<string, React.ComponentType> = {
   'alert': AlertShowcase,
@@ -99,11 +94,6 @@ const componentMap: Record<string, React.ComponentType> = {
   'spacing-system': SpacingSystemComponent,
   'elevation-shadows': ElevationShadowsComponent,
   'interactive-color-palette': InteractiveColorPalette,
-  
-  // Experimental components
-  'advanced-color-picker': AdvancedColorPickerShowcase,
-  'typography-animator': TypographyAnimatorShowcase,
-  'mega-menu': MegaMenuShowcase,
 };
 
 export default function CategoryPage() {
