@@ -55,7 +55,7 @@ export default function Index() {
         </div>
         
         <div className="flex justify-center">
-          <Button size="lg" onClick={() => navigate('/components')}>
+          <Button size="lg" variant="outline" onClick={() => navigate('/components')}>
             <Palette className="mr-2 h-5 w-5" />
             Explore Components
           </Button>
@@ -147,7 +147,7 @@ export default function Index() {
                     <span className="text-sm text-muted-foreground">
                       {category.component_count} components
                     </span>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="secondary" size="sm">
                       Explore →
                     </Button>
                   </div>
