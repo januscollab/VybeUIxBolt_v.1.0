@@ -42,6 +42,13 @@ import AdvancedColorPickerShowcase from '@/components/showcase/experimental/Adva
 import TypographyAnimatorShowcase from '@/components/showcase/experimental/TypographyAnimatorShowcase';
 import MegaMenuShowcase from '@/components/showcase/experimental/MegaMenuShowcase';
 
+// Import foundation components
+import ColorPaletteComponent from '@/components/design-system/ColorPaletteComponent';
+import TypographyScaleComponent from '@/components/design-system/TypographyScaleComponent';
+import SpacingSystemComponent from '@/components/design-system/SpacingSystemComponent';
+import ElevationShadowsComponent from '@/components/design-system/ElevationShadowsComponent';
+import InteractiveColorPalette from '@/components/design-system/InteractiveColorPalette';
+
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
 
@@ -85,6 +92,13 @@ export default function ComponentPage() {
     'advanced-color-picker': AdvancedColorPickerShowcase,
     'typography-animator': TypographyAnimatorShowcase,
     'mega-menu': MegaMenuShowcase,
+    
+    // Add foundation components
+    'color-palette': ColorPaletteComponent,
+    'typography-scale': TypographyScaleComponent,
+    'spacing-system': SpacingSystemComponent,
+    'elevation-shadows': ElevationShadowsComponent,
+    'interactive-color-palette': InteractiveColorPalette,
   };
 
   const Component = componentMap[slug] || (() => <div>Component not found</div>);
