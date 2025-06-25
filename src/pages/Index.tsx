@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCategories, useComponents } from "@/hooks/useStaticDesignSystem";
 import { useLocalDesignSystem } from "@/hooks/useLocalDesignSystem";
-import { Search, ExternalLink, Github, Palette, Code, Zap, Users } from "lucide-react";
+import { Search, Palette, Code, Zap, Users } from "lucide-react";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -44,8 +44,9 @@ export default function Index() {
       {/* Hero Section */}
       <div className="text-center space-y-6 py-12">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            {brandName} Design System
+          <h1 className="text-4xl md:text-6xl font-bold">
+            <span className="text-primary">VybeUI</span>{" "}
+            <span className="text-foreground">Design System</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A comprehensive collection of reusable components, design tokens, and guidelines 
@@ -53,23 +54,10 @@ export default function Index() {
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex justify-center">
           <Button size="lg" onClick={() => navigate('/components')}>
             <Palette className="mr-2 h-5 w-5" />
             Explore Components
-          </Button>
-          <Button variant="outline" size="lg" onClick={() => navigate('/documentation')}>
-            <Code className="mr-2 h-5 w-5" />
-            Integration Guide
-          </Button>
-          <Button 
-            variant="outline" 
-            size="lg"
-            onClick={() => window.open('https://github.com/vybeui/vybeui-design-system', '_blank')}
-          >
-            <Github className="mr-2 h-5 w-5" />
-            GitHub
-            <ExternalLink className="ml-1 h-3 w-3" />
           </Button>
         </div>
       </div>
