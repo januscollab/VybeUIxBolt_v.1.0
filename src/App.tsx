@@ -12,42 +12,52 @@ import ComponentPage from "./pages/ComponentPage";
 import DocumentationPage from "./pages/DocumentationPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Create QueryClient instance outside of component to prevent recreation
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <LocalDesignSystemProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={
-              <MainLayout>
-                <Index />
-              </MainLayout>
-            } />
-            <Route path="/category/:slug" element={
-              <MainLayout>
-                <CategoryPage />
-              </MainLayout>
-            } />
-            <Route path="/component/:slug" element={
-              <MainLayout>
-                <ComponentPage />
-              </MainLayout>
-            } />
-            <Route path="/documentation" element={
-              <MainLayout>
-                <DocumentationPage />
-              </MainLayout>
-            } />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </LocalDesignSystemProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <LocalDesignSystemProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={
+                <MainLayout>
+                  <Index />
+                </MainLayout>
+              } />
+              <Route path="/category/:slug" element={
+                <MainLayout>
+                  <CategoryPage />
+                </MainLayout>
+              } />
+              <Route path="/component/:slug" element={
+                <MainLayout>
+                  <ComponentPage />
+                </MainLayout>
+              } />
+              <Route path="/documentation" element={
+                <MainLayout>
+                  <DocumentationPage />
+                </MainLayout>
+              } />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </LocalDesignSystemProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
