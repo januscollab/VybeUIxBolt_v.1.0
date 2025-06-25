@@ -1,6 +1,6 @@
-
 import { useParams } from "react-router-dom";
-import { useComponent } from "@/hooks/useStaticDesignSystem";
+import { useComponents, useCategories } from "@/hooks/useStaticDesignSystem";
+import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -63,161 +63,32 @@ import FlexboxShowcase from "@/components/showcase/FlexboxShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: component, isLoading } = useComponent(slug!);
-
-  // Render specific design system components
-  const renderComponentContent = () => {
-    switch (component?.slug) {
-      // Foundations
-      case 'color-palette':
-        return <ColorPaletteComponent />;
-      case 'typography-scale':
-        return <TypographyScaleComponent />;
-      case 'spacing-system':
-        return <SpacingSystemComponent />;
-      case 'elevation-shadows':
-        return <ElevationShadowsComponent />;
-      case 'icon-system':
-      case 'icons':
-        return <IconSystemComponent />;
-      case 'interaction-states':
-        return <InteractionStatesComponent />;
-      
-      // Experimental
-      case 'workflow-builder':
-        return <WorkflowBuilderComponent />;
-      case 'collaboration-panel':
-        return <CollaborationPanelComponent />;
-      
-      // Core UI Components
-      case 'button':
-        return <ButtonShowcase />;
-      case 'input':
-      case 'input-field':
-        return <InputShowcase />;
-      case 'select-dropdown':
-        return <SelectDropdownShowcase />;
-      case 'multi-select':
-        return <MultiSelectShowcase />;
-      case 'badge':
-        return <BadgeShowcase />;
-      case 'card':
-        return <CardShowcase />;
-      case 'form':
-      case 'form-wrapper':
-        return <FormShowcase />;
-      case 'form-field':
-        return <FormFieldShowcase />;
-      case 'checkbox':
-        return <CheckboxShowcase />;
-      case 'switch-toggle':
-      case 'switch':
-        return <SwitchToggleShowcase />;
-      case 'textarea':
-        return <TextareaShowcase />;
-      case 'avatar':
-        return <AvatarShowcase />;
-      case 'progress-bar':
-      case 'progress':
-        return <ProgressBarShowcase />;
-      case 'slider':
-        return <SliderShowcase />;
-      case 'search-bar':
-      case 'search':
-        return <SearchBarShowcase />;
-      case 'sidebar':
-        return <SidebarShowcase />;
-      case 'command-menu':
-        return <CommandMenuShowcase />;
-      case 'steps-stepper':
-      case 'stepper':
-        return <StepsStepperShowcase />;
-      case 'ai-command-palette':
-        return <AICommandPaletteShowcase />;
-      case 'breadcrumb':
-        return <BreadcrumbShowcase />;
-      case 'accordion':
-        return <AccordionShowcase />;
-      case 'tooltip':
-        return <TooltipShowcase />;
-      case 'popover':
-        return <PopoverShowcase />;
-      case 'list':
-        return <ListShowcase />;
-      case 'divider':
-      case 'separator':
-        return <DividerShowcase />;
-      case 'radio-button':
-      case 'radio-group':
-        return <RadioButtonShowcase />;
-      case 'loading-spinner':
-      case 'spinner':
-        return <LoadingSpinnerShowcase />;
-      case 'code-block':
-        return <CodeBlockShowcase />;
-      case 'phone-input':
-      case 'phone':
-        return <PhoneInputShowcase />;
-      case 'context-menu':
-        return <ContextMenuShowcase />;
-      case 'empty-state':
-        return <EmptyStateShowcase />;
-      case 'modal-dialog':
-      case 'modal':
-      case 'dialog':
-        return <ModalShowcase />;
-      case 'file-upload':
-        return <FileUploadShowcase />;
-      case 'date-picker':
-        return <DatePickerShowcase />;
-      
-      // Navigation
-      case 'navigation':
-      case 'navigation-menu':
-      case 'pagination':
-      case 'tabs':
-        return <NavigationShowcase />;
-      
-      // Content & Layout
-      case 'table':
-      case 'data-table':
-        return <TableShowcase />;
-      case 'banner':
-        return <BannerShowcase />;
-      case 'container':
-        return <ContainerShowcase />;
-      case 'timeline':
-        return <TimelineShowcase />;
-      case 'grid-system':
-        return <GridSystemShowcase />;
-      case 'flexbox':
-        return <FlexboxShowcase />;
-      
-      // Feedback & Messaging
-      case 'alert':
-      case 'toast':
-      case 'toast-notification':
-      case 'skeleton':
-        return <FeedbackShowcase />;
-      
-      default:
-        return null;
-    }
-  };
+  const { data: allComponents, isLoading } = useComponents();
+  const { data: categories } = useCategories();
+  
+  const component = allComponents?.find(c => c.slug === slug);
+  const category = component ? categories?.find(cat => cat.id === component.category_id) : null;
 
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="h-12 bg-muted animate-pulse rounded" />
-        <div className="h-96 bg-muted animate-pulse rounded" />
+        <BreadcrumbNavigation />
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-muted rounded w-1/3" />
+          <div className="h-4 bg-muted rounded w-2/3" />
+          <div className="h-64 bg-muted rounded" />
+        </div>
       </div>
     );
   }
 
   if (!component) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-muted-foreground">Component not found</h1>
+      <div className="space-y-6">
+        <BreadcrumbNavigation />
+        <div className="text-center py-12">
+          <h1 className="text-2xl font-bold text-muted-foreground">Component not found</h1>
+        </div>
       </div>
     );
   }
@@ -230,6 +101,8 @@ export default function ComponentPage() {
 
   return (
     <div className="space-y-6">
+      <BreadcrumbNavigation />
+      
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-start justify-between">

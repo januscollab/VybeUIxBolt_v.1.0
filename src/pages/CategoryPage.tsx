@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ExperimentalComponentCard } from "@/components/ExperimentalComponentCard";
+import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -17,6 +18,7 @@ export default function CategoryPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
+        <BreadcrumbNavigation />
         <div className="h-8 bg-muted animate-pulse rounded" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -29,14 +31,19 @@ export default function CategoryPage() {
 
   if (!category) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-muted-foreground">Category not found</h1>
+      <div className="space-y-6">
+        <BreadcrumbNavigation />
+        <div className="text-center py-12">
+          <h1 className="text-2xl font-bold text-muted-foreground">Category not found</h1>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
+      <BreadcrumbNavigation />
+      
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (
