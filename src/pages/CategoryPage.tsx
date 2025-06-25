@@ -158,6 +158,8 @@ export default function CategoryPage() {
 
   return (
     <div className="space-y-8">
+      <BreadcrumbNavigation />
+      
       <div className="space-y-2"> 
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.description && (

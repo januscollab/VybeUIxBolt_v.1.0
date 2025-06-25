@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Copy, Figma, FileCode, ChevronDown, ExternalLink } from "lucide-react";
+import { Copy, Figma, FileCode } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -160,10 +160,10 @@ export default function NavigationMenuShowcase() {
           <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
-                <NavigationMenuItem>
+                <NavigationMenuItem className="max-w-full">
                   <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <ul className="grid gap-3 p-4 w-[95vw] md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
@@ -195,7 +195,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    <ul className="grid w-[95vw] md:w-[500px] gap-3 p-4 md:grid-cols-2 lg:w-[600px]">
                       {components.map((component) => (
                         <ListItem
                           key={component.title}
@@ -244,7 +244,7 @@ export default function NavigationMenuShowcase() {
           <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
-                <NavigationMenuItem>
+                <NavigationMenuItem className="max-w-full">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Home
                   </NavigationMenuLink>
@@ -295,7 +295,7 @@ export default function NavigationMenuShowcase() {
           <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
-                <NavigationMenuItem>
+                <NavigationMenuItem className="max-w-full">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Home
                   </NavigationMenuLink>
@@ -303,7 +303,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Products</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2">
+                    <ul className="grid w-[95vw] md:w-[400px] gap-3 p-4 md:grid-cols-2">
                       <ListItem title="Product A" href="#">
                         Our flagship product with premium features
                       </ListItem>
@@ -322,7 +322,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Services</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2">
+                    <ul className="grid w-[95vw] md:w-[400px] gap-3 p-4 md:grid-cols-2">
                       <ListItem title="Consulting" href="#">
                         Expert advice and strategic planning
                       </ListItem>
