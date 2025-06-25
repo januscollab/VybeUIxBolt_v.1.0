@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { useComponents, useCategories } from "@/hooks/useStaticDesignSystem";
 import { BreadcrumbNavigation } from "@/components/navigation/BreadcrumbNavigation";
@@ -93,10 +94,76 @@ export default function ComponentPage() {
     );
   }
 
-  // If we have a custom component, render it
-  const customComponent = renderComponentContent();
-  if (customComponent) {
-    return customComponent;
+  // Map component slugs to their showcase components
+  const getShowcaseComponent = () => {
+    const showcaseMap: Record<string, React.ComponentType> = {
+      'button': ButtonShowcase,
+      'input': InputShowcase,
+      'card': CardShowcase,
+      'form': FormShowcase,
+      'navigation': NavigationShowcase,
+      'table': TableShowcase,
+      'feedback': FeedbackShowcase,
+      'form-field': FormFieldShowcase,
+      'badge': BadgeShowcase,
+      'select-dropdown': SelectDropdownShowcase,
+      'checkbox': CheckboxShowcase,
+      'switch-toggle': SwitchToggleShowcase,
+      'textarea': TextareaShowcase,
+      'avatar': AvatarShowcase,
+      'progress-bar': ProgressBarShowcase,
+      'slider': SliderShowcase,
+      'search-bar': SearchBarShowcase,
+      'sidebar': SidebarShowcase,
+      'command-menu': CommandMenuShowcase,
+      'steps-stepper': StepsStepperShowcase,
+      'ai-command-palette': AICommandPaletteShowcase,
+      'breadcrumb': BreadcrumbShowcase,
+      'accordion': AccordionShowcase,
+      'tooltip': TooltipShowcase,
+      'popover': PopoverShowcase,
+      'list': ListShowcase,
+      'divider': DividerShowcase,
+      'radio-button': RadioButtonShowcase,
+      'loading-spinner': LoadingSpinnerShowcase,
+      'code-block': CodeBlockShowcase,
+      'phone-input': PhoneInputShowcase,
+      'banner': BannerShowcase,
+      'container': ContainerShowcase,
+      'context-menu': ContextMenuShowcase,
+      'empty-state': EmptyStateShowcase,
+      'modal': ModalShowcase,
+      'file-upload': FileUploadShowcase,
+      'date-picker': DatePickerShowcase,
+      'multi-select': MultiSelectShowcase,
+      'timeline': TimelineShowcase,
+      'grid-system': GridSystemShowcase,
+      'flexbox': FlexboxShowcase,
+      // Design system components
+      'color-palette': ColorPaletteComponent,
+      'typography-scale': TypographyScaleComponent,
+      'spacing-system': SpacingSystemComponent,
+      'elevation-shadows': ElevationShadowsComponent,
+      'icon-system': IconSystemComponent,
+      'interaction-states': InteractionStatesComponent,
+      // Experimental components
+      'workflow-builder': WorkflowBuilderComponent,
+      'collaboration-panel': CollaborationPanelComponent,
+    };
+
+    return showcaseMap[component.slug];
+  };
+
+  const ShowcaseComponent = getShowcaseComponent();
+
+  // If we have a custom showcase component, render it
+  if (ShowcaseComponent) {
+    return (
+      <div className="space-y-6">
+        <BreadcrumbNavigation />
+        <ShowcaseComponent />
+      </div>
+    );
   }
 
   return (
