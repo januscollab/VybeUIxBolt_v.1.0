@@ -232,26 +232,23 @@ export function AppSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-border p-4 bg-background space-y-3">
-        <div className="flex flex-col gap-2">
-          <Button variant="ghost" size="sm" className="justify-start h-8" asChild>
+      <SidebarFooter className="border-t border-border p-4 bg-background">
+        <div className="flex gap-2">
+          <Button variant="ghost" size="sm" className="flex-1 justify-start h-8" asChild>
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Github className="h-4 w-4" />
-              <span>View on GitHub</span>
+              <span>GitHub</span>
               <ExternalLink className="h-3 w-3 ml-auto" />
             </a>
           </Button>
-          <Button variant="ghost" size="sm" className="justify-start h-8" asChild>
+          <Button variant="ghost" size="sm" className="flex-1 justify-start h-8" asChild>
             <a href="https://docs.lovable.dev" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Book className="h-4 w-4" />
-              <span>Documentation</span>
+              <span>Docs</span>
               <ExternalLink className="h-3 w-3 ml-auto" />
             </a>
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground text-center border-t pt-3">
-          VybeUI v1.0.0
-        </p>
       </SidebarFooter>
     </Sidebar>
   );

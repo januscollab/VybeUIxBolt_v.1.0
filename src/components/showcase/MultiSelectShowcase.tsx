@@ -1,426 +1,417 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Copy, Figma, FileCode, X, Search, Check } from "lucide-react";
+
 import { useState } from "react";
-import { toast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown, X, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-interface Option {
-  id: string;
-  label: string;
-  value: string;
-}
-
-const skillOptions: Option[] = [
-  { id: "1", label: "JavaScript", value: "javascript" },
-  { id: "2", label: "TypeScript", value: "typescript" },
-  { id: "3", label: "React", value: "react" },
-  { id: "4", label: "Vue.js", value: "vue" },
-  { id: "5", label: "Angular", value: "angular" },
-  { id: "6", label: "Node.js", value: "nodejs" },
-  { id: "7", label: "Python", value: "python" },
-  { id: "8", label: "Go", value: "go" },
-  { id: "9", label: "Rust", value: "rust" },
-  { id: "10", label: "Java", value: "java" },
+const frameworks = [
+  { value: "react", label: "React" },
+  { value: "vue", label: "Vue.js" },
+  { value: "angular", label: "Angular" },
+  { value: "svelte", label: "Svelte" },
+  { value: "next", label: "Next.js" },
+  { value: "nuxt", label: "Nuxt.js" },
+  { value: "gatsby", label: "Gatsby" },
+  { value: "remix", label: "Remix" }
 ];
 
-const categoryOptions: Option[] = [
-  { id: "1", label: "Technology", value: "technology" },
-  { id: "2", label: "Design", value: "design" },
-  { id: "3", label: "Marketing", value: "marketing" },
-  { id: "4", label: "Business", value: "business" },
-  { id: "5", label: "Finance", value: "finance" },
+const skills = [
+  "JavaScript", "TypeScript", "React", "Vue.js", "Angular", "Node.js", 
+  "Python", "Java", "C++", "Go", "Rust", "PHP", "Ruby", "Swift"
+];
+
+const countries = [
+  "United States", "United Kingdom", "Canada", "Australia", "Germany", 
+  "France", "Japan", "Brazil", "India", "China", "Mexico", "Italy"
 ];
 
 export default function MultiSelectShowcase() {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>(["javascript", "react"]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [showCode, setShowCode] = useState(false);
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
-
-  const toggleSkill = (value: string) => {
-    setSelectedSkills(prev => 
-      prev.includes(value) 
-        ? prev.filter(s => s !== value)
+  const toggleFramework = (value: string) => {
+    setSelectedFrameworks(prev =>
+      prev.includes(value)
+        ? prev.filter(item => item !== value)
         : [...prev, value]
     );
   };
 
-  const removeSkill = (value: string) => {
-    setSelectedSkills(prev => prev.filter(s => s !== value));
-  };
-
-  const toggleCategory = (value: string) => {
-    setSelectedCategories(prev => 
-      prev.includes(value) 
-        ? prev.filter(c => c !== value)
-        : [...prev, value]
+  const toggleSkill = (skill: string) => {
+    setSelectedSkills(prev =>
+      prev.includes(skill)
+        ? prev.filter(item => item !== skill)
+        : [...prev, skill]
     );
   };
 
-  const filteredOptions = skillOptions.filter(option =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const getSelectedLabels = (values: string[], options: Option[]) => {
-    return values.map(value => 
-      options.find(opt => opt.value === value)?.label || value
-    );
+  const removeSkill = (skill: string) => {
+    setSelectedSkills(prev => prev.filter(item => item !== skill));
   };
 
-  const codeExample = `const [selected, setSelected] = useState<string[]>([]);
-
-const toggle = (value: string) => {
-  setSelected(prev => 
-    prev.includes(value) 
-      ? prev.filter(s => s !== value)
-      : [...prev, value]
+  const filteredSkills = skills.filter(skill =>
+    skill.toLowerCase().includes(searchTerm.toLowerCase())
   );
-};
-
-// Checkbox List
-{options.map((option) => (
-  <div key={option.id} className="flex items-center space-x-2">
-    <Checkbox 
-      checked={selected.includes(option.value)}
-      onCheckedChange={() => toggle(option.value)}
-    />
-    <label>{option.label}</label>
-  </div>
-))}
-
-// Selected Tags
-{selected.map((value) => (
-  <Badge key={value} variant="secondary">
-    {getLabel(value)}
-    <X onClick={() => remove(value)} />
-  </Badge>
-))}`;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold">Multi-Select</h1>
-            <p className="text-lg text-muted-foreground">
-              Select multiple options from a list with search, tags, and various interaction patterns.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" asChild>
-              <a href="https://www.figma.com/design" target="_blank" rel="noopener noreferrer">
-                <Figma className="h-4 w-4 mr-2" />
-                Figma
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="#storybook" target="_blank" rel="noopener noreferrer">
-                <FileCode className="h-4 w-4 mr-2" />
-                Storybook
-              </a>
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">Multi Select</h1>
           <Badge variant="default">Stable</Badge>
-          <Badge variant="outline">Form Control</Badge>
-          <Badge variant="outline">Searchable</Badge>
         </div>
+        <p className="text-lg text-muted-foreground">
+          Multiple option selection components with search, filtering, and tag-based interfaces.
+        </p>
       </div>
 
-      {/* Checkbox List Multi-Select */}
+      {/* Command-based Multi Select */}
       <Card>
         <CardHeader>
-          <CardTitle>Checkbox List Multi-Select</CardTitle>
-          <CardDescription>Select multiple options using checkboxes with tag display</CardDescription>
+          <CardTitle>Command Multi Select</CardTitle>
+          <CardDescription>Multi-select with search using Command component</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <h4 className="font-medium">Select your skills:</h4>
-              
-              {/* Selected Tags */}
-              {selectedSkills.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {getSelectedLabels(selectedSkills, skillOptions).map((label, index) => (
-                    <Badge key={selectedSkills[index]} variant="secondary" className="gap-1">
-                      {label}
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Select Frameworks</Label>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-full justify-between"
+                  >
+                    {selectedFrameworks.length > 0
+                      ? `${selectedFrameworks.length} selected`
+                      : "Select frameworks..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Search frameworks..." />
+                    <CommandList>
+                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandGroup>
+                        {frameworks.map((framework) => (
+                          <CommandItem
+                            key={framework.value}
+                            value={framework.value}
+                            onSelect={() => toggleFramework(framework.value)}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                selectedFrameworks.includes(framework.value)
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {framework.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            {selectedFrameworks.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {selectedFrameworks.map(value => {
+                  const framework = frameworks.find(f => f.value === value);
+                  return (
+                    <Badge key={value} variant="secondary" className="gap-1">
+                      {framework?.label}
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-4 w-4 p-0 hover:bg-transparent"
-                        onClick={() => removeSkill(selectedSkills[index])}
+                        className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                        onClick={() => toggleFramework(value)}
                       >
                         <X className="h-3 w-3" />
                       </Button>
                     </Badge>
-                  ))}
-                </div>
-              )}
-
-              {/* Options List */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {skillOptions.map((option) => (
-                  <div key={option.id} className="flex items-center space-x-2">
-                    <Checkbox 
-                      checked={selectedSkills.includes(option.value)}
-                      onCheckedChange={() => toggleSkill(option.value)}
-                      id={option.id}
-                    />
-                    <label htmlFor={option.id} className="text-sm cursor-pointer">
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-            </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      {/* Searchable Multi-Select */}
+      {/* Checkbox Multi Select */}
       <Card>
         <CardHeader>
-          <CardTitle>Searchable Multi-Select</CardTitle>
-          <CardDescription>Multi-select with search functionality and dropdown interface</CardDescription>
+          <CardTitle>Checkbox Multi Select</CardTitle>
+          <CardDescription>Multi-select using checkboxes with search</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <h4 className="font-medium">Search and select skills:</h4>
-              
-              {/* Search Input */}
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Select Skills</Label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search skills..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setIsOpen(true)}
-                  className="pl-9"
+                  className="pl-10"
                 />
               </div>
-
-              {/* Dropdown Options */}
-              {isOpen && (
-                <div className="border rounded-lg bg-background shadow-lg max-h-60 overflow-y-auto">
-                  {filteredOptions.length > 0 ? (
-                    filteredOptions.map((option) => (
-                      <div
-                        key={option.id}
-                        className="flex items-center space-x-2 p-3 hover:bg-muted cursor-pointer"
-                        onClick={() => toggleSkill(option.value)}
+            </div>
+            
+            <div className="border rounded-lg p-4 max-h-48 overflow-y-auto">
+              <div className="space-y-3">
+                {filteredSkills.map((skill) => (
+                  <div key={skill} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={skill}
+                      checked={selectedSkills.includes(skill)}
+                      onCheckedChange={() => toggleSkill(skill)}
+                    />
+                    <Label htmlFor={skill} className="text-sm font-normal cursor-pointer">
+                      {skill}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {selectedSkills.length > 0 && (
+              <div className="space-y-2">
+                <div className="text-sm font-medium">Selected Skills ({selectedSkills.length})</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedSkills.map(skill => (
+                    <Badge key={skill} variant="outline" className="gap-1">
+                      {skill}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                        onClick={() => removeSkill(skill)}
                       >
-                        <div className="w-4 h-4 border rounded flex items-center justify-center">
-                          {selectedSkills.includes(option.value) && (
-                            <Check className="h-3 w-3" />
-                          )}
-                        </div>
-                        <span className="text-sm">{option.label}</span>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-3 text-sm text-muted-foreground">
-                      No skills found
-                    </div>
-                  )}
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </Badge>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-              {/* Selected Count */}
-              <p className="text-sm text-muted-foreground">
-                {selectedSkills.length} skill{selectedSkills.length !== 1 ? 's' : ''} selected
-              </p>
+      {/* Tag-based Multi Select */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Tag-based Multi Select</CardTitle>
+          <CardDescription>Interactive tag input with suggestions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Add Countries</Label>
+              <div className="border rounded-lg p-2 min-h-[42px] flex flex-wrap gap-1 items-center">
+                {selectedCountries.map(country => (
+                  <Badge key={country} variant="secondary" className="gap-1">
+                    {country}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                      onClick={() => setSelectedCountries(prev => prev.filter(c => c !== country))}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </Badge>
+                ))}
+                <Input
+                  className="border-0 shadow-none focus-visible:ring-0 px-1 flex-1 min-w-[120px]"
+                  placeholder="Type to add countries..."
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="text-sm font-medium">Suggestions</div>
+              <div className="flex flex-wrap gap-2">
+                {countries
+                  .filter(country => !selectedCountries.includes(country))
+                  .slice(0, 6)
+                  .map(country => (
+                    <Button
+                      key={country}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedCountries(prev => [...prev, country])}
+                    >
+                      + {country}
+                    </Button>
+                  ))}
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Compact Multi-Select */}
+      {/* Grouped Multi Select */}
       <Card>
         <CardHeader>
-          <CardTitle>Compact Multi-Select</CardTitle>
-          <CardDescription>Space-efficient multi-select for smaller interfaces</CardDescription>
+          <CardTitle>Grouped Multi Select</CardTitle>
+          <CardDescription>Multi-select with grouped options</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <h4 className="font-medium">Categories:</h4>
-              
-              <div className="flex flex-wrap gap-2">
-                {categoryOptions.map((option) => (
-                  <Button
-                    key={option.id}
-                    variant={selectedCategories.includes(option.value) ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => toggleCategory(option.value)}
-                    className="h-8"
-                  >
-                    {selectedCategories.includes(option.value) && (
-                      <Check className="h-3 w-3 mr-1" />
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Select Technologies</Label>
+              <div className="border rounded-lg divide-y">
+                <div className="p-3">
+                  <div className="text-sm font-medium mb-2">Frontend</div>
+                  <div className="space-y-2">
+                    {["React", "Vue.js", "Angular", "Svelte"].map((tech) => (
+                      <div key={tech} className="flex items-center space-x-2">
+                        <Checkbox id={tech} />
+                        <Label htmlFor={tech} className="text-sm font-normal cursor-pointer">
+                          {tech}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="p-3">
+                  <div className="text-sm font-medium mb-2">Backend</div>
+                  <div className="space-y-2">
+                    {["Node.js", "Python", "Java", "Go"].map((tech) => (
+                      <div key={tech} className="flex items-center space-x-2">
+                        <Checkbox id={tech} />
+                        <Label htmlFor={tech} className="text-sm font-normal cursor-pointer">
+                          {tech}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="p-3">
+                  <div className="text-sm font-medium mb-2">Database</div>
+                  <div className="space-y-2">
+                    {["PostgreSQL", "MongoDB", "Redis", "MySQL"].map((tech) => (
+                      <div key={tech} className="flex items-center space-x-2">
+                        <Checkbox id={tech} />
+                        <Label htmlFor={tech} className="text-sm font-normal cursor-pointer">
+                          {tech}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Compact Multi Select */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compact Multi Select</CardTitle>
+          <CardDescription>Space-efficient multi-select for limited space</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Categories</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="w-full justify-between text-sm">
+                    {selectedFrameworks.length > 0 ? (
+                      <span>{selectedFrameworks.length} selected</span>
+                    ) : (
+                      <span className="text-muted-foreground">Select categories</span>
                     )}
-                    {option.label}
+                    <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-2">
+                  <div className="space-y-1">
+                    {frameworks.slice(0, 5).map((framework) => (
+                      <div key={framework.value} className="flex items-center space-x-2 p-1">
+                        <Checkbox
+                          id={`compact-${framework.value}`}
+                          checked={selectedFrameworks.includes(framework.value)}
+                          onCheckedChange={() => toggleFramework(framework.value)}
+                        />
+                        <Label htmlFor={`compact-${framework.value}`} className="text-sm font-normal cursor-pointer">
+                          {framework.label}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Status</Label>
+              <div className="flex gap-1">
+                {["Active", "Pending", "Completed"].map((status) => (
+                  <Button
+                    key={status}
+                    variant="outline"
+                    size="sm"
+                    className="text-xs"
+                  >
+                    {status}
                   </Button>
                 ))}
               </div>
-
-              {selectedCategories.length > 0 && (
-                <div className="text-sm text-muted-foreground">
-                  Selected: {getSelectedLabels(selectedCategories, categoryOptions).join(", ")}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium">Code Example</h4>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCode(!showCode)}
-              >
-                {showCode ? "Hide" : "Show"} Code
-              </Button>
-              {showCode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(codeExample)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              )}
-            </div>
-          </div>
-          {showCode && (
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{codeExample}</code>
-            </pre>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Advanced Multi-Select */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Advanced Multi-Select</CardTitle>
-          <CardDescription>Feature-rich multi-select with select all, clear all, and grouping</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium">Advanced Skills Selection:</h4>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setSelectedSkills(skillOptions.map(o => o.value))}
-                  >
-                    Select All
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setSelectedSkills([])}
-                  >
-                    Clear All
-                  </Button>
-                </div>
-              </div>
-
-              {/* Groups */}
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-sm font-medium mb-2 text-muted-foreground">Frontend</h5>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pl-4">
-                    {skillOptions.filter(o => ["javascript", "typescript", "react", "vue", "angular"].includes(o.value)).map((option) => (
-                      <div key={option.id} className="flex items-center space-x-2">
-                        <Checkbox 
-                          checked={selectedSkills.includes(option.value)}
-                          onCheckedChange={() => toggleSkill(option.value)}
-                          id={`advanced-${option.id}`}
-                        />
-                        <label htmlFor={`advanced-${option.id}`} className="text-sm cursor-pointer">
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h5 className="text-sm font-medium mb-2 text-muted-foreground">Backend</h5>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pl-4">
-                    {skillOptions.filter(o => ["nodejs", "python", "go", "rust", "java"].includes(o.value)).map((option) => (
-                      <div key={option.id} className="flex items-center space-x-2">
-                        <Checkbox 
-                          checked={selectedSkills.includes(option.value)}
-                          onCheckedChange={() => toggleSkill(option.value)}
-                          id={`backend-${option.id}`}
-                        />
-                        <label htmlFor={`backend-${option.id}`} className="text-sm cursor-pointer">
-                          {option.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-4">
-                <p className="text-sm text-muted-foreground">
-                  {selectedSkills.length} of {skillOptions.length} skills selected
-                </p>
-              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Usage Guidelines */}
+      {/* Guidelines */}
       <Card>
         <CardHeader>
-          <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for multi-select implementation</CardDescription>
+          <CardTitle>Multi Select Guidelines</CardTitle>
+          <CardDescription>Best practices for multiple selection components</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="font-medium text-success">Best Practices</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Show selected count for awareness</li>
-                <li>• Provide search for large option lists</li>
-                <li>• Use clear visual indicators for selection</li>
+                <li>• Provide search/filter functionality</li>
+                <li>• Show selected count in trigger</li>
                 <li>• Allow easy removal of selections</li>
                 <li>• Group related options logically</li>
-                <li>• Implement select all/clear all for convenience</li>
+                <li>• Use appropriate selection limits</li>
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-medium text-warning">When to Use</h4>
+              <h4 className="font-medium text-info">UX Considerations</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• User needs to select multiple items</li>
-                <li>• Options are not mutually exclusive</li>
-                <li>• Large lists that benefit from search</li>
-                <li>• Tags, categories, or skills selection</li>
-                <li>• Filtering and preference settings</li>
-                <li>• When showing all options is beneficial</li>
+                <li>• Consider dropdown vs inline display</li>
+                <li>• Provide bulk select/deselect options</li>
+                <li>• Use progressive disclosure for large lists</li>
+                <li>• Support keyboard navigation</li>
+                <li>• Validate selection requirements</li>
               </ul>
             </div>
           </div>

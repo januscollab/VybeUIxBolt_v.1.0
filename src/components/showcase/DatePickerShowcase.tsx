@@ -1,146 +1,76 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarIcon, Clock, MapPin, Users } from "lucide-react";
-import { useState } from "react";
-import { format, addDays, subDays } from "date-fns";
+import { CalendarIcon, Clock } from "lucide-react";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const eventFormSchema = z.object({
-  eventDate: z.date({
-    required_error: "Event date is required.",
-  }),
-  startTime: z.string({
-    required_error: "Start time is required.",
-  }),
-  endTime: z.string({
-    required_error: "End time is required.",
-  }),
-});
 
 export default function DatePickerShowcase() {
-  const [singleDate, setSingleDate] = useState<Date>();
-  const [rangeDate, setRangeDate] = useState<{from: Date, to?: Date}>();
-  const [multipleDate, setMultipleDate] = useState<Date[]>([]);
-  const [restrictedDate, setRestrictedDate] = useState<Date>();
-
-  const form = useForm<z.infer<typeof eventFormSchema>>({
-    resolver: zodResolver(eventFormSchema),
+  const [date, setDate] = useState<Date>();
+  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
+    from: undefined,
+    to: undefined,
   });
-
-  function onSubmit(data: z.infer<typeof eventFormSchema>) {
-    console.log("Form submitted:", data);
-  }
+  const [birthDate, setBirthDate] = useState<Date>();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-3xl font-bold">Date Picker Component</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">Date Picker</h1>
           <Badge variant="default">Stable</Badge>
         </div>
         <p className="text-lg text-muted-foreground">
-          Calendar-based date selection with range support, restrictions, and form integration.
+          Calendar-based date selection components with various configurations and formats.
         </p>
       </div>
 
-      {/* Basic Date Pickers */}
+      {/* Basic Date Picker */}
       <Card>
         <CardHeader>
-          <CardTitle>Basic Date Pickers</CardTitle>
-          <CardDescription>Standard single date selection with various trigger styles</CardDescription>
+          <CardTitle>Basic Date Picker</CardTitle>
+          <CardDescription>Simple date selection with calendar popup</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CardContent>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Single Date</Label>
+              <Label>Select Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !singleDate && "text-muted-foreground"
+                      "w-[240px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {singleDate ? format(singleDate, "PPP") : "Pick a date"}
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={singleDate}
-                    onSelect={setSingleDate}
+                    selected={date}
+                    onSelect={setDate}
                     initialFocus
                     className="pointer-events-auto"
                   />
                 </PopoverContent>
               </Popover>
             </div>
-
-            <div className="space-y-2">
-              <Label>Date with Time</Label>
-              <div className="flex gap-2">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "flex-1 justify-start text-left font-normal",
-                        !singleDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {singleDate ? format(singleDate, "MMM dd") : "Date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={singleDate}
-                      onSelect={setSingleDate}
-                      initialFocus
-                      className="pointer-events-auto"
-                    />
-                  </PopoverContent>
-                </Popover>
-                <Button variant="outline" className="flex-1">
-                  <Clock className="mr-2 h-4 w-4" />
-                  9:00 AM
-                </Button>
+            {date && (
+              <div className="text-sm text-muted-foreground">
+                Selected: {format(date, "EEEE, MMMM do, yyyy")}
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Quick Presets</Label>
-              <div className="space-y-2">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={() => setSingleDate(new Date())}
-                >
-                  Today
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={() => setSingleDate(addDays(new Date(), 1))}
-                >
-                  Tomorrow
-                </Button>
-              </div>
-            </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -149,336 +79,296 @@ export default function DatePickerShowcase() {
       <Card>
         <CardHeader>
           <CardTitle>Date Range Picker</CardTitle>
-          <CardDescription>Select date ranges for bookings, reporting, and filtering</CardDescription>
+          <CardDescription>Select a range of dates</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Select Date Range</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !rangeDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {rangeDate?.from ? (
-                    rangeDate.to ? (
-                      <>
-                        {format(rangeDate.from, "LLL dd, y")} -{" "}
-                        {format(rangeDate.to, "LLL dd, y")}
-                      </>
-                    ) : (
-                      format(rangeDate.from, "LLL dd, y")
-                    )
-                  ) : (
-                    "Pick a date range"
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={rangeDate?.from}
-                  selected={rangeDate}
-                  onSelect={setRangeDate}
-                  numberOfMonths={2}
-                  className="pointer-events-auto"
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setRangeDate({
-                from: subDays(new Date(), 7),
-                to: new Date()
-              })}
-            >
-              Last 7 days
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setRangeDate({
-                from: subDays(new Date(), 30),
-                to: new Date()
-              })}
-            >
-              Last 30 days
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setRangeDate({
-                from: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                to: new Date()
-              })}
-            >
-              This month
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Advanced Features */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Advanced Features</CardTitle>
-          <CardDescription>Multiple dates, restrictions, and custom configurations</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <CardContent>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Multiple Dates (Max 5)</Label>
+              <Label>Select Date Range</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
-                      multipleDate.length === 0 && "text-muted-foreground"
+                      "w-[300px] justify-start text-left font-normal",
+                      !dateRange?.from && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {multipleDate.length > 0
-                      ? `${multipleDate.length} date${multipleDate.length > 1 ? 's' : ''} selected`
-                      : "Pick multiple dates"
-                    }
+                    {dateRange?.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "LLL dd, y")} -{" "}
+                          {format(dateRange.to, "LLL dd, y")}
+                        </>
+                      ) : (
+                        format(dateRange.from, "LLL dd, y")
+                      )
+                    ) : (
+                      <span>Pick a date range</span>
+                    )}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
-                    mode="multiple"
-                    selected={multipleDate}
-                    onSelect={(dates) => {
-                      if (dates && dates.length <= 5) {
-                        setMultipleDate(dates);
-                      }
-                    }}
                     initialFocus
+                    mode="range"
+                    defaultMonth={dateRange?.from}
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
                     className="pointer-events-auto"
                   />
                 </PopoverContent>
               </Popover>
-              {multipleDate.length > 0 && (
-                <div className="text-sm text-muted-foreground">
-                  Selected: {multipleDate.map(date => format(date, "MMM dd")).join(", ")}
-                </div>
-              )}
             </div>
+            {dateRange?.from && (
+              <div className="text-sm text-muted-foreground">
+                {dateRange.to 
+                  ? `Range: ${format(dateRange.from, "MMM dd")} - ${format(dateRange.to, "MMM dd, yyyy")}`
+                  : `Start: ${format(dateRange.from, "MMM dd, yyyy")}`
+                }
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
+      {/* Date Input with Validation */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Date of Birth Picker</CardTitle>
+          <CardDescription>Date picker with age restrictions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Restricted Dates (Weekends Disabled)</Label>
+              <Label>Date of Birth</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !restrictedDate && "text-muted-foreground"
+                      "w-[240px] justify-start text-left font-normal",
+                      !birthDate && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {restrictedDate ? format(restrictedDate, "PPP") : "Pick a weekday"}
+                    {birthDate ? format(birthDate, "PPP") : <span>Enter birth date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={restrictedDate}
-                    onSelect={setRestrictedDate}
-                    disabled={(date) => {
-                      const day = date.getDay();
-                      return day === 0 || day === 6; // Disable weekends
-                    }}
+                    selected={birthDate}
+                    onSelect={setBirthDate}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
                     initialFocus
                     className="pointer-events-auto"
                   />
                 </PopoverContent>
               </Popover>
             </div>
+            {birthDate && (
+              <div className="text-sm text-muted-foreground">
+                Age: {Math.floor((new Date().getTime() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000))} years old
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      {/* Form Integration */}
+      {/* Inline Calendar */}
       <Card>
         <CardHeader>
-          <CardTitle>Form Integration</CardTitle>
-          <CardDescription>Date picker integrated with form validation</CardDescription>
+          <CardTitle>Inline Calendar</CardTitle>
+          <CardDescription>Always visible calendar component</CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <FormField
-                  control={form.control}
-                  name="eventDate"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Event Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date < new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                            className="pointer-events-auto"
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormDescription>
-                        Select the date for your event
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="startTime"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Start Time</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select time" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="09:00">9:00 AM</SelectItem>
-                          <SelectItem value="10:00">10:00 AM</SelectItem>
-                          <SelectItem value="11:00">11:00 AM</SelectItem>
-                          <SelectItem value="12:00">12:00 PM</SelectItem>
-                          <SelectItem value="13:00">1:00 PM</SelectItem>
-                          <SelectItem value="14:00">2:00 PM</SelectItem>
-                          <SelectItem value="15:00">3:00 PM</SelectItem>
-                          <SelectItem value="16:00">4:00 PM</SelectItem>
-                          <SelectItem value="17:00">5:00 PM</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="endTime"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>End Time</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select time" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="10:00">10:00 AM</SelectItem>
-                          <SelectItem value="11:00">11:00 AM</SelectItem>
-                          <SelectItem value="12:00">12:00 PM</SelectItem>
-                          <SelectItem value="13:00">1:00 PM</SelectItem>
-                          <SelectItem value="14:00">2:00 PM</SelectItem>
-                          <SelectItem value="15:00">3:00 PM</SelectItem>
-                          <SelectItem value="16:00">4:00 PM</SelectItem>
-                          <SelectItem value="17:00">5:00 PM</SelectItem>
-                          <SelectItem value="18:00">6:00 PM</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="event-title">Event Title</Label>
-                  <Input id="event-title" placeholder="Enter event title" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input id="location" placeholder="Enter location" className="pl-9" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <Button type="submit">
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  Create Event
-                </Button>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </Form>
+          <div className="flex justify-center">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border"
+            />
+          </div>
         </CardContent>
       </Card>
 
-      {/* Usage Guidelines */}
+      {/* Multiple Date Selection */}
       <Card>
         <CardHeader>
-          <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for date picker implementation</CardDescription>
+          <CardTitle>Multiple Date Selection</CardTitle>
+          <CardDescription>Select multiple individual dates</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Select Multiple Dates</Label>
+              <div className="border rounded-lg p-4">
+                <Calendar
+                  mode="multiple"
+                  className="rounded-md"
+                />
+              </div>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              Useful for appointment scheduling, event planning, or availability selection.
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Date and Time Picker */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Date & Time Picker</CardTitle>
+          <CardDescription>Combined date and time selection</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PP") : <span>Pick date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              
+              <div className="space-y-2">
+                <Label>Time</Label>
+                <div className="relative">
+                  <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="time"
+                    className="pl-10"
+                    defaultValue="14:30"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-muted rounded-lg">
+              <div className="text-sm font-medium">Selected DateTime</div>
+              <div className="text-sm text-muted-foreground">
+                {date ? format(date, "EEEE, MMMM do, yyyy") : "No date selected"} at 2:30 PM
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Date Selection */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Date Shortcuts</CardTitle>
+          <CardDescription>Preset date options for common selections</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setDate(new Date())}
+              >
+                Today
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const tomorrow = new Date();
+                  tomorrow.setDate(tomorrow.getDate() + 1);
+                  setDate(tomorrow);
+                }}
+              >
+                Tomorrow
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const nextWeek = new Date();
+                  nextWeek.setDate(nextWeek.getDate() + 7);
+                  setDate(nextWeek);
+                }}
+              >
+                Next Week
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const nextMonth = new Date();
+                  nextMonth.setMonth(nextMonth.getMonth() + 1);
+                  setDate(nextMonth);
+                }}
+              >
+                Next Month
+              </Button>
+            </div>
+            
+            {date && (
+              <div className="p-3 bg-muted rounded-lg">
+                <div className="text-sm">
+                  Selected: {format(date, "EEEE, MMMM do, yyyy")}
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Guidelines */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Date Picker Guidelines</CardTitle>
+          <CardDescription>Best practices for date selection components</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="font-medium text-success">Best Practices</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Use clear date format displays</li>
+                <li>• Use appropriate date formats for locale</li>
                 <li>• Provide keyboard navigation support</li>
-                <li>• Include helpful presets for common selections</li>
-                <li>• Validate date ranges and restrictions</li>
+                <li>• Set reasonable date constraints</li>
+                <li>• Include clear visual feedback</li>
                 <li>• Consider timezone implications</li>
-                <li>• Test across different locales</li>
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-medium text-warning">Accessibility</h4>
+              <h4 className="font-medium text-info">Accessibility</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Ensure calendar is keyboard navigable</li>
-                <li>• Provide proper ARIA labels</li>
-                <li>• Support screen reader announcements</li>
-                <li>• Include date format instructions</li>
-                <li>• Test with assistive technologies</li>
-                <li>• Use semantic HTML structure</li>
+                <li>• Support screen readers</li>
+                <li>• Provide keyboard shortcuts</li>
+                <li>• Use proper ARIA labels</li>
+                <li>• Ensure sufficient color contrast</li>
+                <li>• Allow manual date input</li>
               </ul>
             </div>
           </div>

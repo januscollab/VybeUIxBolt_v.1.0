@@ -1,63 +1,37 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Copy, Figma, FileCode, Upload, File, X, Check, AlertCircle } from "lucide-react";
-import { useState, useRef } from "react";
-import { toast } from "@/hooks/use-toast";
+import { Upload, File, X, Check, AlertCircle, Image, FileText } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function FileUploadShowcase() {
-  const [dragActive, setDragActive] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [showCode, setShowCode] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<Array<{
+    name: string;
+    size: string;
+    type: string;
+    status: 'success' | 'error';
+  }>>([]);
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "Code example has been copied to your clipboard.",
-    });
-  };
-
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFiles(Array.from(e.dataTransfer.files));
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      handleFiles(Array.from(e.target.files));
-    }
-  };
-
-  const handleFiles = (fileList: File[]) => {
-    setFiles(prev => [...prev, ...fileList]);
-    // Simulate upload progress
+  const handleFileUpload = () => {
+    setIsUploading(true);
     setUploadProgress(0);
+    
     const interval = setInterval(() => {
       setUploadProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval);
+          setIsUploading(false);
+          setUploadedFiles(prev => [...prev, {
+            name: "document.pdf",
+            size: "2.5 MB",
+            type: "application/pdf",
+            status: 'success'
+          }]);
           return 100;
         }
         return prev + 10;
@@ -66,258 +40,205 @@ export default function FileUploadShowcase() {
   };
 
   const removeFile = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index));
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  const getFileIcon = (type: string) => {
+    if (type.startsWith('image/')) return <Image className="h-4 w-4" />;
+    return <FileText className="h-4 w-4" />;
   };
-
-  const codeExample = `const [files, setFiles] = useState<File[]>([]);
-const [dragActive, setDragActive] = useState(false);
-
-const handleDrop = (e: React.DragEvent) => {
-  e.preventDefault();
-  setDragActive(false);
-  if (e.dataTransfer.files) {
-    setFiles(Array.from(e.dataTransfer.files));
-  }
-};
-
-<div
-  className={cn(
-    "border-2 border-dashed rounded-lg p-6 text-center",
-    dragActive ? "border-primary bg-primary/5" : "border-muted-foreground/25"
-  )}
-  onDragEnter={handleDrag}
-  onDragLeave={handleDrag}
-  onDragOver={handleDrag}
-  onDrop={handleDrop}
->
-  <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
-  <p>Drag and drop files here, or click to select</p>
-</div>`;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold">File Upload</h1>
-            <p className="text-lg text-muted-foreground">
-              Upload files with drag-and-drop support, progress indicators, and validation.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" asChild>
-              <a href="https://www.figma.com/design" target="_blank" rel="noopener noreferrer">
-                <Figma className="h-4 w-4 mr-2" />
-                Figma
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="#storybook" target="_blank" rel="noopener noreferrer">
-                <FileCode className="h-4 w-4 mr-2" />
-                Storybook
-              </a>
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold">File Upload</h1>
           <Badge variant="default">Stable</Badge>
-          <Badge variant="outline">File Handling</Badge>
-          <Badge variant="outline">Supabase Storage</Badge>
         </div>
+        <p className="text-lg text-muted-foreground">
+          Drag and drop file upload components with progress tracking and validation.
+        </p>
       </div>
 
-      {/* Drag and Drop Upload */}
+      {/* Basic File Upload */}
       <Card>
         <CardHeader>
-          <CardTitle>Drag and Drop Upload</CardTitle>
-          <CardDescription>Upload files by dragging and dropping or clicking to select</CardDescription>
+          <CardTitle>Basic File Upload</CardTitle>
+          <CardDescription>Simple drag and drop file uploader</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                dragActive 
-                  ? "border-primary bg-primary/5" 
-                  : "border-muted-foreground/25 hover:border-muted-foreground/50"
-              }`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-lg font-medium mb-2">Drop files here to upload</p>
-              <p className="text-muted-foreground mb-4">or click to browse</p>
-              <Button variant="outline" size="sm">
-                Select Files
-              </Button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                onChange={handleChange}
-                className="hidden"
-              />
-            </div>
+        <CardContent>
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-muted-foreground/50 transition-colors cursor-pointer group">
+            <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4 group-hover:text-muted-foreground/80" />
+            <h3 className="text-lg font-semibold mb-2">Drop files here to upload</h3>
+            <p className="text-muted-foreground mb-4">
+              or click to browse your computer
+            </p>
+            <Button variant="outline">
+              Choose Files
+            </Button>
+            <p className="text-xs text-muted-foreground mt-4">
+              Supports JPG, PNG, PDF up to 10MB
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
-            {files.length > 0 && (
-              <div className="mt-6 space-y-3">
-                <h4 className="font-medium">Uploaded Files:</h4>
-                {files.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg bg-background">
-                    <div className="flex items-center gap-3">
-                      <File className="h-5 w-5 text-muted-foreground" />
-                      <div>
-                        <p className="font-medium">{file.name}</p>
-                        <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {uploadProgress === 100 ? (
-                        <Check className="h-5 w-5 text-green-500" />
-                      ) : (
-                        <div className="w-20">
-                          <Progress value={uploadProgress} className="h-2" />
-                        </div>
-                      )}
-                      <Button variant="ghost" size="sm" onClick={() => removeFile(index)}>
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+      {/* File Upload with Progress */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Upload with Progress</CardTitle>
+          <CardDescription>File upload with progress indicator</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+            <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+            <p className="text-sm font-medium mb-2">Upload your files</p>
+            <Button onClick={handleFileUpload} disabled={isUploading}>
+              {isUploading ? "Uploading..." : "Select Files"}
+            </Button>
+          </div>
+          
+          {isUploading && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span>Uploading document.pdf</span>
+                <span>{uploadProgress}%</span>
               </div>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium">Code Example</h4>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCode(!showCode)}
-              >
-                {showCode ? "Hide" : "Show"} Code
-              </Button>
-              {showCode && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(codeExample)}
-                >
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </Button>
-              )}
+              <Progress value={uploadProgress} className="w-full" />
             </div>
-          </div>
-          {showCode && (
-            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
-              <code>{codeExample}</code>
-            </pre>
           )}
         </CardContent>
       </Card>
 
-      {/* Simple File Input */}
+      {/* Multiple File Upload */}
       <Card>
         <CardHeader>
-          <CardTitle>Simple File Input</CardTitle>
-          <CardDescription>Basic file input with custom styling</CardDescription>
+          <CardTitle>Multiple File Management</CardTitle>
+          <CardDescription>Upload and manage multiple files</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="file-upload">Choose file</Label>
-                <Input id="file-upload" type="file" className="mt-2" />
-              </div>
-              
-              <div>
-                <Label htmlFor="multiple-files">Choose multiple files</Label>
-                <Input id="multiple-files" type="file" multiple className="mt-2" />
-              </div>
-              
-              <div>
-                <Label htmlFor="image-only">Images only</Label>
-                <Input id="image-only" type="file" accept="image/*" className="mt-2" />
-              </div>
-            </div>
+        <CardContent className="space-y-4">
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+            <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+            <p className="text-sm font-medium mb-2">Drop multiple files here</p>
+            <Button variant="outline" size="sm">
+              Browse Files
+            </Button>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* File Validation */}
-      <Card>
-        <CardHeader>
-          <CardTitle>File Validation</CardTitle>
-          <CardDescription>Upload with file type and size restrictions</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50">
-            <div className="space-y-4">
-              <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
-                <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-3" />
-                <p className="font-medium mb-2">Upload Documents</p>
-                <p className="text-sm text-muted-foreground mb-3">
-                  PDF, DOC, DOCX up to 10MB
-                </p>
-                <Button variant="outline" size="sm">
-                  Browse Files
-                </Button>
-              </div>
-              
-              <div className="flex items-start gap-3 p-3 border border-red-200 bg-red-50 rounded-lg dark:border-red-800 dark:bg-red-950/20">
-                <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
-                <div>
-                  <p className="font-medium text-red-800 dark:text-red-200">Invalid file type</p>
-                  <p className="text-sm text-red-600 dark:text-red-300">Please upload a PDF, DOC, or DOCX file.</p>
+          {uploadedFiles.length > 0 && (
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium">Uploaded Files</h4>
+              {uploadedFiles.map((file, index) => (
+                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div className="flex items-center gap-3">
+                    {getFileIcon(file.type)}
+                    <div>
+                      <div className="text-sm font-medium">{file.name}</div>
+                      <div className="text-xs text-muted-foreground">{file.size}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {file.status === 'success' ? (
+                      <Check className="h-4 w-4 text-success" />
+                    ) : (
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeFile(index)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* File Upload with Validation */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Upload with Validation</CardTitle>
+          <CardDescription>File validation and error handling</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+            <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+            <p className="text-sm font-medium mb-2">Upload images only</p>
+            <Button variant="outline" size="sm">
+              Select Images
+            </Button>
+            <p className="text-xs text-muted-foreground mt-2">
+              JPG, PNG, GIF up to 5MB each
+            </p>
+          </div>
+
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              File "document.pdf" was rejected. Only image files are allowed.
+            </AlertDescription>
+          </Alert>
+
+          <Alert className="border-success/20 bg-success/5">
+            <Check className="h-4 w-4 text-success" />
+            <AlertDescription className="text-success">
+              Successfully uploaded 3 images.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+
+      {/* Compact File Upload */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Compact Upload</CardTitle>
+          <CardDescription>Space-efficient file upload component</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-4 p-4 border border-dashed rounded-lg">
+            <Upload className="h-5 w-5 text-muted-foreground" />
+            <div className="flex-1">
+              <p className="text-sm font-medium">Drag files here or</p>
+              <p className="text-xs text-muted-foreground">Maximum file size: 10MB</p>
+            </div>
+            <Button size="sm" variant="outline">
+              Browse
+            </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Usage Guidelines */}
+      {/* Guidelines */}
       <Card>
         <CardHeader>
-          <CardTitle>Usage Guidelines</CardTitle>
-          <CardDescription>Best practices for file upload implementation</CardDescription>
+          <CardTitle>Upload Guidelines</CardTitle>
+          <CardDescription>Best practices for file upload components</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <h4 className="font-medium text-success">Best Practices</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Provide clear file type restrictions</li>
-                <li>• Show upload progress for large files</li>
-                <li>• Allow multiple upload methods</li>
-                <li>• Validate files on client and server</li>
-                <li>• Provide meaningful error messages</li>
-                <li>• Support drag and drop for better UX</li>
+                <li>• Clearly indicate accepted file types</li>
+                <li>• Show file size limits</li>
+                <li>• Provide visual upload progress</li>
+                <li>• Allow drag and drop interaction</li>
+                <li>• Include file preview when possible</li>
               </ul>
             </div>
             <div className="space-y-3">
-              <h4 className="font-medium text-warning">Considerations</h4>
+              <h4 className="font-medium text-info">Error Handling</h4>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Set appropriate file size limits</li>
-                <li>• Handle upload failures gracefully</li>
-                <li>• Provide preview for image uploads</li>
-                <li>• Consider chunked uploads for large files</li>
-                <li>• Implement virus scanning for security</li>
-                <li>• Store files securely with proper access controls</li>
+                <li>• Validate file types and sizes</li>
+                <li>• Show clear error messages</li>
+                <li>• Allow users to remove files</li>
+                <li>• Handle network failures gracefully</li>
+                <li>• Provide retry mechanisms</li>
               </ul>
             </div>
           </div>

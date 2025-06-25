@@ -205,13 +205,24 @@ export const components: Component[] = [
     updated_at: new Date().toISOString()
   },
   {
+    id: 'multi-select',
+    name: 'Multi Select',
+    slug: 'multi-select',
+    description: 'Multiple option selection component with search and filtering',
+    category_id: '2',
+    status: 'stable',
+    sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
     id: 'badge',
     name: 'Badge',
     slug: 'badge',
     description: 'Small status and labeling component',
     category_id: '2',
     status: 'stable',
-    sort_order: 4,
+    sort_order: 5,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -222,7 +233,7 @@ export const components: Component[] = [
     description: 'Container component for grouping content',
     category_id: '2',
     status: 'stable',
-    sort_order: 5,
+    sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -233,7 +244,7 @@ export const components: Component[] = [
     description: 'User profile image or initials display',
     category_id: '2',
     status: 'stable',
-    sort_order: 6,
+    sort_order: 7,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -244,7 +255,7 @@ export const components: Component[] = [
     description: 'Visual progress indicator',
     category_id: '2',
     status: 'stable',
-    sort_order: 7,
+    sort_order: 8,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -255,7 +266,7 @@ export const components: Component[] = [
     description: 'Range input control',
     category_id: '2',
     status: 'stable',
-    sort_order: 8,
+    sort_order: 9,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -266,7 +277,7 @@ export const components: Component[] = [
     description: 'Boolean input control',
     category_id: '2',
     status: 'stable',
-    sort_order: 9,
+    sort_order: 10,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -277,7 +288,7 @@ export const components: Component[] = [
     description: 'On/off toggle control',
     category_id: '2',
     status: 'stable',
-    sort_order: 10,
+    sort_order: 11,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -288,7 +299,7 @@ export const components: Component[] = [
     description: 'Multi-line text input',
     category_id: '2',
     status: 'stable',
-    sort_order: 11,
+    sort_order: 12,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -299,7 +310,7 @@ export const components: Component[] = [
     description: 'Single selection from multiple options',
     category_id: '2',
     status: 'stable',
-    sort_order: 12,
+    sort_order: 13,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -310,7 +321,7 @@ export const components: Component[] = [
     description: 'Loading state indicator',
     category_id: '2',
     status: 'stable',
-    sort_order: 13,
+    sort_order: 14,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -321,7 +332,7 @@ export const components: Component[] = [
     description: 'Contextual information overlay',
     category_id: '2',
     status: 'stable',
-    sort_order: 14,
+    sort_order: 15,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -332,7 +343,7 @@ export const components: Component[] = [
     description: 'Floating content container',
     category_id: '2',
     status: 'stable',
-    sort_order: 15,
+    sort_order: 16,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -343,7 +354,7 @@ export const components: Component[] = [
     description: 'Collapsible content sections',
     category_id: '2',
     status: 'stable',
-    sort_order: 16,
+    sort_order: 17,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -354,7 +365,7 @@ export const components: Component[] = [
     description: 'Content separator',
     category_id: '2',
     status: 'stable',
-    sort_order: 17,
+    sort_order: 18,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -365,7 +376,7 @@ export const components: Component[] = [
     description: 'Structured data display',
     category_id: '2',
     status: 'stable',
-    sort_order: 18,
+    sort_order: 19,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -376,7 +387,7 @@ export const components: Component[] = [
     description: 'Right-click activated contextual menu',
     category_id: '2',
     status: 'stable',
-    sort_order: 19,
+    sort_order: 20,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -387,7 +398,7 @@ export const components: Component[] = [
     description: 'Helpful placeholders when there\'s no content',
     category_id: '2',
     status: 'stable',
-    sort_order: 20,
+    sort_order: 21,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -398,7 +409,7 @@ export const components: Component[] = [
     description: 'Modal dialogs with various interaction patterns',
     category_id: '2',
     status: 'stable',
-    sort_order: 21,
+    sort_order: 22,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -513,6 +524,28 @@ export const components: Component[] = [
     category_id: '4',
     status: 'stable',
     sort_order: 4,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'grid-system',
+    name: 'Grid System',
+    slug: 'grid-system',
+    description: 'Responsive grid layouts with CSS Grid',
+    category_id: '4',
+    status: 'stable',
+    sort_order: 5,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'flexbox',
+    name: 'Flexbox Layouts',
+    slug: 'flexbox',
+    description: 'Flexible box layouts for dynamic content arrangement',
+    category_id: '4',
+    status: 'stable',
+    sort_order: 6,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },

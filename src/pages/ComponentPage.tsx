@@ -51,6 +51,15 @@ import CodeBlockShowcase from "@/components/showcase/CodeBlockShowcase";
 import PhoneInputShowcase from "@/components/showcase/PhoneInputShowcase";
 import BannerShowcase from "@/components/showcase/BannerShowcase";
 import ContainerShowcase from "@/components/showcase/ContainerShowcase";
+import ContextMenuShowcase from "@/components/showcase/ContextMenuShowcase";
+import EmptyStateShowcase from "@/components/showcase/EmptyStateShowcase";
+import ModalShowcase from "@/components/showcase/ModalShowcase";
+import FileUploadShowcase from "@/components/showcase/FileUploadShowcase";
+import DatePickerShowcase from "@/components/showcase/DatePickerShowcase";
+import MultiSelectShowcase from "@/components/showcase/MultiSelectShowcase";
+import TimelineShowcase from "@/components/showcase/TimelineShowcase";
+import GridSystemShowcase from "@/components/showcase/GridSystemShowcase";
+import FlexboxShowcase from "@/components/showcase/FlexboxShowcase";
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -88,6 +97,8 @@ export default function ComponentPage() {
         return <InputShowcase />;
       case 'select-dropdown':
         return <SelectDropdownShowcase />;
+      case 'multi-select':
+        return <MultiSelectShowcase />;
       case 'badge':
         return <BadgeShowcase />;
       case 'card':
@@ -147,6 +158,18 @@ export default function ComponentPage() {
       case 'phone-input':
       case 'phone':
         return <PhoneInputShowcase />;
+      case 'context-menu':
+        return <ContextMenuShowcase />;
+      case 'empty-state':
+        return <EmptyStateShowcase />;
+      case 'modal-dialog':
+      case 'modal':
+      case 'dialog':
+        return <ModalShowcase />;
+      case 'file-upload':
+        return <FileUploadShowcase />;
+      case 'date-picker':
+        return <DatePickerShowcase />;
       
       // Navigation
       case 'navigation':
@@ -159,6 +182,16 @@ export default function ComponentPage() {
       case 'table':
       case 'data-table':
         return <TableShowcase />;
+      case 'banner':
+        return <BannerShowcase />;
+      case 'container':
+        return <ContainerShowcase />;
+      case 'timeline':
+        return <TimelineShowcase />;
+      case 'grid-system':
+        return <GridSystemShowcase />;
+      case 'flexbox':
+        return <FlexboxShowcase />;
       
       // Feedback & Messaging
       case 'alert':
@@ -166,11 +199,6 @@ export default function ComponentPage() {
       case 'toast-notification':
       case 'skeleton':
         return <FeedbackShowcase />;
-      
-      case 'banner':
-        return <BannerShowcase />;
-      case 'container':
-        return <ContainerShowcase />;
       
       default:
         return null;
