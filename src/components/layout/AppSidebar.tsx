@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { 
   Palette, 
@@ -46,7 +45,6 @@ const categoryIcons = {
   'content-layout': Layout,
   'forms': FileText,
   'feedback': MessageSquare,
-  'rich-text-editor': Edit,
   'experimental': Beaker,
 };
 

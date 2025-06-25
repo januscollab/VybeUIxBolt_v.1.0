@@ -53,7 +53,7 @@ export const STATIC_CATEGORIES: Category[] = [
     name: 'Core UI',
     slug: 'core-ui',
     description: 'Essential interface components for building consistent user experiences.',
-    component_count: 28,
+    component_count: 8,
     is_experimental: false,
     sort_order: 2
   },
@@ -62,7 +62,7 @@ export const STATIC_CATEGORIES: Category[] = [
     name: 'Navigation',
     slug: 'navigation', 
     description: 'Navigation patterns and wayfinding components for intuitive user journeys.',
-    component_count: 6,
+    component_count: 9,
     is_experimental: false,
     sort_order: 3
   },
@@ -86,17 +86,26 @@ export const STATIC_CATEGORIES: Category[] = [
   },
   {
     id: '6',
+    name: 'Feedback',
+    slug: 'feedback',
+    description: 'User feedback components including notifications, alerts, and status indicators.',
+    component_count: 9,
+    is_experimental: false,
+    sort_order: 6
+  },
+  {
+    id: '7',
     name: 'Experimental',
     slug: 'experimental',
     description: 'Cutting-edge components and experimental patterns pushing the boundaries of design.',
     component_count: 2,
     is_experimental: true,
-    sort_order: 6
+    sort_order: 7
   }
 ];
 
 export const STATIC_COMPONENTS: Component[] = [
-  // Foundations
+  // Foundations (6 components)
   {
     id: '1',
     name: 'Color Palette',
@@ -164,45 +173,12 @@ export const STATIC_COMPONENTS: Component[] = [
     documentation: []
   },
   
-  // Core UI Components (Stable)
+  // Core UI Components (8 components)
   {
     id: '7',
     name: 'Button',
     slug: 'button',
     description: 'Interactive button component with multiple variants, sizes, and states.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '8',
-    name: 'Input Field',
-    slug: 'input',
-    description: 'Text input component with validation, labels, and various input types.',
-    category_id: '2', 
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '9',
-    name: 'Select Dropdown',
-    slug: 'select-dropdown',
-    description: 'Dropdown selection component with search and multi-select capabilities.',
-    category_id: '2',
-    status: 'stable', 
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '10',
-    name: 'Multi Select',
-    slug: 'multi-select',
-    description: 'Multi-selection dropdown with tags and filtering capabilities.',
     category_id: '2',
     status: 'stable',
     is_experimental: false,
@@ -221,87 +197,10 @@ export const STATIC_COMPONENTS: Component[] = [
     documentation: []
   },
   {
-    id: '12',
-    name: 'Card',
-    slug: 'card',
-    description: 'Content card component with headers, actions, and flexible layouts.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '13',
-    name: 'Form',
-    slug: 'form',
-    description: 'Form wrapper component with validation and submission handling.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '14',
-    name: 'Form Field',
-    slug: 'form-field',
-    description: 'Structured form field with label, input, and error handling.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '15',
-    name: 'Checkbox',
-    slug: 'checkbox',
-    description: 'Checkbox input with custom styling and validation.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '16',
-    name: 'Switch Toggle',
-    slug: 'switch-toggle',
-    description: 'Toggle switch component for binary choices.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '17',
-    name: 'Textarea',
-    slug: 'textarea',
-    description: 'Multi-line text input with auto-resize and character counting.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
     id: '18',
     name: 'Avatar',
     slug: 'avatar',
     description: 'User avatar component with fallbacks and status indicators.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '19',
-    name: 'Progress Bar',
-    slug: 'progress-bar',
-    description: 'Progress indicator with various styles and animations.',
     category_id: '2',
     status: 'stable',
     is_experimental: false,
@@ -320,10 +219,10 @@ export const STATIC_COMPONENTS: Component[] = [
     documentation: []
   },
   {
-    id: '21',
-    name: 'Search Bar',
-    slug: 'search-bar',
-    description: 'Search input with autocomplete and filtering capabilities.',
+    id: '34',
+    name: 'Code Block',
+    slug: 'code-block',
+    description: 'Formatted code display with syntax highlighting.',
     category_id: '2',
     status: 'stable',
     is_experimental: false,
@@ -331,65 +230,10 @@ export const STATIC_COMPONENTS: Component[] = [
     documentation: []
   },
   {
-    id: '22',
-    name: 'Sidebar',
-    slug: 'sidebar',
-    description: 'Collapsible sidebar navigation with menu items.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '23',
-    name: 'Command Menu',
-    slug: 'command-menu',
-    description: 'Command palette for quick actions and navigation.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '24',
-    name: 'Steps Stepper',
-    slug: 'steps-stepper',
-    description: 'Multi-step process indicator with progress tracking.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '25',
-    name: 'AI Palette',
-    slug: 'ai-command-palette',
-    description: 'AI-powered command palette with intelligent suggestions.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '26',
-    name: 'Breadcrumb',
-    slug: 'breadcrumb',
-    description: 'Navigation breadcrumb trail for hierarchical content.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '27',
-    name: 'Accordion',
-    slug: 'accordion',
-    description: 'Collapsible content sections with smooth animations.',
+    id: '38',
+    name: 'Context Menu',
+    slug: 'context-menu',
+    description: 'Menu that appears on right-click or long-press.',
     category_id: '2',
     status: 'stable',
     is_experimental: false,
@@ -418,184 +262,8 @@ export const STATIC_COMPONENTS: Component[] = [
     variants: [],
     documentation: []
   },
-  {
-    id: '30',
-    name: 'List',
-    slug: 'list',
-    description: 'Structured list component with various item types.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '31',
-    name: 'Divider',
-    slug: 'divider',
-    description: 'Visual divider to separate content sections.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '32',
-    name: 'Radio Button',
-    slug: 'radio-button',
-    description: 'Radio button for single choice selection.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '33',
-    name: 'Loading Spinner',
-    slug: 'loading-spinner',
-    description: 'Animated spinner to indicate loading state.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '34',
-    name: 'Code Block',
-    slug: 'code-block',
-    description: 'Formatted code display with syntax highlighting.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '35',
-    name: 'Phone Input',
-    slug: 'phone-input',
-    description: 'International phone number input with country code selection.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '36',
-    name: 'Banner',
-    slug: 'banner',
-    description: 'Promotional banner with customizable content and actions.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '37',
-    name: 'Container',
-    slug: 'container',
-    description: 'Layout container for consistent content alignment and spacing.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '38',
-    name: 'Context Menu',
-    slug: 'context-menu',
-    description: 'Menu that appears on right-click or long-press.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '39',
-    name: 'Empty State',
-    slug: 'empty-state',
-    description: 'Visual representation for empty data sets or missing content.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '40',
-    name: 'Modal Dialog',
-    slug: 'modal-dialog',
-    description: 'Overlay window for focused interactions and notifications.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '41',
-    name: 'File Upload',
-    slug: 'file-upload',
-    description: 'Component for uploading files with progress tracking.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '42',
-    name: 'Date Picker',
-    slug: 'date-picker',
-    description: 'Calendar-based date selection component.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '43',
-    name: 'Timeline',
-    slug: 'timeline',
-    description: 'Component to display a series of events in chronological order.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '44',
-    name: 'Grid System',
-    slug: 'grid-system',
-    description: 'Responsive grid layouts built with CSS Grid.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
-  {
-    id: '45',
-    name: 'Flexbox',
-    slug: 'flexbox',
-    description: 'Utilities for creating flexible and responsive layouts with Flexbox.',
-    category_id: '2',
-    status: 'stable',
-    is_experimental: false,
-    variants: [],
-    documentation: []
-  },
 
-  // Navigation Components (Stable)
+  // Navigation Components (9 components)
   {
     id: '46',
     name: 'Navigation Menu',
@@ -629,8 +297,74 @@ export const STATIC_COMPONENTS: Component[] = [
     variants: [],
     documentation: []
   },
+  {
+    id: '26',
+    name: 'Breadcrumb',
+    slug: 'breadcrumb',
+    description: 'Navigation breadcrumb trail for hierarchical content.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '22',
+    name: 'Sidebar',
+    slug: 'sidebar',
+    description: 'Collapsible sidebar navigation with menu items.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '23',
+    name: 'Command Menu',
+    slug: 'command-menu',
+    description: 'Command palette for quick actions and navigation.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '25',
+    name: 'AI Palette',
+    slug: 'ai-command-palette',
+    description: 'AI-powered command palette with intelligent suggestions.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '21',
+    name: 'Search Bar',
+    slug: 'search-bar',
+    description: 'Search input with autocomplete and filtering capabilities.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '24',
+    name: 'Steps Stepper',
+    slug: 'steps-stepper',
+    description: 'Multi-step process indicator with progress tracking.',
+    category_id: '3',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
 
-  // Content & Layout Components (Stable)
+  // Content & Layout Components (8 components)
   {
     id: '49',
     name: 'Table',
@@ -642,14 +376,225 @@ export const STATIC_COMPONENTS: Component[] = [
     variants: [],
     documentation: []
   },
+  {
+    id: '12',
+    name: 'Card',
+    slug: 'card',
+    description: 'Content card component with headers, actions, and flexible layouts.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '37',
+    name: 'Container',
+    slug: 'container',
+    description: 'Layout container for consistent content alignment and spacing.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '44',
+    name: 'Grid System',
+    slug: 'grid-system',
+    description: 'Responsive grid layouts built with CSS Grid.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '45',
+    name: 'Flexbox',
+    slug: 'flexbox',
+    description: 'Utilities for creating flexible and responsive layouts with Flexbox.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '30',
+    name: 'List',
+    slug: 'list',
+    description: 'Structured list component with various item types.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '31',
+    name: 'Divider',
+    slug: 'divider',
+    description: 'Visual divider to separate content sections.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '43',
+    name: 'Timeline',
+    slug: 'timeline',
+    description: 'Component to display a series of events in chronological order.',
+    category_id: '4',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
 
-  // Form Components (Stable)
+  // Form Components (12 components)
+  {
+    id: '8',
+    name: 'Input Field',
+    slug: 'input',
+    description: 'Text input component with validation, labels, and various input types.',
+    category_id: '5', 
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '13',
+    name: 'Form',
+    slug: 'form',
+    description: 'Form wrapper component with validation and submission handling.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '14',
+    name: 'Form Field',
+    slug: 'form-field',
+    description: 'Structured form field with label, input, and error handling.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '17',
+    name: 'Textarea',
+    slug: 'textarea',
+    description: 'Multi-line text input with auto-resize and character counting.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '15',
+    name: 'Checkbox',
+    slug: 'checkbox',
+    description: 'Checkbox input with custom styling and validation.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '32',
+    name: 'Radio Button',
+    slug: 'radio-button',
+    description: 'Radio button for single choice selection.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '16',
+    name: 'Switch Toggle',
+    slug: 'switch-toggle',
+    description: 'Toggle switch component for binary choices.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '9',
+    name: 'Select Dropdown',
+    slug: 'select-dropdown',
+    description: 'Dropdown selection component with search and multi-select capabilities.',
+    category_id: '5',
+    status: 'stable', 
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '10',
+    name: 'Multi Select',
+    slug: 'multi-select',
+    description: 'Multi-selection dropdown with tags and filtering capabilities.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '42',
+    name: 'Date Picker',
+    slug: 'date-picker',
+    description: 'Calendar-based date selection component.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '35',
+    name: 'Phone Input',
+    slug: 'phone-input',
+    description: 'International phone number input with country code selection.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '41',
+    name: 'File Upload',
+    slug: 'file-upload',
+    description: 'Component for uploading files with progress tracking.',
+    category_id: '5',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+
+  // Feedback Components (9 components)
   {
     id: '50',
     name: 'Alert',
     slug: 'alert',
     description: 'Notification banner for important messages and status updates.',
-    category_id: '5',
+    category_id: '6',
     status: 'stable',
     is_experimental: false,
     variants: [],
@@ -660,7 +605,62 @@ export const STATIC_COMPONENTS: Component[] = [
     name: 'Toast Notification',
     slug: 'toast',
     description: 'Non-intrusive notification for brief status updates and messages.',
-    category_id: '5',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '40',
+    name: 'Modal Dialog',
+    slug: 'modal-dialog',
+    description: 'Overlay window for focused interactions and notifications.',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '33',
+    name: 'Loading Spinner',
+    slug: 'loading-spinner',
+    description: 'Animated spinner to indicate loading state.',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '19',
+    name: 'Progress Bar',
+    slug: 'progress-bar',
+    description: 'Progress indicator with various styles and animations.',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '36',
+    name: 'Banner',
+    slug: 'banner',
+    description: 'Promotional banner with customizable content and actions.',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '39',
+    name: 'Empty State',
+    slug: 'empty-state',
+    description: 'Visual representation for empty data sets or missing content.',
+    category_id: '6',
     status: 'stable',
     is_experimental: false,
     variants: [],
@@ -671,20 +671,31 @@ export const STATIC_COMPONENTS: Component[] = [
     name: 'Skeleton',
     slug: 'skeleton',
     description: 'Placeholder UI for indicating loading state.',
-    category_id: '5',
+    category_id: '6',
+    status: 'stable',
+    is_experimental: false,
+    variants: [],
+    documentation: []
+  },
+  {
+    id: '27',
+    name: 'Accordion',
+    slug: 'accordion',
+    description: 'Collapsible content sections with smooth animations.',
+    category_id: '6',
     status: 'stable',
     is_experimental: false,
     variants: [],
     documentation: []
   },
 
-  // Experimental Components
+  // Experimental Components (2 components)
   {
     id: '53',
     name: 'Workflow Builder',
     slug: 'workflow-builder',
     description: 'Visual interface for creating and managing automated workflows.',
-    category_id: '6',
+    category_id: '7',
     status: 'review',
     is_experimental: true,
     variants: [],
@@ -695,7 +706,7 @@ export const STATIC_COMPONENTS: Component[] = [
     name: 'Collaboration Panel',
     slug: 'collaboration-panel',
     description: 'Real-time collaboration interface with user presence and activity tracking.',
-    category_id: '6',
+    category_id: '7',
     status: 'backlog',
     is_experimental: true,
     variants: [],
