@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -51,14 +52,14 @@ export default function DocumentationPage() {
     }
   };
 
-  const installationCode = `npm install @vybeui/vybeui-design-system
+  const installationCode = `npm install @vybeui/design-system
 # or
-yarn add @vybeui/vybeui-design-system
+yarn add @vybeui/design-system
 # or
-pnpm add @vybeui/vybeui-design-system`;
+pnpm add @vybeui/design-system`;
 
-  const reactUsage = `import { Button, Card, Input } from '@vybeui/vybeui-design-system';
-import '@vybeui/vybeui-design-system/styles.css';
+  const reactUsage = `import { Button, Card, Input } from '@vybeui/design-system';
+import '@vybeui/design-system/styles.css';
 
 export function MyComponent() {
   return (
@@ -83,7 +84,7 @@ export function MyComponent() {
 </template>
 
 <script>
-import { VybeCard, VybeInput, VybeButton } from '@vybeui/vybeui-design-system/vue';
+import { VybeCard, VybeInput, VybeButton } from '@vybeui/design-system/vue';
 
 export default {
   components: {
@@ -97,7 +98,7 @@ export default {
   const htmlUsage = `<!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/@vybeui/vybeui-design-system/dist/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/@vybeui/design-system/dist/styles.css">
 </head>
 <body>
   <div class="vybe-card p-6">
@@ -107,7 +108,7 @@ export default {
     </button>
   </div>
 
-  <script src="https://unpkg.com/@vybeui/vybeui-design-system/dist/vybe.min.js"></script>
+  <script src="https://unpkg.com/@vybeui/design-system/dist/vybe.min.js"></script>
 </body>
 </html>`;
 
@@ -115,7 +116,7 @@ export default {
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@vybeui/vybeui-design-system/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@vybeui/design-system/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -178,16 +179,16 @@ module.exports = {
   const nextjsSetup = `// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@vybeui/vybeui-design-system'],
+  transpilePackages: ['@vybeui/design-system'],
   experimental: {
-    optimizePackageImports: ['@vybeui/vybeui-design-system']
+    optimizePackageImports: ['@vybeui/design-system']
   }
 }
 
 module.exports = nextConfig
 
 // pages/_app.js or app/layout.js
-import '@vybeui/vybeui-design-system/styles.css'
+import '@vybeui/design-system/styles.css'
 
 export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
@@ -200,12 +201,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['@vybeui/vybeui-design-system'],
+    include: ['@vybeui/design-system'],
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: \`@import "@vybeui/vybeui-design-system/tokens";\`
+        additionalData: \`@import "@vybeui/design-system/tokens";\`
       }
     }
   }
@@ -221,7 +222,7 @@ import {
   Input,
   Badge,
   Alert
-} from '@vybeui/vybeui-design-system';
+} from '@vybeui/design-system';
 
 export function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -302,7 +303,7 @@ export function UserProfile() {
         </Button>
         <Button 
           variant="outline"
-          onClick={() => window.open('https://github.com/vybeui/vybeui-design-system', '_blank')}
+          onClick={() => window.open('https://github.com/vybeui/design-system', '_blank')}
         >
           <ExternalLink className="h-4 w-4 mr-2" />
           View on GitHub
