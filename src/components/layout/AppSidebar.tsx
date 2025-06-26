@@ -213,7 +213,7 @@ export function AppSidebar() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-8 w-8 p-0 ml-1 hover:bg-accent"
+                                className="h-8 w-8 p-0 ml-1 hover:bg-accent flex items-center justify-center"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
