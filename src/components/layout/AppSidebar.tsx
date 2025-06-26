@@ -221,7 +221,7 @@ export function AppSidebar() {
                               >
                                 <ChevronRight 
                                   className={`h-3 w-3 transition-transform duration-200 ${
-                                    isExpanded ? 'rotate-90' : ''
+                                    isExpanded ? 'rotate-90' : 'rotate-0'
                                   }`} 
                                 />
                               </Button>
