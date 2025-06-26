@@ -56,7 +56,7 @@ export function AppSidebar() {
   // Auto-expand category when on category page
   useEffect(() => {
     const pathMatch = location.pathname.match(/^\/category\/(.+)$/);
-    if (pathMatch) {
+    if (pathMatch && categories) {
       const categorySlug = pathMatch[1];
       const category = categories?.find(cat => cat.slug === categorySlug);
       if (category && !expandedCategories.includes(category.id)) {
@@ -67,11 +67,10 @@ export function AppSidebar() {
 
   // Handle hash changes for component navigation
   useEffect(() => {
-    const hash = location.hash.replace('#', '');
     const pathComponent = location.pathname.match(/^\/component\/(.+)$/);
     
-    // Check for component in hash or in path
-    const componentSlug = hash || (pathComponent && pathComponent[1]);
+    // Check for component in path
+    const componentSlug = pathComponent && pathComponent[1];
     
     if (componentSlug) {
       const component = allComponents?.find(comp => comp.slug === componentSlug);
@@ -87,7 +86,7 @@ export function AppSidebar() {
     } else {
       setActiveComponentId(null);
     }
-  }, [location.hash, location.pathname, allComponents, categories, expandedCategories]);
+  }, [location.pathname, allComponents, categories, expandedCategories]);
 
   const getCategoryComponents = (categoryId: string) => {
     return allComponents?.filter(component => component.category_id === categoryId) || [];
@@ -198,35 +197,37 @@ export function AppSidebar() {
                     <SidebarMenuItem key={category.id}>
                       <Collapsible open={isExpanded} onOpenChange={() => toggleCategory(category.id)}>
                         <div className="flex items-center w-full">
-                          <SidebarMenuButton 
-                            asChild 
-                            isActive={isActive} 
-                            className="flex-1 justify-start py-2 min-h-[40px]"
-                          >
-                            <Link to={`/category/${category.slug}`} className="flex items-center gap-3">
-                              <Icon className="h-4 w-4 flex-shrink-0" />
-                              <div className="text-sm font-medium">{category.name}</div>
-                            </Link>
-                          </SidebarMenuButton>
-                          {getFilteredComponents(category.id).length > 0 && (
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0 ml-1 hover:bg-accent flex items-center justify-center"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                }}
-                              >
-                                <ChevronRight 
-                                  className={`h-3 w-3 transition-transform duration-200 ${
-                                    isExpanded ? 'rotate-90' : 'rotate-0'
-                                  }`} 
-                                />
-                              </Button>
-                            </CollapsibleTrigger>
-                          )}
+                          <div className="flex-1 flex items-center">
+                            <SidebarMenuButton 
+                              asChild 
+                              isActive={isActive} 
+                              className="flex-1 justify-start py-2 min-h-[40px]"
+                            >
+                              <Link to={`/category/${category.slug}`} className="flex items-center gap-3">
+                                <Icon className="h-4 w-4 flex-shrink-0" />
+                                <div className="text-sm font-medium">{category.name}</div>
+                              </Link>
+                            </SidebarMenuButton>
+                            {getFilteredComponents(category.id).length > 0 && (
+                              <CollapsibleTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0 ml-1 hover:bg-accent flex items-center justify-center"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <ChevronRight 
+                                    className={`h-3 w-3 transition-transform duration-200 ${
+                                      isExpanded ? 'rotate-90' : 'rotate-0'
+                                    }`} 
+                                  />
+                                </Button>
+                              </CollapsibleTrigger>
+                            )}
+                          </div>
                         </div>
                         <CollapsibleContent>
                           <SidebarMenuSub className="mt-2 mb-2">
@@ -237,14 +238,8 @@ export function AppSidebar() {
                                   <SidebarMenuSubButton 
                                     asChild 
                                     isActive={isComponentActive || activeComponentId === component.id}
-                                  >
-                                    <Link 
-                                      to={
-                                        location.pathname.startsWith('/category/') 
-                                          ? `${location.pathname}#${component.slug}` 
-                                          : `/component/${component.slug}`
-                                      }
-                                    >
+                                   >
+                                    <Link to={`/component/${component.slug}`}>
                                       <span>{component.name}</span>
                                       {component.is_experimental && (
                                         <span className="ml-auto text-xs bg-accent/10 text-accent px-1.5 py-0.5 rounded">EXP</span>

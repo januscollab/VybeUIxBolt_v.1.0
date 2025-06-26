@@ -1,5 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useComponent } from '@/hooks/useStaticDesignSystem';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 import AlertShowcase from '@/components/showcase/AlertShowcase';
 import AvatarShowcase from '@/components/showcase/AvatarShowcase';
@@ -44,6 +48,8 @@ import InteractiveColorPalette from '@/components/design-system/InteractiveColor
 
 export default function ComponentPage() {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const { data: component, isLoading } = useComponent(slug || '');
 
   const componentMap: Record<string, React.ComponentType> = {
     'alert': AlertShowcase,
@@ -88,7 +94,53 @@ export default function ComponentPage() {
     'interactive-color-palette': InteractiveColorPalette,
   };
 
-  const Component = componentMap[slug] || (() => <div>Component not found</div>);
+  const Component = componentMap[slug || ''] || (() => <div>Component not found</div>);
 
-  return <Component />;
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="h-8 bg-muted animate-pulse rounded" />
+        <div className="h-[500px] bg-muted animate-pulse rounded-lg" />
+      </div>
+    );
+  }
+
+  if (!component) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-12">
+          <h1 className="text-2xl font-bold text-muted-foreground">Component not found</h1>
+          <Button 
+            variant="outline" 
+            className="mt-4"
+            onClick={() => navigate('/')}
+          >
+            Return to Home
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => navigate(-1)}
+          className="gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+      </div>
+      
+      <Card className="border-t-4 border-t-primary">
+        <CardContent className="pt-6">
+          <Component />
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

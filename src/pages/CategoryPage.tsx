@@ -104,21 +104,7 @@ export default function CategoryPage() {
   const { data: components, isLoading } = useComponents(slug);
   const contentRef = useRef<HTMLDivElement>(null);
   
-  const category = categories?.find(c => c.slug === slug);
-  
-  // Scroll to component if hash is present
-  useEffect(() => {
-    if (location.hash) {
-      const componentId = location.hash.replace('#', '');
-      const element = document.getElementById(componentId);
-      if (element) {
-        // Add a small delay to ensure the page is fully rendered
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      }
-    }
-  }, [location.hash, components]);
+  const category = categories?.find(c => c.slug === slug);  
   
   if (isLoading) {
     return (
@@ -181,10 +167,9 @@ export default function CategoryPage() {
             {/* Render each component directly on the page */}
             {components.map((component) => {
               const ComponentShowcase = componentMap[component.slug];
-              
               if (!ComponentShowcase) {
                 return (
-                  <Card key={component.id} id={component.slug} className="scroll-mt-20">
+                  <Card key={component.id} className="scroll-mt-20">
                     <CardHeader>
                       <CardTitle>{component.name}</CardTitle>
                       <CardDescription>{component.description}</CardDescription>
@@ -199,7 +184,7 @@ export default function CategoryPage() {
               }
               
               return (
-                <section key={component.id} id={component.slug} className="scroll-mt-20">
+                <section key={component.id} className="scroll-mt-20">
                   <Card className="border-t-4 border-t-primary">
                     <CardContent className="pt-6">
                       <ComponentShowcase />
