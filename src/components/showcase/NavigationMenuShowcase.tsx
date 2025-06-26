@@ -157,7 +157,7 @@ export default function NavigationMenuShowcase() {
           <CardDescription>Simple horizontal navigation with dropdown menus</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
+          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center max-w-full overflow-hidden">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem className="max-w-full">
@@ -241,7 +241,7 @@ export default function NavigationMenuShowcase() {
           <CardDescription>Simple horizontal navigation links without dropdowns</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
+          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center max-w-full overflow-hidden">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem className="max-w-full">
@@ -292,7 +292,7 @@ export default function NavigationMenuShowcase() {
           <CardDescription>Navigation menu with dropdown content for categories</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center">
+          <div className="p-6 border rounded-lg bg-muted/50 flex justify-center max-w-full overflow-hidden">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem className="max-w-full">
