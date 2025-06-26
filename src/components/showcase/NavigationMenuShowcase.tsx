@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Copy, Figma, FileCode } from "lucide-react";
+import { Copy, Figma, FileCode, ChevronRight } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -163,7 +163,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem className="max-w-full">
                   <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid gap-3 p-4 w-full lg:grid-cols-[.75fr_1fr]">
+                    <ul className="grid gap-3 p-4 w-full max-w-[600px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
@@ -195,7 +195,7 @@ export default function NavigationMenuShowcase() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-full gap-3 p-4 md:grid-cols-2">
+                    <ul className="grid w-full max-w-[600px] gap-3 p-4 md:grid-cols-2">
                       {components.map((component) => (
                         <ListItem
                           key={component.title}
